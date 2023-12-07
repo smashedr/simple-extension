@@ -14,7 +14,7 @@ chrome.storage.onChanged.addListener(onChanged)
 async function onInstalled(details) {
     console.log('onInstalled:', details)
 
-    const githubUrl = 'https://github.com/cssnr/simple-extension'
+    const githubUrl = 'https://github.com/smashedr/simple-extension'
     const options = await Promise.resolve(
         setDefaultOptions({
             contextMenu: true,
