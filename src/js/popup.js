@@ -17,6 +17,7 @@ document.getElementById('inject-script').onclick = injectScript
 
 /**
  * Initialize Popup
+ * TODO: Cleanup Permissions
  * @function initPopup
  */
 async function initPopup() {
@@ -108,7 +109,6 @@ async function revokePermsBtn(event) {
     const permissions = await chrome.permissions.getAll()
     console.log('permissions:', permissions)
     await chrome.permissions.remove({
-        permissions: ['host'],
         origins: ['https://*/*', 'http://*/*'],
     })
     window.close()
@@ -129,5 +129,5 @@ async function injectScript(event) {
 }
 
 function alertFunction() {
-    alert('Success')
+    alert('Inject Script Success')
 }

@@ -1,10 +1,19 @@
 // JS Background Service Worker
 
+chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
 chrome.contextMenus.onClicked.addListener(contextMenusClicked)
 chrome.commands.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
+
+/**
+ * On Startup Callback
+ * @function onStartup
+ */
+function onStartup() {
+    console.log('onStartup')
+}
 
 /**
  * On Install Callback
@@ -13,8 +22,7 @@ chrome.storage.onChanged.addListener(onChanged)
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
-
-    const githubUrl = 'https://github.com/smashedr/simple-extension'
+    const githubURL = 'https://github.com/smashedr/simple-extension'
     const options = await Promise.resolve(
         setDefaultOptions({
             contextMenu: true,
@@ -26,17 +34,19 @@ async function onInstalled(details) {
     if (options.contextMenu) {
         createContextMenus()
     }
-    if (details.reason === 'install') {
+    if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
         chrome.runtime.openOptionsPage()
-    } else if (options.showUpdate && details.reason === 'update') {
-        const manifest = chrome.runtime.getManifest()
-        if (manifest.version !== details.previousVersion) {
-            const url = `${githubUrl}/releases/tag/${manifest.version}`
-            console.log(`update url: ${url}`)
-            await chrome.tabs.create({ active: true, url })
+    } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
+        if (options.showUpdate) {
+            const manifest = chrome.runtime.getManifest()
+            if (manifest.version !== details.previousVersion) {
+                const url = `${githubURL}/releases/tag/${manifest.version}`
+                console.log(`url: ${url}`)
+                await chrome.tabs.create({ active: true, url })
+            }
         }
     }
-    chrome.runtime.setUninstallURL(`${githubUrl}/issues`)
+    await chrome.runtime.setUninstallURL(`${githubURL}/issues`)
 }
 
 /**
