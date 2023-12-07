@@ -108,7 +108,7 @@ function onMessage(message, sender, sendResponse) {
 function onChanged(changes, namespace) {
     // console.log('onChanged:', changes, namespace)
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
-        if (key === 'options' && namespace === 'sync' && oldValue && newValue) {
+        if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
             if (oldValue.contextMenu !== newValue.contextMenu) {
                 if (newValue?.contextMenu) {
                     console.log('Enabled contextMenu...')

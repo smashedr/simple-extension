@@ -15,23 +15,25 @@
         <a id="revoke-perms" class="btn btn-outline-danger visually-hidden has-perms" role="button">Remove Host Permissions</a>
         <a id="inject-script" class="btn btn-outline-warning" role="button">Inject Script</a>
         <hr class="my-1">
-        <a class="btn btn-primary popup-click w-100" role="button" data-href="html/page.html">Open Main Page</a>
-        <a class="btn btn-primary popup-click w-100" role="button" data-href="open_window">Open Main Window</a>
+        <a class="btn btn-primary" role="button" data-href="html/page.html">Open Main Page</a>
+        <a class="btn btn-primary" role="button" data-href="open_window">Open Main Window</a>
     </div>
     <hr>
-    <div class="form-check form-switch">
-        <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
-        <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
-    </div>
-    <div class="form-check form-switch">
-        <input class="form-check-input" id="showUpdate" type="checkbox" role="switch">
-        <label class="form-check-label" for="showUpdate" aria-describedby="showUpdateHelp">Show Release Notes on Update</label>
-    </div>
-    <a class="btn btn-outline-info popup-click w-100 mt-3" role="button" data-href="options">Open Options</a>
+    <form id="options-form" class="mb-2">
+        <div class="form-check form-switch">
+            <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
+            <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
+        </div>
+        <div class="form-check form-switch">
+            <input class="form-check-input" id="showUpdate" type="checkbox" role="switch">
+            <label class="form-check-label" for="showUpdate" aria-describedby="showUpdateHelp">Show Release Notes on Update</label>
+        </div>
+    </form>
+    <a class="btn btn-outline-info w-100" role="button" data-href="options">Open Options</a>
     <hr>
     <div class="justify-content-center align-items-center d-flex text-center small mb-0">
-        <img class="me-1" src="../images/logo16.png" alt="Link Extractor" width="16" height="16">
-        <a class="link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover popup-click me-1" type="button" rel="noopener"
+        <img src="../images/logo16.png" alt="Link Extractor" width="16" height="16">
+        <a class="link-offset-2 link-underline link-underline-opacity-0 link-underline-opacity-75-hover mx-2" type="button" rel="noopener"
            data-href="homepage">Simple Extension</a> v<span id="version"></span>
     </div>
 </div>

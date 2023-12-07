@@ -8,7 +8,7 @@ document
     .querySelectorAll('[data-href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
 document
-    .querySelectorAll('input')
+    .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 
 document.getElementById('grant-perms').onclick = grantPermsBtn
@@ -100,12 +100,15 @@ function grantPermsBtn(event) {
 
 /**
  * Grant Permissions Button Click Callback
+ * TODO: Determine how to remove host permissions on chrome
  * @function grantPerms
  * @param {Event} event
  */
 async function revokePermsBtn(event) {
+    const permissions = await chrome.permissions.getAll()
+    console.log('permissions:', permissions)
     await chrome.permissions.remove({
-        permissions: ['tabs'],
+        permissions: ['host'],
         origins: ['https://*/*', 'http://*/*'],
     })
     window.close()

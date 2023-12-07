@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', initOptions)
 chrome.storage.onChanged.addListener(onChanged)
 
 document
-    .querySelectorAll('input')
+    .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 document
     .getElementById('options-form')
@@ -41,7 +41,7 @@ async function initOptions() {
 function onChanged(changes, namespace) {
     // console.log('onChanged:', changes, namespace)
     for (const [key, { newValue }] of Object.entries(changes)) {
-        if (key === 'options' && namespace === 'sync') {
+        if (namespace === 'sync' && key === 'options') {
             console.log('newValue:', newValue)
             updateOptions(newValue)
         }
