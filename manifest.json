@@ -1,0 +1,58 @@
+{
+  "name": "Simple Extension",
+  "description": "Simple Web Extension Example.",
+  "homepage_url": "https://github.com/cssnr/simple-extension",
+  "author": "Shane",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "Show Main Popup Action"
+    },
+    "open_page": {
+      "suggested_key": {
+        "default": "Alt+Shift+X"
+      },
+      "description": "Open Extension Page"
+    },
+    "open_window": {
+      "suggested_key": {
+        "default": "Alt+Shift+W"
+      },
+      "description": "Open Extension Window"
+    }
+  },
+  "permissions": ["contextMenus", "scripting", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content-script.js"]
+    }
+  ],
+  "background": {},
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_popup": "html/popup.html",
+    "default_title": "Simple Extension",
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo48.png",
+      "96": "images/logo96.png",
+      "128": "images/logo128.png"
+    }
+  },
+  "icons": {
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png",
+    "96": "images/logo96.png",
+    "128": "images/logo128.png"
+  }
+}

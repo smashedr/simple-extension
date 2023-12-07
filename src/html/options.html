@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Simple Extension</title>
+    <link rel="icon" href="../images/logo16.png" sizes="any">
+    <link rel="stylesheet" type="text/css" href="../dist/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/options.css">
+    <script type="text/javascript" src="../js/theme.js"></script>
+</head>
+<body>
+
+<div class="container-fluid p-3">
+<div class="row">
+<div class="col-xl-6 col-md-8 col-12 m-auto">
+<div class="card">
+<div class="card-body">
+    <div class="justify-content-center align-items-center d-flex">
+        <img src="../images/logo48.png" class="img-fluid float-start me-2" alt="Simple Extension" height="48" width="48">
+        <h1>Simple Extension</h1>
+    </div>
+    <div class="clearfix"></div>
+    <p class="text-center lead">v<span id="version"></span></p>
+    <table class="table table-sm table-borderless table-hover">
+        <caption class="visually-hidden">Keyboard Shortcuts</caption>
+        <thead class="visually-hidden"><tr><th>Description</th><th>Shortcut</th></tr></thead>
+        <tbody>
+        <tr><td>Show Popup Action</td> <td class="text-end"><kbd id="mainKey">Not Set</kbd></td></tr>
+        <tr><td>Open Main Page</td> <td class="text-end"><kbd id="openPage">Not Set</kbd></td></tr>
+        <tr><td>Show Main Window</td> <td class="text-end"><kbd id="showWindow">Not Set</kbd></td></tr>
+        </tbody>
+    </table>
+    <hr>
+    <form id="options-form" class="options">
+        <div class="form-check form-switch">
+            <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
+            <label class="form-check-label" for="contextMenu" aria-describedby="contextMenuHelp">Enable Right Click Menu</label>
+        </div>
+        <div class="form-check form-switch mb-3">
+            <input class="form-check-input" id="showUpdate" type="checkbox" role="switch">
+            <label class="form-check-label" for="showUpdate" aria-describedby="showUpdateHelp">Show Release Notes on Update</label>
+        </div>
+        <div class="mb-2">
+            <label for="testInput" class="form-label">Test Input</label>
+            <input id="testInput" aria-describedby="testInputHelp" type="text" class="form-control" autocomplete="off">
+            <div class="form-text" id="testInputHelp">Just a test text input.</div>
+        </div>
+    </form>
+    <hr>
+    <div class="text-center">
+        <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
+           href="https://github.com/cssnr/simple-extension">Get Help</a>
+        |
+        <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
+           href="https://github.com/cssnr/simple-extension/issues">Open Issue</a>
+    </div>
+</div> <!-- card-body -->
+</div> <!-- card -->
+</div> <!-- col -->
+</div> <!-- row -->
+</div> <!-- container -->
+
+<script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
+<script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
+<script type="module" src="../js/options.js"></script>
+
+</body>
+</html>
