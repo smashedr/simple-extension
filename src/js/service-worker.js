@@ -176,7 +176,7 @@ async function setDefaultOptions(defaultOptions) {
     }
     if (changed) {
         await chrome.storage.sync.set({ options })
-        console.log('setDefaultOptions: options:', options)
+        console.log('changed:', options)
     }
     return options
 }
