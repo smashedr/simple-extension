@@ -12,7 +12,7 @@ document
     .forEach((el) => el.addEventListener('change', saveOptions))
 
 document.getElementById('grant-perms').onclick = grantPermsBtn
-document.getElementById('revoke-perms').onclick = revokePermsBtn
+// document.getElementById('revoke-perms').onclick = revokePermsBtn
 document.getElementById('inject-script').onclick = injectScript
 
 /**
@@ -87,20 +87,20 @@ function grantPermsBtn(event) {
     window.close()
 }
 
-/**
- * Grant Permissions Button Click Callback
- * TODO: Determine how to remove host permissions on chrome
- * @function grantPerms
- * @param {Event} event
- */
-async function revokePermsBtn(event) {
-    const permissions = await chrome.permissions.getAll()
-    console.log('permissions:', permissions)
-    await chrome.permissions.remove({
-        origins: ['https://*/*', 'http://*/*'],
-    })
-    window.close()
-}
+// /**
+//  * Revoke Permissions Button Click Callback
+//  * TODO: Determine how to remove host permissions on chrome
+//  * @function revokePermsBtn
+//  * @param {Event} event
+//  */
+// async function revokePermsBtn(event) {
+//     const permissions = await chrome.permissions.getAll()
+//     console.log('permissions:', permissions)
+//     await chrome.permissions.remove({
+//         origins: permissions.origins,
+//     })
+//     window.close()
+// }
 
 /**
  * Grant Permissions Button Click Callback
