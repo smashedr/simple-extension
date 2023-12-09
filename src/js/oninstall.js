@@ -1,17 +1,17 @@
-// JS for install.html
+// JS for oninstall.html
 
 import { checkPerms } from './export.js'
 
-document.addEventListener('DOMContentLoaded', initOnInstall)
+document.addEventListener('DOMContentLoaded', initOninstall)
 document.getElementById('grant-perms').addEventListener('click', grantPermsBtn)
 document.getElementById('open-options').addEventListener('click', openOptions)
 
 /**
- * Initialize initOnInstall
- * @function initOnInstall
+ * Initialize initOninstall
+ * @function initOninstall
  */
-async function initOnInstall() {
-    console.log('initOnInstall')
+async function initOninstall() {
+    console.log('initOninstall')
     // const { options } = await chrome.storage.sync.get(['options'])
     // console.log('options:', options)
     await checkPerms()

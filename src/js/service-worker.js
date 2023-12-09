@@ -36,7 +36,7 @@ async function onInstalled(details) {
     }
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
         // chrome.runtime.openOptionsPage()
-        const url = chrome.runtime.getURL('/html/install.html')
+        const url = chrome.runtime.getURL('/html/oninstall.html')
         await chrome.tabs.create({ url, active: true })
     } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
         if (options.showUpdate) {
@@ -70,8 +70,8 @@ async function contextMenusClicked(ctx, tab) {
         await chrome.windows.create({
             type: 'detached_panel',
             url: '/html/window.html',
-            width: 480,
-            height: 360,
+            width: 720,
+            height: 480,
         })
     } else {
         console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)

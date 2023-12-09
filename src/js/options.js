@@ -14,6 +14,14 @@ document
 document
     .getElementById('options-form')
     .addEventListener('submit', (e) => e.preventDefault())
+document.querySelectorAll('[data-href]').forEach((el) =>
+    el.addEventListener('click', async (e) => {
+        console.log('clicked')
+        const url = chrome.runtime.getURL(e.target.dataset.href)
+        await chrome.tabs.create({ active: true, url })
+        window.close()
+    })
+)
 
 /**
  * Initialize Options

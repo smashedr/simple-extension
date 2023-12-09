@@ -59,8 +59,8 @@ async function popupLinks(event) {
         await chrome.windows.create({
             type: 'detached_panel',
             url: '/html/window.html',
-            width: 480,
-            height: 360,
+            width: 720,
+            height: 480,
         })
         return window.close()
     } else if (anchor?.dataset?.href) {
