@@ -13,11 +13,11 @@ export async function checkPerms() {
     })
     console.log('checkPerms:', hasPerms)
     if (hasPerms) {
-        hasPermsEl.forEach((el) => el.classList.remove('visually-hidden'))
-        grantPermsEl.forEach((el) => el.classList.add('visually-hidden'))
+        hasPermsEl.forEach((el) => el.classList.remove('d-none'))
+        grantPermsEl.forEach((el) => el.classList.add('d-none'))
     } else {
-        grantPermsEl.forEach((el) => el.classList.remove('visually-hidden'))
-        hasPermsEl.forEach((el) => el.classList.add('visually-hidden'))
+        grantPermsEl.forEach((el) => el.classList.remove('d-none'))
+        hasPermsEl.forEach((el) => el.classList.add('d-none'))
     }
     return hasPerms
 }
