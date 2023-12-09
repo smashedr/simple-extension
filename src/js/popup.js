@@ -1,6 +1,6 @@
 // JS for popup.html
 
-import { saveOptions, updateOptions } from './export.js'
+import { checkPerms, saveOptions, updateOptions } from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 
@@ -17,7 +17,6 @@ document.getElementById('inject-script').onclick = injectScript
 
 /**
  * Initialize Popup
- * TODO: Cleanup Permissions
  * @function initPopup
  */
 async function initPopup() {
@@ -29,18 +28,7 @@ async function initPopup() {
     console.log('options:', options)
     updateOptions(options)
 
-    const hasPerms = await chrome.permissions.contains({
-        origins: ['https://*/*', 'http://*/*'],
-    })
-    if (hasPerms) {
-        document
-            .querySelectorAll('.has-perms')
-            .forEach((el) => el.classList.remove('visually-hidden'))
-    } else {
-        document
-            .querySelectorAll('.grant-perms')
-            .forEach((el) => el.classList.remove('visually-hidden'))
-    }
+    await checkPerms()
 
     // const views = chrome.extension.getViews()
     // console.log('views:', views)

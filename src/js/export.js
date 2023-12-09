@@ -1,6 +1,28 @@
 // JS Exports
 
 /**
+ * Check Host Permissions
+ * @function checkPerms
+ * @return {Boolean}
+ */
+export async function checkPerms() {
+    const hasPermsEl = document.querySelectorAll('.has-perms')
+    const grantPermsEl = document.querySelectorAll('.grant-perms')
+    const hasPerms = await chrome.permissions.contains({
+        origins: ['https://*/*', 'http://*/*'],
+    })
+    console.log('checkPerms:', hasPerms)
+    if (hasPerms) {
+        hasPermsEl.forEach((el) => el.classList.remove('visually-hidden'))
+        grantPermsEl.forEach((el) => el.classList.add('visually-hidden'))
+    } else {
+        grantPermsEl.forEach((el) => el.classList.remove('visually-hidden'))
+        hasPermsEl.forEach((el) => el.classList.add('visually-hidden'))
+    }
+    return hasPerms
+}
+
+/**
  * Save Options Callback
  * @function saveOptions
  * @param {InputEvent} event
