@@ -59,5 +59,6 @@ export function updateOptions(options) {
                 el.value = value
             }
         }
+        // el.classList.remove('is-invalid')
     }
 }

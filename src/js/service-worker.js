@@ -139,6 +139,7 @@ function onChanged(changes, namespace) {
  */
 function createContextMenus() {
     console.log('createContextMenus')
+    chrome.contextMenus.removeAll()
     const ctx = ['all']
     const contexts = [
         [ctx, 'open_page', 'normal', 'Main Page'],
