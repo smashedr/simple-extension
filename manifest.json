@@ -12,17 +12,17 @@
       },
       "description": "Show Main Popup Action"
     },
-    "open_page": {
+    "openHome": {
       "suggested_key": {
         "default": "Alt+Shift+X"
       },
-      "description": "Open Extension Page"
+      "description": "Open Home Page"
     },
-    "open_window": {
+    "showPage": {
       "suggested_key": {
         "default": "Alt+Shift+W"
       },
-      "description": "Open Extension Window"
+      "description": "Show Extension Page"
     }
   },
   "permissions": ["activeTab", "contextMenus", "scripting", "storage"],

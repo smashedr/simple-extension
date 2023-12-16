@@ -1,13 +1,19 @@
-// JS for page.html
+// JS for home.html
 
-document.addEventListener('DOMContentLoaded', initPage)
+document.addEventListener('DOMContentLoaded', domContentLoaded)
+
+document.getElementById('close').addEventListener('click', closePage)
 
 /**
- * Initialize Page
- * @function initPage
+ * DOMContentLoaded
+ * @function domContentLoaded
  */
-async function initPage() {
-    console.log('initPage')
+async function domContentLoaded() {
+    console.log('domContentLoaded')
     const { options } = await chrome.storage.sync.get(['options'])
     console.log('options:', options)
+}
+
+function closePage() {
+    chrome.windows.remove(chrome.windows.WINDOW_ID_CURRENT)
 }
