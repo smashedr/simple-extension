@@ -40,7 +40,7 @@ For any issues, bugs or concerns; please [Open an Issue](https://github.com/smas
 
 # Configuration
 
-You can pin the Addon by clicking the `Puzzle Piece`, find the Link Extractor icon, then;  
+You can pin the Addon by clicking the `Puzzle Piece`, find the Web Extension icon, then;  
 **Chrome,** click the `Pin` icon.  
 **Firefox,** click the `Settings Wheel` and `Pin to Toolbar`.
 

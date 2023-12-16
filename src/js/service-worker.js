@@ -2,7 +2,7 @@
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
-chrome.contextMenus.onClicked.addListener(contextMenusClicked)
+chrome.contextMenus.onClicked.addListener(onClicked)
 chrome.commands.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
@@ -16,7 +16,7 @@ function onStartup() {
 }
 
 /**
- * On Install Callback
+ * On Installed Callback
  * @function onInstalled
  * @param {InstalledDetails} details
  */
@@ -52,12 +52,12 @@ async function onInstalled(details) {
 
 /**
  * On Clicked Callback
- * @function contextMenusClicked
+ * @function onClicked
  * @param {OnClickData} ctx
  * @param {chrome.tabs.Tab} tab
  */
-async function contextMenusClicked(ctx, tab) {
-    console.log('contextMenusClicked:', ctx, tab)
+async function onClicked(ctx, tab) {
+    console.log('onClicked:', ctx, tab)
     if (ctx.menuItemId === 'options') {
         chrome.runtime.openOptionsPage()
     } else if (ctx.menuItemId === 'openHome') {
@@ -96,7 +96,7 @@ async function onCommand(command) {
 }
 
 /**
- * Handle Messages
+ * On Message Callback
  * @function onMessage
  * @param {Object} message
  * @param {MessageSender} sender
