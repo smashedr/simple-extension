@@ -60,16 +60,13 @@ async function contextMenusClicked(ctx, tab) {
     console.log('contextMenusClicked:', ctx, tab)
     if (ctx.menuItemId === 'options') {
         chrome.runtime.openOptionsPage()
-    } else if (ctx.menuItemId === 'open_page') {
-        // const views = chrome.extension.getViews()
-        // const result = views.find((item) => item.location.href.endsWith('html/page.html'))
-        // console.log('result:', result)
-        const url = chrome.runtime.getURL('/html/page.html')
+    } else if (ctx.menuItemId === 'openHome') {
+        const url = chrome.runtime.getURL('/html/home.html')
         await chrome.tabs.create({ active: true, url })
-    } else if (ctx.menuItemId === 'open_window') {
+    } else if (ctx.menuItemId === 'showPage') {
         await chrome.windows.create({
             type: 'detached_panel',
-            url: '/html/window.html',
+            url: '/html/page.html',
             width: 720,
             height: 480,
         })
@@ -85,13 +82,13 @@ async function contextMenusClicked(ctx, tab) {
  */
 async function onCommand(command) {
     console.log(`onCommand: ${command}`)
-    if (command === 'open_page') {
-        const url = chrome.runtime.getURL('/html/page.html')
+    if (command === 'openHome') {
+        const url = chrome.runtime.getURL('/html/home.html')
         await chrome.tabs.create({ active: true, url })
-    } else if (command === 'open_window') {
+    } else if (command === 'showPage') {
         await chrome.windows.create({
             type: 'detached_panel',
-            url: '/html/window.html',
+            url: '/html/page.html',
             width: 480,
             height: 360,
         })
@@ -139,10 +136,11 @@ function onChanged(changes, namespace) {
  */
 function createContextMenus() {
     console.log('createContextMenus')
+    chrome.contextMenus.removeAll()
     const ctx = ['all']
     const contexts = [
-        [ctx, 'open_page', 'normal', 'Main Page'],
-        [ctx, 'open_window', 'normal', 'Main Window'],
+        [ctx, 'openHome', 'normal', 'Home Page'],
+        [ctx, 'showPage', 'normal', 'Extension Page'],
         [ctx, 'separator-1', 'separator', 'separator'],
         [ctx, 'options', 'normal', 'Open Options'],
     ]
