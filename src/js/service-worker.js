@@ -35,9 +35,15 @@ async function onInstalled(details) {
         createContextMenus()
     }
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        // chrome.runtime.openOptionsPage()
-        const url = chrome.runtime.getURL('/html/oninstall.html')
-        await chrome.tabs.create({ url, active: true })
+        const hasPerms = await chrome.permissions.contains({
+            origins: ['https://*/*', 'http://*/*'],
+        })
+        if (hasPerms) {
+            chrome.runtime.openOptionsPage()
+        } else {
+            const url = chrome.runtime.getURL('/html/oninstall.html')
+            await chrome.tabs.create({ active: true, url })
+        }
     } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
         if (options.showUpdate) {
             const manifest = chrome.runtime.getManifest()
