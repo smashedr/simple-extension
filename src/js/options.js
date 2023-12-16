@@ -15,14 +15,9 @@ document
     .getElementById('options-form')
     .addEventListener('submit', (e) => e.preventDefault())
 
-document.querySelectorAll('[data-href]').forEach((el) =>
-    el.addEventListener('click', async (e) => {
-        console.log('clicked')
-        const url = chrome.runtime.getURL(e.target.dataset.href)
-        await chrome.tabs.create({ active: true, url })
-        window.close()
-    })
-)
+document
+    .querySelectorAll('.open-oninstall')
+    .forEach((el) => el.addEventListener('click', openOnInstall))
 
 /**
  * Initialize Options
@@ -35,8 +30,8 @@ async function initOptions() {
 
     await setShortcuts({
         mainKey: '_execute_action',
-        openPage: 'open_page',
-        showWindow: 'show_window',
+        openHome: 'openHome',
+        showPage: 'showPage',
     })
 
     const { options } = await chrome.storage.sync.get(['options'])
@@ -72,6 +67,18 @@ async function grantPermsBtn(event) {
         origins: ['https://*/*', 'http://*/*'],
     })
     await checkPerms()
+}
+
+/**
+ * Open OnInstall Page
+ * @function openOnInstall
+ * @param {MouseEvent} event
+ */
+async function openOnInstall(event) {
+    console.log('openOnInstall')
+    const url = chrome.runtime.getURL('../html/oninstall.html')
+    await chrome.tabs.create({ active: true, url })
+    window.close()
 }
 
 /**

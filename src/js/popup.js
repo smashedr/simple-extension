@@ -30,11 +30,12 @@ async function initPopup() {
 
     await checkPerms()
 
-    // const views = chrome.extension.getViews()
-    // console.log('views:', views)
-
     // const tabs = await chrome.tabs.query({ highlighted: true })
     // console.log('tabs:', tabs)
+
+    // const views = chrome.extension.getViews()
+    // const result = views.find((item) => item.location.href.endsWith('html/home.html'))
+    // console.log('result:', result)
 }
 
 /**
@@ -55,10 +56,10 @@ async function popupLinks(event) {
     } else if (anchor?.dataset?.href === 'options') {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor?.dataset?.href === 'open_window') {
+    } else if (anchor?.dataset?.href === 'showPage') {
         await chrome.windows.create({
             type: 'detached_panel',
-            url: '/html/window.html',
+            url: '/html/page.html',
             width: 720,
             height: 480,
         })
