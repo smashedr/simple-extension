@@ -11,9 +11,9 @@ document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 
-document.getElementById('grant-perms').onclick = grantPermsBtn
-// document.getElementById('revoke-perms').onclick = revokePermsBtn
-document.getElementById('inject-script').onclick = injectScript
+document.getElementById('grant-perms').addEventListener('click', grantPerms)
+// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+document.getElementById('inject-script').addEventListener('click', injectScript)
 
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -27,6 +27,8 @@ async function initPopup() {
     console.log('initPopup')
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
+    document.getElementById('homepage_url').href =
+        chrome.runtime.getManifest().homepage_url
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.log('options:', options)
@@ -83,8 +85,8 @@ async function popupLinks(event) {
  * @function grantPerms
  * @param {Event} event
  */
-function grantPermsBtn(event) {
-    console.log('permissions click:', event)
+function grantPerms(event) {
+    console.log('grantPerms:', event)
     chrome.permissions.request({
         origins: ['https://*/*', 'http://*/*'],
     })
@@ -94,10 +96,11 @@ function grantPermsBtn(event) {
 // /**
 //  * Revoke Permissions Button Click Callback
 //  * TODO: Determine how to remove host permissions on chrome
-//  * @function revokePermsBtn
+//  * @function revokePerms
 //  * @param {Event} event
 //  */
-// async function revokePermsBtn(event) {
+// async function revokePerms(event) {
+//     console.log('revokePerms:', event)
 //     const permissions = await chrome.permissions.getAll()
 //     console.log('permissions:', permissions)
 //     await chrome.permissions.remove({
@@ -112,6 +115,7 @@ function grantPermsBtn(event) {
  * @param {MouseEvent} event
  */
 async function injectScript(event) {
+    console.log('injectScript:', event)
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
