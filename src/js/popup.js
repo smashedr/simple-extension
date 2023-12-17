@@ -5,15 +5,15 @@ import { checkPerms, saveOptions, updateOptions } from './export.js'
 document.addEventListener('DOMContentLoaded', initPopup)
 
 document
-    .querySelectorAll('[data-href]')
+    .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 
-document.getElementById('grant-perms').onclick = grantPermsBtn
-// document.getElementById('revoke-perms').onclick = revokePermsBtn
-document.getElementById('inject-script').onclick = injectScript
+document.getElementById('grant-perms').addEventListener('click', grantPerms)
+// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+document.getElementById('inject-script').addEventListener('click', injectScript)
 
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
@@ -27,6 +27,8 @@ async function initPopup() {
     console.log('initPopup')
     document.getElementById('version').textContent =
         chrome.runtime.getManifest().version
+    document.getElementById('homepage_url').href =
+        chrome.runtime.getManifest().homepage_url
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.log('options:', options)
@@ -53,15 +55,14 @@ async function popupLinks(event) {
     console.log('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
+    console.log(`anchor.href: ${anchor.href}`)
     let url
-    if (anchor?.dataset?.href.startsWith('http')) {
-        url = anchor.dataset.href
-    } else if (anchor?.dataset?.href === 'homepage') {
+    if (anchor.href === 'homepage') {
         url = chrome.runtime.getManifest().homepage_url
-    } else if (anchor?.dataset?.href === 'options') {
+    } else if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor?.dataset?.href === 'showPage') {
+    } else if (anchor.href.endsWith('html/page.html')) {
         await chrome.windows.create({
             type: 'detached_panel',
             url: '/html/page.html',
@@ -69,13 +70,12 @@ async function popupLinks(event) {
             height: 480,
         })
         return window.close()
-    } else if (anchor?.dataset?.href) {
-        url = chrome.runtime.getURL(anchor.dataset.href)
+    } else if (anchor.href.startsWith('http')) {
+        url = anchor.href
+    } else {
+        url = chrome.runtime.getURL(anchor.href)
     }
     console.log('url:', url)
-    if (!url) {
-        return console.error('No dataset.href for anchor:', anchor)
-    }
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }
@@ -85,8 +85,8 @@ async function popupLinks(event) {
  * @function grantPerms
  * @param {Event} event
  */
-function grantPermsBtn(event) {
-    console.log('permissions click:', event)
+function grantPerms(event) {
+    console.log('grantPerms:', event)
     chrome.permissions.request({
         origins: ['https://*/*', 'http://*/*'],
     })
@@ -96,10 +96,11 @@ function grantPermsBtn(event) {
 // /**
 //  * Revoke Permissions Button Click Callback
 //  * TODO: Determine how to remove host permissions on chrome
-//  * @function revokePermsBtn
+//  * @function revokePerms
 //  * @param {Event} event
 //  */
-// async function revokePermsBtn(event) {
+// async function revokePerms(event) {
+//     console.log('revokePerms:', event)
 //     const permissions = await chrome.permissions.getAll()
 //     console.log('permissions:', permissions)
 //     await chrome.permissions.remove({
@@ -114,6 +115,7 @@ function grantPermsBtn(event) {
  * @param {MouseEvent} event
  */
 async function injectScript(event) {
+    console.log('injectScript:', event)
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
