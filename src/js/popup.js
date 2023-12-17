@@ -5,7 +5,7 @@ import { checkPerms, saveOptions, updateOptions } from './export.js'
 document.addEventListener('DOMContentLoaded', initPopup)
 
 document
-    .querySelectorAll('[data-href]')
+    .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
 document
     .querySelectorAll('#options-form input')
@@ -53,15 +53,14 @@ async function popupLinks(event) {
     console.log('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
+    console.log(`anchor.href: ${anchor.href}`)
     let url
-    if (anchor?.dataset?.href.startsWith('http')) {
-        url = anchor.dataset.href
-    } else if (anchor?.dataset?.href === 'homepage') {
+    if (anchor.href === 'homepage') {
         url = chrome.runtime.getManifest().homepage_url
-    } else if (anchor?.dataset?.href === 'options') {
+    } else if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor?.dataset?.href === 'showPage') {
+    } else if (anchor.href.endsWith('html/page.html')) {
         await chrome.windows.create({
             type: 'detached_panel',
             url: '/html/page.html',
@@ -69,13 +68,12 @@ async function popupLinks(event) {
             height: 480,
         })
         return window.close()
-    } else if (anchor?.dataset?.href) {
-        url = chrome.runtime.getURL(anchor.dataset.href)
+    } else if (anchor.href.startsWith('http')) {
+        url = anchor.href
+    } else {
+        url = chrome.runtime.getURL(anchor.href)
     }
     console.log('url:', url)
-    if (!url) {
-        return console.error('No dataset.href for anchor:', anchor)
-    }
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }

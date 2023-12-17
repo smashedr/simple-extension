@@ -49,7 +49,7 @@ async function onInstalled(details) {
             const manifest = chrome.runtime.getManifest()
             if (manifest.version !== details.previousVersion) {
                 const url = `${githubURL}/releases/tag/${manifest.version}`
-                await chrome.tabs.create({ url, active: false })
+                await chrome.tabs.create({ active: false, url })
             }
         }
     }
