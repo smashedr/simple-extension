@@ -14,6 +14,8 @@ async function domContentLoaded() {
     console.log('options:', options)
 }
 
-function closePage() {
+function closePage(event) {
+    console.log('closePage', event)
+    event.preventDefault()
     chrome.windows.remove(chrome.windows.WINDOW_ID_CURRENT)
 }

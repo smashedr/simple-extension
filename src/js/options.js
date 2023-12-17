@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', initOptions)
 
 chrome.storage.onChanged.addListener(onChanged)
 
-document.getElementById('grant-perms').addEventListener('click', grantPermsBtn)
+document.getElementById('grant-perms').addEventListener('click', grantPerms)
 
 document
     .querySelectorAll('#options-form input')
@@ -15,11 +15,11 @@ document
     .getElementById('options-form')
     .addEventListener('submit', (e) => e.preventDefault())
 document
-    .querySelectorAll('[data-bs-toggle="tooltip"]')
-    .forEach((el) => new bootstrap.Tooltip(el))
-document
     .querySelectorAll('.open-oninstall')
     .forEach((el) => el.addEventListener('click', openOnInstall))
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
 
 /**
  * Initialize Options
@@ -59,11 +59,11 @@ function onChanged(changes, namespace) {
 }
 
 /**
- * Grant Permissions Button Click Callback
- * @function grantPermsBtn
+ * Grant Permissions Click Callback
+ * @function grantPerms
  * @param {MouseEvent} event
  */
-async function grantPermsBtn(event) {
+async function grantPerms(event) {
     console.log('grantPermsBtn:', event)
     await chrome.permissions.request({
         origins: ['https://*/*', 'http://*/*'],
@@ -72,12 +72,12 @@ async function grantPermsBtn(event) {
 }
 
 /**
- * Open OnInstall Page
+ * Open OnInstall Page Click Callback
  * @function openOnInstall
  * @param {MouseEvent} event
  */
 async function openOnInstall(event) {
-    console.log('openOnInstall')
+    console.log('openOnInstall', event)
     const url = chrome.runtime.getURL('../html/oninstall.html')
     await chrome.tabs.create({ active: true, url })
     window.close()

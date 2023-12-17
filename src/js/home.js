@@ -19,11 +19,15 @@ async function domContentLoaded() {
     console.log('options:', options)
 }
 
-async function openOptions() {
+async function openOptions(event) {
+    console.log('openOptions', event)
+    event.preventDefault()
     chrome.runtime.openOptionsPage()
 }
 
-async function openPage() {
+async function openPage(event) {
+    console.log('openOptions', event)
+    event.preventDefault()
     await chrome.windows.create({
         type: 'detached_panel',
         url: '/html/page.html',

@@ -30,11 +30,11 @@ async function initPopup() {
     document.getElementById('homepage_url').href =
         chrome.runtime.getManifest().homepage_url
 
+    await checkPerms()
+
     const { options } = await chrome.storage.sync.get(['options'])
     console.log('options:', options)
     updateOptions(options)
-
-    await checkPerms()
 
     // const tabs = await chrome.tabs.query({ highlighted: true })
     // console.log('tabs:', tabs)
@@ -57,9 +57,7 @@ async function popupLinks(event) {
     const anchor = event.target.closest('a')
     console.log(`anchor.href: ${anchor.href}`)
     let url
-    if (anchor.href === 'homepage') {
-        url = chrome.runtime.getManifest().homepage_url
-    } else if (anchor.href.endsWith('html/options.html')) {
+    if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
     } else if (anchor.href.endsWith('html/page.html')) {
