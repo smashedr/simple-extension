@@ -15,6 +15,10 @@ document.getElementById('grant-perms').onclick = grantPermsBtn
 // document.getElementById('revoke-perms').onclick = revokePermsBtn
 document.getElementById('inject-script').onclick = injectScript
 
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
+
 /**
  * Initialize Popup
  * @function initPopup
@@ -34,6 +38,7 @@ async function initPopup() {
     // console.log('tabs:', tabs)
 
     // const views = chrome.extension.getViews()
+    // console.log('views:', views)
     // const result = views.find((item) => item.location.href.endsWith('html/home.html'))
     // console.log('result:', result)
 }

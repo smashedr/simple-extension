@@ -14,7 +14,9 @@ document
 document
     .getElementById('options-form')
     .addEventListener('submit', (e) => e.preventDefault())
-
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
 document
     .querySelectorAll('.open-oninstall')
     .forEach((el) => el.addEventListener('click', openOnInstall))
