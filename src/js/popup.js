@@ -26,8 +26,8 @@ document
 async function initPopup() {
     console.log('initPopup')
     const manifest = chrome.runtime.getManifest()
-    document.getElementById('version').textContent = manifest.version
-    document.getElementById('homepage_url').href = manifest.homepage_url
+    document.querySelector('.version').textContent = manifest.version
+    document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
 
     await checkPerms()
 

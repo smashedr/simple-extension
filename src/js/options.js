@@ -27,8 +27,8 @@ document
  */
 async function initOptions() {
     console.log('initOptions')
-    document.getElementById('version').textContent =
-        chrome.runtime.getManifest().version
+    const manifest = chrome.runtime.getManifest()
+    document.querySelector('.version').textContent = manifest.version
 
     await setShortcuts({
         mainKey: '_execute_action',
