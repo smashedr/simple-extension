@@ -8,7 +8,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=smashedr_simple-extension&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=smashedr_simple-extension)
 # Simple Extension
 
-Modern Chrome Web Extension and Firefox Browser Addon Simple Example.
+Modern Chrome Web Extension and Firefox Browser Addon Simple Extension Example.
 [README.md](README.md) copied from [link-extractor](https://github.com/cssnr/link-extractor) as an example.
 
 *   [Install](#install)
