@@ -26,8 +26,8 @@ document
 async function initPopup() {
     console.log('initPopup')
     const manifest = chrome.runtime.getManifest()
-    document.getElementById('version').textContent = manifest.version
-    document.getElementById('homepage_url').href = manifest.homepage_url
+    document.querySelector('.version').textContent = manifest.version
+    document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
 
     await checkPerms()
 
@@ -116,11 +116,7 @@ async function injectScript(event) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        func: alertFunction,
+        files: ['/js/inject.js'],
     })
     window.close()
-}
-
-function alertFunction() {
-    alert('Inject Script Success')
 }

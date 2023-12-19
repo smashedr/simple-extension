@@ -110,7 +110,7 @@ async function onCommand(command) {
  */
 function onMessage(message, sender, sendResponse) {
     console.log('onMessage: message, sender:', message, sender)
-    sendResponse('success')
+    sendResponse('Success.')
 }
 
 /**
