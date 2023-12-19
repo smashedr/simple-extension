@@ -116,11 +116,7 @@ async function injectScript(event) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     chrome.scripting.executeScript({
         target: { tabId: tab.id },
-        func: alertFunction,
+        files: ['/js/inject.js'],
     })
     window.close()
-}
-
-function alertFunction() {
-    alert('Inject Script Success')
 }
