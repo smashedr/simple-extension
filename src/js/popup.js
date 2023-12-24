@@ -1,6 +1,6 @@
 // JS for popup.html
 
-import { checkPerms, saveOptions, updateOptions } from './export.js'
+import { checkPerms, saveOptions, showToast, updateOptions } from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 
@@ -114,9 +114,14 @@ function grantPerms(event) {
 async function injectScript(event) {
     console.log('injectScript:', event)
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-    chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        files: ['/js/inject.js'],
-    })
-    window.close()
+    try {
+        await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files: ['/js/inject.js'],
+        })
+        window.close()
+    } catch (e) {
+        showToast(e.toString(), 'danger')
+        console.log(e)
+    }
 }
