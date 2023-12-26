@@ -14,19 +14,19 @@ document
  * @function domContentLoaded
  */
 async function domContentLoaded() {
-    console.log('domContentLoaded')
+    console.debug('domContentLoaded')
     const { options } = await chrome.storage.sync.get(['options'])
     console.log('options:', options)
 }
 
 async function openOptions(event) {
-    console.log('openOptions', event)
+    console.debug('openOptions:', event)
     event.preventDefault()
     chrome.runtime.openOptionsPage()
 }
 
 async function openPage(event) {
-    console.log('openOptions', event)
+    console.debug('openPage:', event)
     event.preventDefault()
     await chrome.windows.create({
         type: 'detached_panel',

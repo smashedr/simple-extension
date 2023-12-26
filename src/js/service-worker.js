@@ -30,7 +30,7 @@ async function onInstalled(details) {
             testInput: 'Default Value',
         })
     )
-    console.log('options:', options)
+    console.debug('options:', options)
     if (options.contextMenu) {
         createContextMenus()
     }
@@ -63,7 +63,7 @@ async function onInstalled(details) {
  * @param {chrome.tabs.Tab} tab
  */
 async function onClicked(ctx, tab) {
-    console.log('onClicked:', ctx, tab)
+    console.debug('onClicked:', ctx, tab)
     if (ctx.menuItemId === 'options') {
         chrome.runtime.openOptionsPage()
     } else if (ctx.menuItemId === 'openHome') {
@@ -87,7 +87,7 @@ async function onClicked(ctx, tab) {
  * @param {String} command
  */
 async function onCommand(command) {
-    console.log(`onCommand: ${command}`)
+    console.debug(`onCommand: ${command}`)
     if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await chrome.tabs.create({ active: true, url })
@@ -109,7 +109,7 @@ async function onCommand(command) {
  * @param {Function} sendResponse
  */
 function onMessage(message, sender, sendResponse) {
-    console.log('onMessage: message, sender:', message, sender)
+    console.debug('onMessage: message, sender:', message, sender)
     sendResponse('Success.')
 }
 
@@ -120,15 +120,15 @@ function onMessage(message, sender, sendResponse) {
  * @param {String} namespace
  */
 function onChanged(changes, namespace) {
-    // console.log('onChanged:', changes, namespace)
+    // console.debug('onChanged:', changes, namespace)
     for (const [key, { oldValue, newValue }] of Object.entries(changes)) {
         if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
             if (oldValue.contextMenu !== newValue.contextMenu) {
                 if (newValue?.contextMenu) {
-                    console.log('Enabled contextMenu...')
+                    console.info('Enabled contextMenu...')
                     createContextMenus()
                 } else {
-                    console.log('Disabled contextMenu...')
+                    console.info('Disabled contextMenu...')
                     chrome.contextMenus.removeAll()
                 }
             }
@@ -141,7 +141,7 @@ function onChanged(changes, namespace) {
  * @function createContextMenus
  */
 function createContextMenus() {
-    console.log('createContextMenus')
+    console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
     const ctx = ['all']
     const contexts = [

@@ -26,7 +26,7 @@ document
  * @function initOptions
  */
 async function initOptions() {
-    console.log('initOptions')
+    console.debug('initOptions')
     const manifest = chrome.runtime.getManifest()
     document.querySelector('.version').textContent = manifest.version
     document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
@@ -38,7 +38,7 @@ async function initOptions() {
     })
 
     const { options } = await chrome.storage.sync.get(['options'])
-    console.log('options:', options)
+    console.debug('options:', options)
     updateOptions(options)
     await checkPerms()
 }
@@ -50,7 +50,7 @@ async function initOptions() {
  * @param {String} namespace
  */
 function onChanged(changes, namespace) {
-    // console.log('onChanged:', changes, namespace)
+    console.debug('onChanged:', changes, namespace)
     for (const [key, { newValue }] of Object.entries(changes)) {
         if (namespace === 'sync' && key === 'options') {
             console.log('newValue:', newValue)
@@ -65,7 +65,7 @@ function onChanged(changes, namespace) {
  * @param {MouseEvent} event
  */
 async function grantPerms(event) {
-    console.log('grantPermsBtn:', event)
+    console.debug('grantPermsBtn:', event)
     await chrome.permissions.request({
         origins: ['https://*/*', 'http://*/*'],
     })
@@ -78,7 +78,7 @@ async function grantPerms(event) {
  * @param {MouseEvent} event
  */
 async function openOnInstall(event) {
-    console.log('openOnInstall', event)
+    console.debug('openOnInstall:', event)
     const url = chrome.runtime.getURL('../html/oninstall.html')
     await chrome.tabs.create({ active: true, url })
     window.close()
@@ -92,10 +92,10 @@ async function openOnInstall(event) {
 async function setShortcuts(mapping) {
     const commands = await chrome.commands.getAll()
     for (const [elementID, name] of Object.entries(mapping)) {
-        // console.log(`${elementID}: ${name}`)
+        // console.debug(`${elementID}: ${name}`)
         const command = commands.find((x) => x.name === name)
         if (command?.shortcut) {
-            console.log(`${elementID}: ${command.shortcut}`)
+            console.debug(`${elementID}: ${command.shortcut}`)
             const el = document.getElementById(elementID)
             if (el) {
                 el.textContent = command.shortcut

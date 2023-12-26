@@ -24,7 +24,7 @@ document
  * @function initPopup
  */
 async function initPopup() {
-    console.log('initPopup')
+    console.debug('initPopup')
     const manifest = chrome.runtime.getManifest()
     document.querySelector('.version').textContent = manifest.version
     document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
@@ -32,7 +32,7 @@ async function initPopup() {
     await checkPerms()
 
     const { options } = await chrome.storage.sync.get(['options'])
-    console.log('options:', options)
+    console.debug('options:', options)
     updateOptions(options)
 
     // const tabs = await chrome.tabs.query({ highlighted: true })
@@ -51,10 +51,10 @@ async function initPopup() {
  * @param {MouseEvent} event
  */
 async function popupLinks(event) {
-    console.log('popupLinks:', event)
+    console.debug('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
-    console.log(`anchor.href: ${anchor.href}`)
+    console.debug(`anchor.href: ${anchor.href}`)
     let url
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
@@ -72,7 +72,7 @@ async function popupLinks(event) {
     } else {
         url = chrome.runtime.getURL(anchor.href)
     }
-    console.log('url:', url)
+    console.debug('url:', url)
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }
@@ -83,7 +83,7 @@ async function popupLinks(event) {
  * @param {Event} event
  */
 function grantPerms(event) {
-    console.log('grantPerms:', event)
+    console.debug('grantPerms:', event)
     chrome.permissions.request({
         origins: ['https://*/*', 'http://*/*'],
     })
@@ -97,7 +97,7 @@ function grantPerms(event) {
 //  * @param {Event} event
 //  */
 // async function revokePerms(event) {
-//     console.log('revokePerms:', event)
+//     console.debug('revokePerms:', event)
 //     const permissions = await chrome.permissions.getAll()
 //     console.log('permissions:', permissions)
 //     await chrome.permissions.remove({
@@ -112,7 +112,7 @@ function grantPerms(event) {
  * @param {MouseEvent} event
  */
 async function injectScript(event) {
-    console.log('injectScript:', event)
+    console.debug('injectScript:', event)
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     try {
         await chrome.scripting.executeScript({
@@ -122,6 +122,6 @@ async function injectScript(event) {
         window.close()
     } catch (e) {
         showToast(e.toString(), 'danger')
-        console.log(e)
+        console.info(e)
     }
 }
