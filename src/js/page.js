@@ -9,13 +9,13 @@ document.getElementById('close').addEventListener('click', closePage)
  * @function domContentLoaded
  */
 async function domContentLoaded() {
-    console.log('domContentLoaded')
+    console.debug('domContentLoaded')
     const { options } = await chrome.storage.sync.get(['options'])
-    console.log('options:', options)
+    console.debug('options:', options)
 }
 
 function closePage(event) {
-    console.log('closePage', event)
+    console.debug('closePage:', event)
     event.preventDefault()
     chrome.windows.remove(chrome.windows.WINDOW_ID_CURRENT)
 }
