@@ -53,7 +53,7 @@ function onChanged(changes, namespace) {
     console.debug('onChanged:', changes, namespace)
     for (const [key, { newValue }] of Object.entries(changes)) {
         if (namespace === 'sync' && key === 'options') {
-            console.log('newValue:', newValue)
+            console.debug('newValue:', newValue)
             updateOptions(newValue)
         }
     }

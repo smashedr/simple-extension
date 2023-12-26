@@ -16,7 +16,7 @@ document
 async function domContentLoaded() {
     console.debug('domContentLoaded')
     const { options } = await chrome.storage.sync.get(['options'])
-    console.log('options:', options)
+    console.debug('options:', options)
 }
 
 async function openOptions(event) {
