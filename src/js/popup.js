@@ -35,6 +35,10 @@ async function initPopup() {
     console.debug('options:', options)
     updateOptions(options)
 
+    if (chrome.runtime.lastError) {
+        showToast(chrome.runtime.lastError.message, 'warning')
+    }
+
     // const tabs = await chrome.tabs.query({ highlighted: true })
     // console.log('tabs:', tabs)
 
