@@ -2,4 +2,9 @@
 
 body {
     width: 340px;
+    overflow-x: hidden;
+}
+
+input::placeholder {
+    text-align: center;
 }

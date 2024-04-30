@@ -1,7 +1,6 @@
 // JS for home.html
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
-
 document.getElementById('close').addEventListener('click', closePage)
 
 /**
