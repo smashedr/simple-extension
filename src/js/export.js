@@ -185,3 +185,21 @@ export function copyActiveElementText(ctx) {
         console.info('No Text to Copy.')
     }
 }
+
+/**
+ * Copy Image SRC of document.activeElement.querySelector img
+ * This is Injected because Chrome SW has no DOM and requires offscreen
+ * @function copyActiveImageSrc
+ * @param {Object} ctx
+ */
+export function copyActiveImageSrc(ctx) {
+    console.debug('copyActiveImageSrc:', ctx.srcUrl)
+    navigator.clipboard.writeText(ctx.srcUrl).then()
+    // console.debug('copyActiveElementText:', ctx, document.activeElement)
+    // const img = document.activeElement.querySelector('img')
+    // if (!img?.src) {
+    //     return console.info('Image not found or no src.', img)
+    // }
+    // console.log('img.src:', img.src)
+    // navigator.clipboard.writeText(img.src).then()
+}

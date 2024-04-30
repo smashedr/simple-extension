@@ -5,7 +5,13 @@
   "author": "Shane",
   "version": "0.0.2",
   "manifest_version": 3,
-  "permissions": ["activeTab", "contextMenus", "scripting", "storage"],
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "contextMenus",
+    "scripting",
+    "storage"
+  ],
   "host_permissions": ["*://*/*"],
   "content_scripts": [
     {

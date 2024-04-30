@@ -104,7 +104,8 @@ async function grantPerms(event) {
 
 // /**
 //  * Revoke Permissions Button Click Callback
-//  * TODO: Determine how to remove host permissions on chrome
+//  * NOTE: For many reasons Chrome will determine host_perms are required and
+//  *       will ask for them at install time and not allow them to be revoked
 //  * @function revokePerms
 //  * @param {Event} event
 //  */

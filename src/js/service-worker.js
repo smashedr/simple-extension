@@ -1,6 +1,11 @@
 // JS Background Service Worker
 
-import { checkPerms, copyActiveElementText, injectFunction } from './export.js'
+import {
+    checkPerms,
+    copyActiveElementText,
+    copyActiveImageSrc,
+    injectFunction,
+} from './export.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
@@ -72,7 +77,7 @@ async function onInstalled(details) {
  */
 async function onClicked(ctx, tab) {
     console.debug('onClicked:', ctx, tab)
-    if (ctx.menuItemId === 'options') {
+    if (ctx.menuItemId === 'openOptions') {
         chrome.runtime.openOptionsPage()
     } else if (ctx.menuItemId === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
@@ -84,9 +89,12 @@ async function onClicked(ctx, tab) {
             width: 720,
             height: 480,
         })
-    } else if (ctx.menuItemId === 'copy') {
+    } else if (ctx.menuItemId === 'copyText') {
         console.debug('injectFunction: copy')
         await injectFunction(copyActiveElementText, [ctx])
+    } else if (ctx.menuItemId === 'copySrc') {
+        console.debug('injectFunction: image')
+        await injectFunction(copyActiveImageSrc, [ctx])
     } else {
         console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
     }
@@ -156,12 +164,13 @@ function createContextMenus() {
     chrome.contextMenus.removeAll()
     const ctx = ['all']
     const contexts = [
-        [['link'], 'copy', 'normal', 'Copy Link Text to Clipboard'],
-        [['link'], 'separator-1', 'separator', 'separator'],
+        [['link'], 'copyText', 'normal', 'Copy Link Text to Clipboard'],
+        [['image'], 'copySrc', 'normal', 'Copy Image Link to Clipboard'],
+        [['image', 'link'], 'separator-1', 'separator', 'separator'],
         [ctx, 'openHome', 'normal', 'Home Page'],
         [ctx, 'showPanel', 'normal', 'Extension Panel'],
         [ctx, 'separator-2', 'separator', 'separator'],
-        [ctx, 'options', 'normal', 'Open Options'],
+        [ctx, 'openOptions', 'normal', 'Open Options'],
     ]
     contexts.forEach((context) => {
         chrome.contextMenus.create({
