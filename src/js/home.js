@@ -10,8 +10,8 @@ document
     .querySelectorAll('.open-options')
     .forEach((el) => el.addEventListener('click', openOptions))
 document
-    .querySelectorAll('.open-page')
-    .forEach((el) => el.addEventListener('click', openPage))
+    .querySelectorAll('.open-panel')
+    .forEach((el) => el.addEventListener('click', openPanel))
 
 /**
  * DOMContentLoaded
@@ -30,12 +30,12 @@ async function openOptions(event) {
     chrome.runtime.openOptionsPage()
 }
 
-async function openPage(event) {
-    console.debug('openPage:', event)
+async function openPanel(event) {
+    console.debug('openPanel:', event)
     event.preventDefault()
     await chrome.windows.create({
-        type: 'detached_panel',
-        url: '/html/page.html',
+        type: 'panel',
+        url: '/html/panel.html',
         width: 720,
         height: 480,
     })

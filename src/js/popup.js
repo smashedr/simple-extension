@@ -69,10 +69,10 @@ async function popupLinks(event) {
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor.href.endsWith('html/page.html')) {
+    } else if (anchor.href.endsWith('html/panel.html')) {
         await chrome.windows.create({
-            type: 'detached_panel',
-            url: '/html/page.html',
+            type: 'panel',
+            url: '/html/panel.html',
             width: 720,
             height: 480,
         })

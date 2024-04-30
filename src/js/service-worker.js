@@ -1,5 +1,7 @@
 // JS Background Service Worker
 
+import { checkPerms } from './export.js'
+
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
 chrome.contextMenus.onClicked.addListener(onClicked)
@@ -43,9 +45,7 @@ async function onInstalled(details) {
         createContextMenus()
     }
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        const hasPerms = await chrome.permissions.contains({
-            origins: ['https://*/*', 'http://*/*'],
-        })
+        const hasPerms = await checkPerms()
         if (hasPerms) {
             chrome.runtime.openOptionsPage()
         } else {
@@ -77,10 +77,10 @@ async function onClicked(ctx, tab) {
     } else if (ctx.menuItemId === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await chrome.tabs.create({ active: true, url })
-    } else if (ctx.menuItemId === 'showPage') {
+    } else if (ctx.menuItemId === 'showPanel') {
         await chrome.windows.create({
-            type: 'detached_panel',
-            url: '/html/page.html',
+            type: 'panel',
+            url: '/html/panel.html',
             width: 720,
             height: 480,
         })
@@ -99,10 +99,10 @@ async function onCommand(command) {
     if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await chrome.tabs.create({ active: true, url })
-    } else if (command === 'showPage') {
+    } else if (command === 'showPanel') {
         await chrome.windows.create({
-            type: 'detached_panel',
-            url: '/html/page.html',
+            type: 'panel',
+            url: '/html/panel.html',
             width: 480,
             height: 360,
         })
@@ -154,7 +154,7 @@ function createContextMenus() {
     const ctx = ['all']
     const contexts = [
         [ctx, 'openHome', 'normal', 'Home Page'],
-        [ctx, 'showPage', 'normal', 'Extension Page'],
+        [ctx, 'showPanel', 'normal', 'Extension Panel'],
         [ctx, 'separator-1', 'separator', 'separator'],
         [ctx, 'options', 'normal', 'Open Options'],
     ]
