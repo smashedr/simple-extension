@@ -1,6 +1,6 @@
 // JS Background Service Worker
 
-import { checkPerms } from './export.js'
+import { checkPerms, copyActiveElementText, injectFunction } from './export.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
@@ -84,6 +84,9 @@ async function onClicked(ctx, tab) {
             width: 720,
             height: 480,
         })
+    } else if (ctx.menuItemId === 'copy') {
+        console.debug('injectFunction: copy')
+        await injectFunction(copyActiveElementText, [ctx])
     } else {
         console.error(`Unknown ctx.menuItemId: ${ctx.menuItemId}`)
     }
@@ -153,9 +156,11 @@ function createContextMenus() {
     chrome.contextMenus.removeAll()
     const ctx = ['all']
     const contexts = [
+        [['link'], 'copy', 'normal', 'Copy Link Text to Clipboard'],
+        [['link'], 'separator-1', 'separator', 'separator'],
         [ctx, 'openHome', 'normal', 'Home Page'],
         [ctx, 'showPanel', 'normal', 'Extension Panel'],
-        [ctx, 'separator-1', 'separator', 'separator'],
+        [ctx, 'separator-2', 'separator', 'separator'],
         [ctx, 'options', 'normal', 'Open Options'],
     ]
     contexts.forEach((context) => {

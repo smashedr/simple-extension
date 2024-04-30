@@ -148,3 +148,40 @@ export function showToast(message, type = 'success') {
     element.addEventListener('mousemove', () => toast.hide())
     toast.show()
 }
+
+/**
+ * Inject Function into Current Tab with args
+ * @function injectFunction
+ * @param {Function} func
+ * @param {Array} args
+ */
+export async function injectFunction(func, args) {
+    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
+    await chrome.scripting.executeScript({
+        target: { tabId: tab.id },
+        func: func,
+        args: args,
+    })
+}
+
+/**
+ * Copy Text of ctx.linkText or from Active Element
+ * NOTE: Chrome does not support ctx.linkText
+ * @function copyActiveElementText
+ * @param {Object} ctx
+ */
+export function copyActiveElementText(ctx) {
+    console.debug('copyActiveElementText:', ctx)
+    let text =
+        ctx.linkText?.trim() ||
+        document.activeElement.innerText?.trim() ||
+        document.activeElement.title?.trim() ||
+        document.activeElement.firstElementChild?.alt?.trim() ||
+        document.activeElement.ariaLabel?.trim()
+    console.log('text:', text)
+    if (text?.length) {
+        navigator.clipboard.writeText(text).then()
+    } else {
+        console.info('No Text to Copy.')
+    }
+}
