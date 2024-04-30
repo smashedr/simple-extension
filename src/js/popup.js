@@ -3,18 +3,15 @@
 import { checkPerms, saveOptions, showToast, updateOptions } from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
-
+document.getElementById('grant-perms').addEventListener('click', grantPerms)
+// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+document.getElementById('inject-script').addEventListener('click', injectScript)
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', popupLinks))
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
-
-document.getElementById('grant-perms').addEventListener('click', grantPerms)
-// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
-document.getElementById('inject-script').addEventListener('click', injectScript)
-
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
@@ -34,6 +31,13 @@ async function initPopup() {
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     updateOptions(options)
+
+    if (chrome.runtime.lastError) {
+        showToast(chrome.runtime.lastError.message, 'warning')
+    }
+
+    // const platformInfo = await chrome.runtime.getPlatformInfo()
+    // console.log('platformInfo:', platformInfo)
 
     // const tabs = await chrome.tabs.query({ highlighted: true })
     // console.log('tabs:', tabs)

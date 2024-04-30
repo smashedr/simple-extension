@@ -1,7 +1,6 @@
 // JS for home.html
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
-
 document
     .querySelectorAll('.open-options')
     .forEach((el) => el.addEventListener('click', openOptions))

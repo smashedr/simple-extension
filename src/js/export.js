@@ -83,7 +83,7 @@ export function showToast(message, type = 'success') {
         element.classList.add(`text-bg-${type}`)
         container.appendChild(element)
         const toast = new bootstrap.Toast(element)
-        element.addEventListener('mouseover', () => toast.hide())
+        element.addEventListener('mousemove', () => toast.hide())
         toast.show()
     } else {
         console.info('Missing clone or container:', clone, container)
