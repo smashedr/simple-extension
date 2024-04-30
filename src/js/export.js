@@ -85,14 +85,17 @@ export async function saveOptions(event) {
 }
 
 /**
- * Update Options based on typeof
+ * Update Options based on type
  * @function initOptions
  * @param {Object} options
- * @param {boolean} text
  */
-export function updateOptions(options, text = false) {
+export function updateOptions(options) {
     console.debug('updateOptions:', options)
     for (let [key, value] of Object.entries(options)) {
+        if (typeof value === 'undefined') {
+            console.warn('Value undefined for key:', key)
+            continue
+        }
         if (key.startsWith('radio')) {
             key = value
             value = true
@@ -102,12 +105,10 @@ export function updateOptions(options, text = false) {
         if (!el) {
             continue
         }
-        if (text) {
+        if (el.tagName !== 'INPUT') {
             el.textContent = value.toString()
-        } else if (typeof value === 'boolean') {
+        } else if (el.type === 'checkbox') {
             el.checked = value
-        } else if (typeof value === 'object') {
-            console.debug(`Options Object for: ${key}`, value)
         } else {
             el.value = value
         }
