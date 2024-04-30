@@ -1,6 +1,12 @@
 // JS for popup.html
 
-import { checkPerms, saveOptions, showToast, updateOptions } from './export.js'
+import {
+    checkPerms,
+    requestPerms,
+    saveOptions,
+    showToast,
+    updateOptions,
+} from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
@@ -58,20 +64,23 @@ async function popupLinks(event) {
     console.debug('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
-    console.debug(`anchor.href: ${anchor.href}`)
+    console.debug(`anchor.href: ${anchor.href}`, anchor)
     let url
     if (anchor.href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor.href.endsWith('html/page.html')) {
+    } else if (anchor.href.endsWith('html/panel.html')) {
         await chrome.windows.create({
-            type: 'detached_panel',
-            url: '/html/page.html',
+            type: 'panel',
+            url: '/html/panel.html',
             width: 720,
             height: 480,
         })
         return window.close()
-    } else if (anchor.href.startsWith('http')) {
+    } else if (
+        anchor.href.startsWith('http') ||
+        anchor.href.startsWith('chrome-extension')
+    ) {
         url = anchor.href
     } else {
         url = chrome.runtime.getURL(anchor.href)
@@ -83,14 +92,13 @@ async function popupLinks(event) {
 
 /**
  * Grant Permissions Button Click Callback
+ * Firefox requires us to ignore the promise and call window.close()
  * @function grantPerms
  * @param {Event} event
  */
-function grantPerms(event) {
+async function grantPerms(event) {
     console.debug('grantPerms:', event)
-    chrome.permissions.request({
-        origins: ['https://*/*', 'http://*/*'],
-    })
+    requestPerms()
     window.close()
 }
 

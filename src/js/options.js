@@ -1,8 +1,10 @@
 // JS for options.html
 
-import { checkPerms, saveOptions, updateOptions } from './export.js'
+import { checkPerms, grantPerms, saveOptions, updateOptions } from './export.js'
 
 chrome.storage.onChanged.addListener(onChanged)
+chrome.permissions.onAdded.addListener(onAdded)
+
 document.addEventListener('DOMContentLoaded', initOptions)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document
@@ -31,7 +33,7 @@ async function initOptions() {
     await setShortcuts({
         mainKey: '_execute_action',
         openHome: 'openHome',
-        showPage: 'showPage',
+        showPanel: 'showPanel',
     })
 
     const { options } = await chrome.storage.sync.get(['options'])
@@ -49,24 +51,12 @@ async function initOptions() {
 function onChanged(changes, namespace) {
     console.debug('onChanged:', changes, namespace)
     for (const [key, { newValue }] of Object.entries(changes)) {
-        if (namespace === 'sync' && key === 'options') {
-            console.debug('newValue:', newValue)
-            updateOptions(newValue)
+        if (namespace === 'sync') {
+            if (key === 'options') {
+                updateOptions(newValue)
+            }
         }
     }
-}
-
-/**
- * Grant Permissions Click Callback
- * @function grantPerms
- * @param {MouseEvent} event
- */
-async function grantPerms(event) {
-    console.debug('grantPermsBtn:', event)
-    await chrome.permissions.request({
-        origins: ['https://*/*', 'http://*/*'],
-    })
-    await checkPerms()
 }
 
 /**
@@ -99,4 +89,13 @@ async function setShortcuts(mapping) {
             }
         }
     }
+}
+
+/**
+ * Permissions On Added Callback
+ * @param permissions
+ */
+async function onAdded(permissions) {
+    console.debug('onAdded', permissions)
+    await checkPerms()
 }
