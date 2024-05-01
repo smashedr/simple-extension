@@ -9,7 +9,7 @@ if (!window.injected) {
     }, 1)
 } else {
     setTimeout(function () {
-        alert('Script inject.js already injected!')
+        alert('Already injected script inject.js!')
     }, 1)
 }
 
