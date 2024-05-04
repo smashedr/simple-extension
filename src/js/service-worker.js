@@ -162,15 +162,14 @@ function onChanged(changes, namespace) {
 function createContextMenus() {
     console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
-    const ctx = ['all']
     const contexts = [
-        [['link'], 'copyText', 'normal', 'Copy Link Text to Clipboard'],
-        [['image'], 'copySrc', 'normal', 'Copy Image Link to Clipboard'],
-        [['image', 'link'], 'separator-1', 'separator', 'separator'],
-        [ctx, 'openHome', 'normal', 'Home Page'],
-        [ctx, 'showPanel', 'normal', 'Extension Panel'],
-        [ctx, 'separator-2', 'separator', 'separator'],
-        [ctx, 'openOptions', 'normal', 'Open Options'],
+        [['link'], 'copyText', 'normal', 'Copy Link Text'],
+        [['image', 'audio', 'video'], 'copySrc', 'normal', 'Copy Source URL'],
+        [['link', 'image', 'audio', 'video'], 's-1', 'separator', 'separator'],
+        [['all'], 'openHome', 'normal', 'Home Page'],
+        [['all'], 'showPanel', 'normal', 'Extension Panel'],
+        [['all'], 's-2', 'separator', 'separator'],
+        [['all'], 'openOptions', 'normal', 'Open Options'],
     ]
     contexts.forEach((context) => {
         chrome.contextMenus.create({
