@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="vh-100">
 <head>
     <meta charset="utf-8">
     <title>Simple Extension Panel</title>
@@ -9,18 +9,29 @@
     <link rel="stylesheet" type="text/css" href="../css/main.css">
     <script type="text/javascript" src="../js/theme.js"></script>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 
-<div class="container-fluid p-3">
+<main class="flex-grow-1 p-3">
+<div class="container-fluid">
     <div class="row">
         <div class="col-12">
             <h1>Simple Extension Panel</h1>
             <p>It may be possible, that someone, somewhere, may find some use for this panel...</p>
-            <a class="btn btn-warning float-end" role="button" id="close">
+        </div>
+    </div>
+</div>
+</main>
+
+<footer class="flex-shrink-0 p-3">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <a class="btn btn-warning float-end mt-auto" role="button" id="close">
                 Close Window <i class="fa-solid fa-circle-xmark ms-1"></i></a>
         </div>
     </div>
 </div>
+</footer>
 
 <script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
