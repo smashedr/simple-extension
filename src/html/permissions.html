@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ASN Plus</title>
+    <title>Simple Extension Permissions</title>
     <link rel="icon" href="../images/logo16.png" sizes="any">
     <link rel="stylesheet" type="text/css" href="../dist/bootstrap/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../dist/fontawesome/css/all.min.css">
@@ -19,7 +19,7 @@
     <div class="d-flex justify-content-center align-items-center">
         <img src="../images/logo48.png" class="me-2" height="48" width="48"
              alt="Simple Extension" title="Simple Extension">
-        <h1>Welcome</h1>
+        <h1>Simple Extension</h1>
     </div>
     <div class="d-none grant-perms">
         <p class="lead">To run a content script on every site, host permissions are needed.</p>
@@ -32,6 +32,11 @@
     </p>
     <a id="open-options" class="btn btn-lg btn-outline-info w-100 mb-3" role="button" href="../html/options.html">
         <i class="fa-solid fa-sliders me-1"></i> Open Options</a>
+    <div class="d-none has-perms my-1">
+        <div class="alert alert-success" role="alert">
+            Permissions Granted.
+        </div>
+    </div>
     <div class="text-center">
         <a class="link-body-emphasis text-decoration-none" target="_blank" rel="noopener"
            href="https://github.com/smashedr/simple-extension">View Source</a>
@@ -48,11 +53,11 @@
     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" id="bi-dot" viewBox="0 0 16 16">
         <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
     </svg>
-</div>
+</div> <!-- d-none -->
 
 <script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
-<script type="module" src="../js/oninstall.js"></script>
+<script type="module" src="../js/permissions.js"></script>
 
 </body>
 </html>

@@ -66,7 +66,7 @@ function onChanged(changes, namespace) {
  */
 async function openOnInstall(event) {
     console.debug('openOnInstall:', event)
-    const url = chrome.runtime.getURL('../html/oninstall.html')
+    const url = chrome.runtime.getURL('../html/permissions.html')
     await chrome.tabs.create({ active: true, url })
     window.close()
 }

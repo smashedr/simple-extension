@@ -3,7 +3,7 @@
   "description": "Simple Web Extension Example.",
   "homepage_url": "https://github.com/smashedr/simple-extension",
   "author": "Shane",
-  "version": "0.0.2",
+  "version": "0.0.1",
   "manifest_version": 3,
   "permissions": [
     "activeTab",
