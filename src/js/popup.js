@@ -90,35 +90,6 @@ async function popupLinks(event) {
 
 /**
  * Grant Permissions Button Click Callback
- * Firefox requires us to ignore the promise and call window.close()
- * @function grantPerms
- * @param {Event} event
- */
-async function grantPerms(event) {
-    console.debug('grantPerms:', event)
-    requestPerms()
-    window.close()
-}
-
-// /**
-//  * Revoke Permissions Button Click Callback
-//  * NOTE: For many reasons Chrome will determine host_perms are required and
-//  *       will ask for them at install time and not allow them to be revoked
-//  * @function revokePerms
-//  * @param {Event} event
-//  */
-// async function revokePerms(event) {
-//     console.debug('revokePerms:', event)
-//     const permissions = await chrome.permissions.getAll()
-//     console.log('permissions:', permissions)
-//     await chrome.permissions.remove({
-//         origins: permissions.origins,
-//     })
-//     window.close()
-// }
-
-/**
- * Grant Permissions Button Click Callback
  * @function injectScript
  * @param {MouseEvent} event
  */
@@ -135,4 +106,16 @@ async function injectScript(event) {
         showToast(e.toString(), 'danger')
         console.info(e)
     }
+}
+
+/**
+ * Grant Permissions Click Callback
+ * Promise from requestPerms is ignored so we can close the popup immediately
+ * @function grantPerms
+ * @param {MouseEvent} event
+ */
+export async function grantPerms(event) {
+    console.debug('grantPerms:', event)
+    requestPerms()
+    window.close()
 }

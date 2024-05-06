@@ -72,8 +72,15 @@
     <div class="d-none grant-perms my-3">
         <a id="grant-perms" class="btn btn-lg btn-success w-100 mb-2" role="button">
             <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</a>
-        <p class="text-center"><a role="button" class="open-oninstall" href="../html/permissions.html">More Information on Permissions</a></p>
+        <p class="text-center"><a role="button" class="open-permissions" href="../html/permissions.html">More Information on Permissions</a></p>
     </div>
+    <div class="d-none has-perms my-3">
+        <a id="revoke-perms" class="link-danger" role="button"
+           data-bs-toggle="tooltip" data-bs-placement="top"
+           data-bs-title="Google Chrome does not allow removing required permissions via this method.">
+            Remove Host Permissions</a>
+    </div>
+
     <hr>
     <div class="text-center">
         <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"

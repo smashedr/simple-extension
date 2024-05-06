@@ -1,12 +1,22 @@
 // JS for options.html
 
-import { checkPerms, grantPerms, saveOptions, updateOptions } from './export.js'
+import {
+    checkPerms,
+    onAdded,
+    onRemoved,
+    requestPerms,
+    revokePerms,
+    saveOptions,
+    updateOptions,
+} from './export.js'
 
 chrome.storage.onChanged.addListener(onChanged)
 chrome.permissions.onAdded.addListener(onAdded)
+chrome.permissions.onRemoved.addListener(onRemoved)
 
 document.addEventListener('DOMContentLoaded', initOptions)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
+document.getElementById('revoke-perms').addEventListener('click', revokePerms)
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -14,8 +24,8 @@ document
     .getElementById('options-form')
     .addEventListener('submit', (e) => e.preventDefault())
 document
-    .querySelectorAll('.open-oninstall')
-    .forEach((el) => el.addEventListener('click', openOnInstall))
+    .querySelectorAll('.open-permissions')
+    .forEach((el) => el.addEventListener('click', openPermissions))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
@@ -60,12 +70,12 @@ function onChanged(changes, namespace) {
 }
 
 /**
- * Open OnInstall Page Click Callback
- * @function openOnInstall
+ * Open Permissions Page Click Callback
+ * @function openPermissions
  * @param {MouseEvent} event
  */
-async function openOnInstall(event) {
-    console.debug('openOnInstall:', event)
+async function openPermissions(event) {
+    console.debug('openPermissions:', event)
     const url = chrome.runtime.getURL('../html/permissions.html')
     await chrome.tabs.create({ active: true, url })
     window.close()
@@ -92,10 +102,11 @@ async function setShortcuts(mapping) {
 }
 
 /**
- * Permissions On Added Callback
- * @param permissions
+ * Grant Permissions Click Callback
+ * @function grantPerms
+ * @param {MouseEvent} event
  */
-async function onAdded(permissions) {
-    console.debug('onAdded', permissions)
-    await checkPerms()
+export async function grantPerms(event) {
+    console.debug('grantPerms:', event)
+    await requestPerms()
 }

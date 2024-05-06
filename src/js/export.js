@@ -1,18 +1,6 @@
 // JS Exports
 
 /**
- * Grant Permissions Click Callback
- * Shared with Options and Home
- * @function grantPerms
- * @param {MouseEvent} event
- */
-export async function grantPerms(event) {
-    console.debug('grantPerms:', event)
-    await requestPerms()
-    await checkPerms()
-}
-
-/**
  * Request Host Permissions
  * @function requestPerms
  * @return {chrome.permissions.request}
@@ -47,6 +35,46 @@ export async function checkPerms() {
         hasPermsEl.forEach((el) => el.classList.add('d-none'))
     }
     return hasPerms
+}
+
+/**
+ * Revoke Permissions Click Callback
+ * NOTE: For many reasons Chrome will determine host_perms are required and
+ *       will ask for them at install time and not allow them to be revoked
+ * @function revokePerms
+ * @param {Event} event
+ */
+export async function revokePerms(event) {
+    console.debug('revokePerms:', event)
+    const permissions = await chrome.permissions.getAll()
+    console.debug('permissions:', permissions)
+    try {
+        await chrome.permissions.remove({
+            origins: permissions.origins,
+        })
+        await checkPerms()
+    } catch (e) {
+        console.log(e)
+        showToast(e.toString(), 'danger')
+    }
+}
+
+/**
+ * Permissions On Added Callback
+ * @param permissions
+ */
+export async function onAdded(permissions) {
+    console.debug('onAdded', permissions)
+    await checkPerms()
+}
+
+/**
+ * Permissions On Removed Callback
+ * @param permissions
+ */
+export async function onRemoved(permissions) {
+    console.debug('onRemoved', permissions)
+    await checkPerms()
 }
 
 /**
