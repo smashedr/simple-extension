@@ -1,11 +1,20 @@
 // JS for home.html
 
-import { checkPerms, grantPerms } from './export.js'
+import {
+    checkPerms,
+    onAdded,
+    onRemoved,
+    requestPerms,
+    revokePerms,
+} from './export.js'
 
 chrome.permissions.onAdded.addListener(onAdded)
+chrome.permissions.onAdded.addListener(onAdded)
+chrome.permissions.onRemoved.addListener(onRemoved)
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
+document.getElementById('revoke-perms').addEventListener('click', revokePerms)
 document
     .querySelectorAll('.open-options')
     .forEach((el) => el.addEventListener('click', openOptions))
@@ -42,10 +51,11 @@ async function openPanel(event) {
 }
 
 /**
- * Permissions On Added Callback
- * @param permissions
+ * Grant Permissions Click Callback
+ * @function grantPerms
+ * @param {MouseEvent} event
  */
-async function onAdded(permissions) {
-    console.info('onAdded', permissions)
-    await checkPerms()
+export async function grantPerms(event) {
+    console.debug('grantPerms:', event)
+    await requestPerms()
 }
