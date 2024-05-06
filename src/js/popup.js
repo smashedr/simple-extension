@@ -64,12 +64,13 @@ async function popupLinks(event) {
     console.debug('popupLinks:', event)
     event.preventDefault()
     const anchor = event.target.closest('a')
-    console.debug(`anchor.href: ${anchor.href}`, anchor)
+    const href = anchor.getAttribute('href').replace(/^\.+/g, '')
+    console.debug('href:', href)
     let url
-    if (anchor.href.endsWith('html/options.html')) {
+    if (href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         return window.close()
-    } else if (anchor.href.endsWith('html/panel.html')) {
+    } else if (href.endsWith('html/panel.html')) {
         await chrome.windows.create({
             type: 'panel',
             url: '/html/panel.html',
@@ -77,13 +78,10 @@ async function popupLinks(event) {
             height: 480,
         })
         return window.close()
-    } else if (
-        anchor.href.startsWith('http') ||
-        anchor.href.startsWith('chrome-extension')
-    ) {
-        url = anchor.href
+    } else if (href.startsWith('http')) {
+        url = href
     } else {
-        url = chrome.runtime.getURL(anchor.href)
+        url = chrome.runtime.getURL(href)
     }
     console.debug('url:', url)
     await chrome.tabs.create({ active: true, url })

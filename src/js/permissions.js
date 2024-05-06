@@ -1,4 +1,4 @@
-// JS for oninstall.html
+// JS for permissions.html
 
 import { checkPerms, requestPerms } from './export.js'
 

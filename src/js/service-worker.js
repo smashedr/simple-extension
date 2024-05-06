@@ -54,7 +54,7 @@ async function onInstalled(details) {
         if (hasPerms) {
             chrome.runtime.openOptionsPage()
         } else {
-            const url = chrome.runtime.getURL('/html/oninstall.html')
+            const url = chrome.runtime.getURL('/html/permissions.html')
             await chrome.tabs.create({ active: true, url })
         }
     } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
