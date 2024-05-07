@@ -21,6 +21,9 @@ document
 document
     .querySelectorAll('.open-panel')
     .forEach((el) => el.addEventListener('click', openPanel))
+document
+    .querySelectorAll('[data-bs-toggle="tooltip"]')
+    .forEach((el) => new bootstrap.Tooltip(el))
 
 /**
  * DOMContentLoaded

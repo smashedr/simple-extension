@@ -84,6 +84,15 @@ async function popupLinks(event) {
         url = chrome.runtime.getURL(href)
     }
     console.debug('url:', url)
+    const tabs = await chrome.tabs.query({ currentWindow: true })
+    console.log(tabs)
+    for (const tab of tabs) {
+        if (tab.url === url) {
+            console.debug('tab:', tab)
+            await chrome.tabs.update(tab.id, { active: true })
+            return window.close()
+        }
+    }
     await chrome.tabs.create({ active: true, url })
     return window.close()
 }
