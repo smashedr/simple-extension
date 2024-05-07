@@ -50,6 +50,10 @@ async function initOptions() {
     console.debug('options:', options)
     updateOptions(options)
     await checkPerms()
+
+    if (chrome.runtime.lastError) {
+        showToast(chrome.runtime.lastError.message, 'warning')
+    }
 }
 
 /**

@@ -157,6 +157,29 @@ function hideShowElement(selector, show, speed = 'fast') {
 }
 
 /**
+ * Activate or Open Tab from URL
+ * @function activateOrOpen
+ * @param {String} url
+ * @param {Boolean} [open]
+ * @return {Boolean}
+ */
+export async function activateOrOpen(url, open = true) {
+    console.debug('activateOrOpen:', url)
+    const tabs = await chrome.tabs.query({ currentWindow: true })
+    // console.debug('tabs:', tabs)
+    for (const tab of tabs) {
+        if (tab.url === url) {
+            console.debug('tab:', tab)
+            await chrome.tabs.update(tab.id, { active: true })
+            return
+        }
+    }
+    if (open) {
+        await chrome.tabs.create({ active: true, url })
+    }
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message

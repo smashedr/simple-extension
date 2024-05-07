@@ -15,6 +15,8 @@ chrome.permissions.onRemoved.addListener(onRemoved)
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+
+// TODO: Create Link Handler Similar to popupLinks for Extension Pages
 document
     .querySelectorAll('.open-options')
     .forEach((el) => el.addEventListener('click', openOptions))
@@ -34,6 +36,10 @@ async function domContentLoaded() {
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     await checkPerms()
+
+    if (chrome.runtime.lastError) {
+        showToast(chrome.runtime.lastError.message, 'warning')
+    }
 }
 
 async function openOptions(event) {
