@@ -1,6 +1,7 @@
 // JS Background Service Worker
 
 import {
+    activateOrOpen,
     checkPerms,
     copyActiveElementText,
     copyActiveImageSrc,
@@ -81,7 +82,7 @@ async function onClicked(ctx, tab) {
         chrome.runtime.openOptionsPage()
     } else if (ctx.menuItemId === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
-        await chrome.tabs.create({ active: true, url })
+        await activateOrOpen(url)
     } else if (ctx.menuItemId === 'showPanel') {
         await chrome.windows.create({
             type: 'panel',
@@ -109,7 +110,7 @@ async function onCommand(command) {
     console.debug(`onCommand: ${command}`)
     if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
-        await chrome.tabs.create({ active: true, url })
+        await activateOrOpen(url)
     } else if (command === 'showPanel') {
         await chrome.windows.create({
             type: 'panel',

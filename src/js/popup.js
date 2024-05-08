@@ -2,6 +2,7 @@
 
 import {
     checkPerms,
+    linkClick,
     requestPerms,
     saveOptions,
     showToast,
@@ -14,7 +15,7 @@ document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('inject-script').addEventListener('click', injectScript)
 document
     .querySelectorAll('a[href]')
-    .forEach((el) => el.addEventListener('click', popupLinks))
+    .forEach((el) => el.addEventListener('click', linkClick))
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -52,49 +53,6 @@ async function initPopup() {
     // console.log('views:', views)
     // const result = views.find((item) => item.location.href.endsWith('html/home.html'))
     // console.log('result:', result)
-}
-
-/**
- * Popup Links Click Callback
- * Firefox requires a call to window.close()
- * @function popupLinks
- * @param {MouseEvent} event
- */
-async function popupLinks(event) {
-    console.debug('popupLinks:', event)
-    event.preventDefault()
-    const anchor = event.target.closest('a')
-    const href = anchor.getAttribute('href').replace(/^\.+/g, '')
-    console.debug('href:', href)
-    let url
-    if (href.endsWith('html/options.html')) {
-        chrome.runtime.openOptionsPage()
-        return window.close()
-    } else if (href.endsWith('html/panel.html')) {
-        await chrome.windows.create({
-            type: 'panel',
-            url: '/html/panel.html',
-            width: 720,
-            height: 480,
-        })
-        return window.close()
-    } else if (href.startsWith('http')) {
-        url = href
-    } else {
-        url = chrome.runtime.getURL(href)
-    }
-    console.debug('url:', url)
-    const tabs = await chrome.tabs.query({ currentWindow: true })
-    console.log(tabs)
-    for (const tab of tabs) {
-        if (tab.url === url) {
-            console.debug('tab:', tab)
-            await chrome.tabs.update(tab.id, { active: true })
-            return window.close()
-        }
-    }
-    await chrome.tabs.create({ active: true, url })
-    return window.close()
 }
 
 /**

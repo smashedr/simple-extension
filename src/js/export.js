@@ -157,6 +157,67 @@ function hideShowElement(selector, show, speed = 'fast') {
 }
 
 /**
+ * Link Click Callback
+ * Firefox requires a call to window.close()
+ * @function linkClick
+ * @param {MouseEvent} event
+ */
+export async function linkClick(event) {
+    console.debug('linkClick:', event)
+    event.preventDefault()
+    const anchor = event.target.closest('a')
+    const href = anchor.getAttribute('href').replace(/^\.+/g, '')
+    console.debug('href:', href)
+    const close = !!anchor.dataset?.close
+    console.debug('close:', close)
+    let url
+    if (href.endsWith('html/options.html')) {
+        chrome.runtime.openOptionsPage()
+        if (typeof anchor.dataset?.close !== 'undefined') window.close()
+        return
+    } else if (href.endsWith('html/panel.html')) {
+        await chrome.windows.create({
+            type: 'panel',
+            url: '/html/panel.html',
+            width: 720,
+            height: 480,
+        })
+        if (typeof anchor.dataset?.close !== 'undefined') window.close()
+        return
+    } else if (href.startsWith('http')) {
+        url = href
+    } else {
+        url = chrome.runtime.getURL(href)
+    }
+    console.debug('url:', url)
+    await activateOrOpen(url)
+    if (typeof anchor.dataset?.close !== 'undefined') window.close()
+}
+
+/**
+ * Activate or Open Tab from URL
+ * @function activateOrOpen
+ * @param {String} url
+ * @param {Boolean} [open]
+ * @return {Boolean}
+ */
+export async function activateOrOpen(url, open = true) {
+    console.debug('activateOrOpen:', url)
+    const tabs = await chrome.tabs.query({ currentWindow: true })
+    // console.debug('tabs:', tabs)
+    for (const tab of tabs) {
+        if (tab.url === url) {
+            console.debug('tab:', tab)
+            await chrome.tabs.update(tab.id, { active: true })
+            return
+        }
+    }
+    if (open) {
+        await chrome.tabs.create({ active: true, url })
+    }
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message

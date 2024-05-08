@@ -2,6 +2,7 @@
 
 import {
     checkPerms,
+    linkClick,
     onAdded,
     onRemoved,
     requestPerms,
@@ -17,15 +18,16 @@ chrome.permissions.onRemoved.addListener(onRemoved)
 document.addEventListener('DOMContentLoaded', initOptions)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+
+document
+    .querySelectorAll('a[href]')
+    .forEach((el) => el.addEventListener('click', linkClick))
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 document
     .getElementById('options-form')
     .addEventListener('submit', (e) => e.preventDefault())
-document
-    .querySelectorAll('.open-permissions')
-    .forEach((el) => el.addEventListener('click', openPermissions))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
@@ -67,18 +69,6 @@ function onChanged(changes, namespace) {
             }
         }
     }
-}
-
-/**
- * Open Permissions Page Click Callback
- * @function openPermissions
- * @param {MouseEvent} event
- */
-async function openPermissions(event) {
-    console.debug('openPermissions:', event)
-    const url = chrome.runtime.getURL('../html/permissions.html')
-    await chrome.tabs.create({ active: true, url })
-    window.close()
 }
 
 /**

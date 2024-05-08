@@ -2,6 +2,7 @@
 
 import {
     checkPerms,
+    linkClick,
     onAdded,
     onRemoved,
     requestPerms,
@@ -15,12 +16,10 @@ chrome.permissions.onRemoved.addListener(onRemoved)
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+
 document
-    .querySelectorAll('.open-options')
-    .forEach((el) => el.addEventListener('click', openOptions))
-document
-    .querySelectorAll('.open-panel')
-    .forEach((el) => el.addEventListener('click', openPanel))
+    .querySelectorAll('a[href]')
+    .forEach((el) => el.addEventListener('click', linkClick))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
