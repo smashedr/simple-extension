@@ -86,11 +86,7 @@ async function popupLinks(event) {
     }
     console.debug('url:', url)
     await activateOrOpen(url)
-    return window.close()
-
-    if (chrome.runtime.lastError) {
-        showToast(chrome.runtime.lastError.message, 'warning')
-    }
+    window.close()
 }
 
 /**
