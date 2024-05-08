@@ -170,8 +170,6 @@ export async function linkClick(event, close = false) {
     const anchor = event.target.closest('a')
     const href = anchor.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
-    // const close = !!anchor.dataset?.close
-    // console.debug('close:', close)
     let url
     if (href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
