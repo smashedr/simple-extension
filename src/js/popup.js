@@ -15,7 +15,9 @@ document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('inject-script').addEventListener('click', injectScript)
 document
     .querySelectorAll('a[href]')
-    .forEach((el) => el.addEventListener('click', linkClick))
+    .forEach((el) =>
+        el.addEventListener('click', (event) => linkClick(event, true))
+    )
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))

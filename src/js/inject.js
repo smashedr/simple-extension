@@ -14,7 +14,7 @@ if (!window.injected) {
 }
 
 // Run some good code
-console.log('Injected: inject.js')
+console.info('INJECTED: content-script.js')
 
 // Use function from content-script.js
 console.log(contentScriptFunction())

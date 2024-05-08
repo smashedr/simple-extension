@@ -161,19 +161,19 @@ function hideShowElement(selector, show, speed = 'fast') {
  * Firefox requires a call to window.close()
  * @function linkClick
  * @param {MouseEvent} event
+ * @param {Boolean} close
  */
-export async function linkClick(event) {
+export async function linkClick(event, close = false) {
     console.debug('linkClick:', event)
+    console.debug('close:', close)
     event.preventDefault()
     const anchor = event.target.closest('a')
     const href = anchor.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
-    const close = !!anchor.dataset?.close
-    console.debug('close:', close)
     let url
     if (href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
-        if (typeof anchor.dataset?.close !== 'undefined') window.close()
+        if (close) window.close()
         return
     } else if (href.endsWith('html/panel.html')) {
         await chrome.windows.create({
@@ -182,7 +182,7 @@ export async function linkClick(event) {
             width: 720,
             height: 480,
         })
-        if (typeof anchor.dataset?.close !== 'undefined') window.close()
+        if (close) window.close()
         return
     } else if (href.startsWith('http')) {
         url = href
@@ -191,7 +191,7 @@ export async function linkClick(event) {
     }
     console.debug('url:', url)
     await activateOrOpen(url)
-    if (typeof anchor.dataset?.close !== 'undefined') window.close()
+    if (close) window.close()
 }
 
 /**
