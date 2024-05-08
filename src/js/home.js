@@ -2,6 +2,7 @@
 
 import {
     checkPerms,
+    linkClick,
     onAdded,
     onRemoved,
     requestPerms,
@@ -16,13 +17,9 @@ document.addEventListener('DOMContentLoaded', domContentLoaded)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('revoke-perms').addEventListener('click', revokePerms)
 
-// TODO: Create Link Handler Similar to popupLinks for Extension Pages
 document
-    .querySelectorAll('.open-options')
-    .forEach((el) => el.addEventListener('click', openOptions))
-document
-    .querySelectorAll('.open-panel')
-    .forEach((el) => el.addEventListener('click', openPanel))
+    .querySelectorAll('a[href]')
+    .forEach((el) => el.addEventListener('click', linkClick))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
@@ -36,10 +33,6 @@ async function domContentLoaded() {
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     await checkPerms()
-
-    if (chrome.runtime.lastError) {
-        showToast(chrome.runtime.lastError.message, 'warning')
-    }
 }
 
 async function openOptions(event) {

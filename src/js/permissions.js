@@ -1,13 +1,16 @@
 // JS for permissions.html
 
-import { checkPerms, onRemoved, requestPerms } from './export.js'
+import { checkPerms, linkClick, onRemoved, requestPerms } from './export.js'
 
 chrome.permissions.onAdded.addListener(onAdded)
 chrome.permissions.onRemoved.addListener(onRemoved)
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document.getElementById('grant-perms').addEventListener('click', grantPerms)
-document.getElementById('open-options').addEventListener('click', openOptions)
+
+document
+    .querySelectorAll('a[href]')
+    .forEach((el) => el.addEventListener('click', linkClick))
 
 /**
  * DOMContentLoaded
@@ -16,18 +19,6 @@ document.getElementById('open-options').addEventListener('click', openOptions)
 async function domContentLoaded() {
     console.debug('domContentLoaded')
     await checkPerms()
-}
-
-/**
- * Open Options Click Callback
- * @function openOptions
- * @param {MouseEvent} event
- */
-function openOptions(event) {
-    console.debug('openOptions:', event)
-    event.preventDefault()
-    chrome.runtime.openOptionsPage()
-    window.close()
 }
 
 /**
