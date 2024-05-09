@@ -39,6 +39,7 @@ async function onStartup() {
 async function onInstalled(details) {
     console.log('onInstalled:', details)
     const githubURL = 'https://github.com/smashedr/simple-extension'
+    // const uninstallURL = new URL('https://link-extractor.cssnr.com/uninstall/')
     const options = await Promise.resolve(
         setDefaultOptions({
             contextMenu: true,
@@ -50,6 +51,7 @@ async function onInstalled(details) {
     if (options.contextMenu) {
         createContextMenus()
     }
+    const manifest = chrome.runtime.getManifest()
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
         const hasPerms = await checkPerms()
         if (hasPerms) {
@@ -60,13 +62,15 @@ async function onInstalled(details) {
         }
     } else if (details.reason === chrome.runtime.OnInstalledReason.UPDATE) {
         if (options.showUpdate) {
-            const manifest = chrome.runtime.getManifest()
             if (manifest.version !== details.previousVersion) {
                 const url = `${githubURL}/releases/tag/${manifest.version}`
                 await chrome.tabs.create({ active: false, url })
             }
         }
     }
+    // uninstallURL.searchParams.append('version', manifest.version)
+    // console.log('uninstallURL:', uninstallURL.href)
+    // await chrome.runtime.setUninstallURL(uninstallURL.href)
     await chrome.runtime.setUninstallURL(`${githubURL}/issues`)
 }
 

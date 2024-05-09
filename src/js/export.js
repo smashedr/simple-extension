@@ -160,8 +160,8 @@ function hideShowElement(selector, show, speed = 'fast') {
  * Link Click Callback
  * Firefox requires a call to window.close()
  * @function linkClick
- * @param {MouseEvent} event
- * @param {Boolean} close
+ * @param {Event} event
+ * @param {Boolean} [close]
  */
 export async function linkClick(event, close = false) {
     console.debug('linkClick:', event)
