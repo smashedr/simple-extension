@@ -6,6 +6,7 @@ import {
     requestPerms,
     saveOptions,
     showToast,
+    updateManifest,
     updateOptions,
 } from './export.js'
 
@@ -31,11 +32,7 @@ document
  */
 async function initPopup() {
     console.debug('initPopup')
-    const manifest = chrome.runtime.getManifest()
-    document.querySelector('.version').textContent = manifest.version
-    document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
-
-    await checkPerms()
+    updateManifest()
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
@@ -44,6 +41,8 @@ async function initPopup() {
     if (chrome.runtime.lastError) {
         showToast(chrome.runtime.lastError.message, 'warning')
     }
+
+    await checkPerms()
 
     // const platformInfo = await chrome.runtime.getPlatformInfo()
     // console.log('platformInfo:', platformInfo)

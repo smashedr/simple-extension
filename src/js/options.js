@@ -8,6 +8,7 @@ import {
     requestPerms,
     revokePerms,
     saveOptions,
+    updateManifest,
     updateOptions,
 } from './export.js'
 
@@ -38,9 +39,7 @@ document
  */
 async function initOptions() {
     console.debug('initOptions')
-    const manifest = chrome.runtime.getManifest()
-    document.querySelector('.version').textContent = manifest.version
-    document.querySelector('[href="homepage_url"]').href = manifest.homepage_url
+    updateManifest()
 
     await setShortcuts({
         mainKey: '_execute_action',
@@ -51,6 +50,7 @@ async function initOptions() {
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     updateOptions(options)
+
     await checkPerms()
 }
 
