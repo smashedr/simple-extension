@@ -46,6 +46,7 @@ async function initOptions() {
         openHome: 'openHome',
         showPanel: 'showPanel',
     })
+    // await setShortcuts('#keyboard-shortcuts')
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
@@ -72,6 +73,16 @@ function onChanged(changes, namespace) {
 }
 
 /**
+ * Grant Permissions Click Callback
+ * @function grantPerms
+ * @param {MouseEvent} event
+ */
+export async function grantPerms(event) {
+    console.debug('grantPerms:', event)
+    await requestPerms()
+}
+
+/**
  * Set Keyboard Shortcuts
  * @function setShortcuts
  * @param {Object} mapping { elementID: name }
@@ -91,12 +102,21 @@ async function setShortcuts(mapping) {
     }
 }
 
-/**
- * Grant Permissions Click Callback
- * @function grantPerms
- * @param {MouseEvent} event
- */
-export async function grantPerms(event) {
-    console.debug('grantPerms:', event)
-    await requestPerms()
-}
+// /**
+//  * Set Keyboard Shortcuts
+//  * @function setShortcuts
+//  * @param {String} selector
+//  */
+// async function setShortcuts(selector) {
+//     const table = document.querySelector(selector)
+//     console.debug('table:', table)
+//     const commands = await chrome.commands.getAll()
+//     const source = table.querySelector('tfoot > tr')
+//     for (const command of commands) {
+//         console.debug('command:', command)
+//         const row = source.cloneNode(true)
+//         row.querySelector('.description').textContent = command.description
+//         row.querySelector('kbd').textContent = command.shortcut
+//         table.appendChild(row)
+//     }
+// }
