@@ -39,20 +39,14 @@ document
  */
 async function initOptions() {
     console.debug('initOptions')
-    updateManifest()
 
-    await setShortcuts({
-        mainKey: '_execute_action',
-        openHome: 'openHome',
-        showPanel: 'showPanel',
-    })
-    // await setShortcuts('#keyboard-shortcuts')
+    updateManifest()
+    await setShortcuts()
+    await checkPerms()
 
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     updateOptions(options)
-
-    await checkPerms()
 }
 
 /**
@@ -85,38 +79,17 @@ export async function grantPerms(event) {
 /**
  * Set Keyboard Shortcuts
  * @function setShortcuts
- * @param {Object} mapping { elementID: name }
+ * @param {String} selector
  */
-async function setShortcuts(mapping) {
+async function setShortcuts(selector = '#keyboard-shortcuts') {
+    const tbody = document.querySelector(selector).querySelector('tbody')
     const commands = await chrome.commands.getAll()
-    for (const [elementID, name] of Object.entries(mapping)) {
-        // console.debug(`${elementID}: ${name}`)
-        const command = commands.find((x) => x.name === name)
-        if (command?.shortcut) {
-            console.debug(`${elementID}: ${command.shortcut}`)
-            const el = document.getElementById(elementID)
-            if (el) {
-                el.textContent = command.shortcut
-            }
-        }
+    const source = tbody.querySelector('tr.d-none').cloneNode(true)
+    source.classList.remove('d-none')
+    for (const command of commands) {
+        const row = source.cloneNode(true)
+        row.querySelector('.description').textContent = command.description
+        row.querySelector('kbd').textContent = command.shortcut || 'Not Set'
+        tbody.appendChild(row)
     }
 }
-
-// /**
-//  * Set Keyboard Shortcuts
-//  * @function setShortcuts
-//  * @param {String} selector
-//  */
-// async function setShortcuts(selector) {
-//     const table = document.querySelector(selector)
-//     console.debug('table:', table)
-//     const commands = await chrome.commands.getAll()
-//     const source = table.querySelector('tfoot > tr')
-//     for (const command of commands) {
-//         console.debug('command:', command)
-//         const row = source.cloneNode(true)
-//         row.querySelector('.description').textContent = command.description
-//         row.querySelector('kbd').textContent = command.shortcut
-//         table.appendChild(row)
-//     }
-// }
