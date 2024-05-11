@@ -2,8 +2,8 @@
 
 import {
     checkPerms,
+    grantPerms,
     linkClick,
-    requestPerms,
     saveOptions,
     showToast,
     updateManifest,
@@ -11,14 +11,15 @@ import {
 } from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
-document.getElementById('grant-perms').addEventListener('click', grantPerms)
-// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
 document.getElementById('inject-script').addEventListener('click', injectScript)
+// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+
+document
+    .getElementById('grant-perms')
+    .addEventListener('click', (e) => grantPerms(e, true))
 document
     .querySelectorAll('a[href]')
-    .forEach((el) =>
-        el.addEventListener('click', (event) => linkClick(event, true))
-    )
+    .forEach((el) => el.addEventListener('click', (e) => linkClick(e, true)))
 document
     .querySelectorAll('#options-form input')
     .forEach((el) => el.addEventListener('change', saveOptions))
@@ -74,16 +75,4 @@ async function injectScript(event) {
         showToast(e.toString(), 'danger')
         console.info(e)
     }
-}
-
-/**
- * Grant Permissions Click Callback
- * Promise from requestPerms is ignored so we can close the popup immediately
- * @function grantPerms
- * @param {MouseEvent} event
- */
-export async function grantPerms(event) {
-    console.debug('grantPerms:', event)
-    requestPerms()
-    window.close()
 }

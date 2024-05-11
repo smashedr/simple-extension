@@ -141,17 +141,6 @@ export async function activateOrOpen(url, open = true) {
 }
 
 /**
- * Request Host Permissions
- * @function requestPerms
- * @return {chrome.permissions.request}
- */
-export async function requestPerms() {
-    return await chrome.permissions.request({
-        origins: ['*://*/*'],
-    })
-}
-
-/**
  * Check Host Permissions
  * @function checkPerms
  * @return {Boolean}
@@ -175,6 +164,32 @@ export async function checkPerms() {
         hasPermsEl.forEach((el) => el.classList.add('d-none'))
     }
     return hasPerms
+}
+
+/**
+ * Grant Permissions Click Callback
+ * Promise from requestPerms is ignored so we can close the popup immediately
+ * @function grantPerms
+ * @param {MouseEvent} event
+ * @param {Boolean} [close]
+ */
+export async function grantPerms(event, close = false) {
+    console.debug('grantPerms:', event)
+    requestPerms()
+    if (close) {
+        window.close()
+    }
+}
+
+/**
+ * Request Host Permissions
+ * @function requestPerms
+ * @return {chrome.permissions.request}
+ */
+export async function requestPerms() {
+    return await chrome.permissions.request({
+        origins: ['*://*/*'],
+    })
 }
 
 /**
