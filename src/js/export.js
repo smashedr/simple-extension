@@ -239,6 +239,16 @@ export function showToast(message, type = 'success') {
     toast.show()
 }
 
+export function updateManifest() {
+    const manifest = chrome.runtime.getManifest()
+    document
+        .querySelectorAll('.version')
+        .forEach((el) => (el.textContent = manifest.version))
+    document
+        .querySelectorAll('[href="homepage_url"]')
+        .forEach((el) => (el.href = manifest.homepage_url))
+}
+
 /**
  * Inject Function into Current Tab with args
  * @function injectFunction

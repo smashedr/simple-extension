@@ -1,5 +1,7 @@
 // JS for links.html and options.html
 
+import { showToast } from './export.js'
+
 if (typeof ClipboardJS !== 'undefined') {
     const clipboard = new ClipboardJS('.clip')
     clipboard.on('success', function (event) {
