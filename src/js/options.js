@@ -2,10 +2,10 @@
 
 import {
     checkPerms,
+    grantPerms,
     linkClick,
     onAdded,
     onRemoved,
-    requestPerms,
     revokePerms,
     saveOptions,
     updateManifest,
@@ -17,8 +17,8 @@ chrome.permissions.onAdded.addListener(onAdded)
 chrome.permissions.onRemoved.addListener(onRemoved)
 
 document.addEventListener('DOMContentLoaded', initOptions)
-document.getElementById('grant-perms').addEventListener('click', grantPerms)
 document.getElementById('revoke-perms').addEventListener('click', revokePerms)
+document.getElementById('grant-perms').addEventListener('click', grantPerms)
 
 document
     .querySelectorAll('a[href]')
@@ -64,16 +64,6 @@ function onChanged(changes, namespace) {
             }
         }
     }
-}
-
-/**
- * Grant Permissions Click Callback
- * @function grantPerms
- * @param {MouseEvent} event
- */
-export async function grantPerms(event) {
-    console.debug('grantPerms:', event)
-    await requestPerms()
 }
 
 /**

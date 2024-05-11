@@ -1,83 +1,6 @@
 // JS Exports
 
 /**
- * Request Host Permissions
- * @function requestPerms
- * @return {chrome.permissions.request}
- */
-export async function requestPerms() {
-    return await chrome.permissions.request({
-        origins: ['*://*/*'],
-    })
-}
-
-/**
- * Check Host Permissions
- * @function checkPerms
- * @return {Boolean}
- */
-export async function checkPerms() {
-    const hasPerms = await chrome.permissions.contains({
-        origins: ['*://*/*'],
-    })
-    console.debug('checkPerms:', hasPerms)
-    // Firefox still uses DOM Based Background Scripts
-    if (typeof document === 'undefined') {
-        return hasPerms
-    }
-    const hasPermsEl = document.querySelectorAll('.has-perms')
-    const grantPermsEl = document.querySelectorAll('.grant-perms')
-    if (hasPerms) {
-        hasPermsEl.forEach((el) => el.classList.remove('d-none'))
-        grantPermsEl.forEach((el) => el.classList.add('d-none'))
-    } else {
-        grantPermsEl.forEach((el) => el.classList.remove('d-none'))
-        hasPermsEl.forEach((el) => el.classList.add('d-none'))
-    }
-    return hasPerms
-}
-
-/**
- * Revoke Permissions Click Callback
- * NOTE: For many reasons Chrome will determine host_perms are required and
- *       will ask for them at install time and not allow them to be revoked
- * @function revokePerms
- * @param {Event} event
- */
-export async function revokePerms(event) {
-    console.debug('revokePerms:', event)
-    const permissions = await chrome.permissions.getAll()
-    console.debug('permissions:', permissions)
-    try {
-        await chrome.permissions.remove({
-            origins: permissions.origins,
-        })
-        await checkPerms()
-    } catch (e) {
-        console.log(e)
-        showToast(e.toString(), 'danger')
-    }
-}
-
-/**
- * Permissions On Added Callback
- * @param permissions
- */
-export async function onAdded(permissions) {
-    console.debug('onAdded', permissions)
-    await checkPerms()
-}
-
-/**
- * Permissions On Removed Callback
- * @param permissions
- */
-export async function onRemoved(permissions) {
-    console.debug('onRemoved', permissions)
-    await checkPerms()
-}
-
-/**
  * Save Options Callback
  * @function saveOptions
  * @param {InputEvent} event
@@ -218,6 +141,98 @@ export async function activateOrOpen(url, open = true) {
 }
 
 /**
+ * Check Host Permissions
+ * @function checkPerms
+ * @return {Boolean}
+ */
+export async function checkPerms() {
+    const hasPerms = await chrome.permissions.contains({
+        origins: ['*://*/*'],
+    })
+    console.debug('checkPerms:', hasPerms)
+    // Firefox still uses DOM Based Background Scripts
+    if (typeof document === 'undefined') {
+        return hasPerms
+    }
+    const hasPermsEl = document.querySelectorAll('.has-perms')
+    const grantPermsEl = document.querySelectorAll('.grant-perms')
+    if (hasPerms) {
+        hasPermsEl.forEach((el) => el.classList.remove('d-none'))
+        grantPermsEl.forEach((el) => el.classList.add('d-none'))
+    } else {
+        grantPermsEl.forEach((el) => el.classList.remove('d-none'))
+        hasPermsEl.forEach((el) => el.classList.add('d-none'))
+    }
+    return hasPerms
+}
+
+/**
+ * Grant Permissions Click Callback
+ * Promise from requestPerms is ignored so we can close the popup immediately
+ * @function grantPerms
+ * @param {MouseEvent} event
+ * @param {Boolean} [close]
+ */
+export async function grantPerms(event, close = false) {
+    console.debug('grantPerms:', event)
+    requestPerms()
+    if (close) {
+        window.close()
+    }
+}
+
+/**
+ * Request Host Permissions
+ * @function requestPerms
+ * @return {chrome.permissions.request}
+ */
+export async function requestPerms() {
+    return await chrome.permissions.request({
+        origins: ['*://*/*'],
+    })
+}
+
+/**
+ * Revoke Permissions Click Callback
+ * NOTE: For many reasons Chrome will determine host_perms are required and
+ *       will ask for them at install time and not allow them to be revoked
+ * @function revokePerms
+ * @param {Event} event
+ */
+export async function revokePerms(event) {
+    console.debug('revokePerms:', event)
+    const permissions = await chrome.permissions.getAll()
+    console.debug('permissions:', permissions)
+    try {
+        await chrome.permissions.remove({
+            origins: permissions.origins,
+        })
+        await checkPerms()
+    } catch (e) {
+        console.log(e)
+        showToast(e.toString(), 'danger')
+    }
+}
+
+/**
+ * Permissions On Added Callback
+ * @param permissions
+ */
+export async function onAdded(permissions) {
+    console.debug('onAdded', permissions)
+    await checkPerms()
+}
+
+/**
+ * Permissions On Removed Callback
+ * @param permissions
+ */
+export async function onRemoved(permissions) {
+    console.debug('onRemoved', permissions)
+    await checkPerms()
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message
@@ -225,7 +240,7 @@ export async function activateOrOpen(url, open = true) {
  */
 export function showToast(message, type = 'success') {
     console.debug(`showToast: ${type}: ${message}`)
-    const clone = document.querySelector('.d-none .toast')
+    const clone = document.querySelector('.d-none > .toast')
     const container = document.getElementById('toast-container')
     if (!clone || !container) {
         return console.warn('Missing clone or container:', clone, container)

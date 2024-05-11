@@ -2,10 +2,10 @@
 
 import {
     checkPerms,
+    grantPerms,
     linkClick,
     onAdded,
     onRemoved,
-    requestPerms,
     revokePerms,
 } from './export.js'
 
@@ -33,31 +33,4 @@ async function domContentLoaded() {
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     await checkPerms()
-}
-
-async function openOptions(event) {
-    console.debug('openOptions:', event)
-    event.preventDefault()
-    chrome.runtime.openOptionsPage()
-}
-
-async function openPanel(event) {
-    console.debug('openPanel:', event)
-    event.preventDefault()
-    await chrome.windows.create({
-        type: 'panel',
-        url: '/html/panel.html',
-        width: 720,
-        height: 480,
-    })
-}
-
-/**
- * Grant Permissions Click Callback
- * @function grantPerms
- * @param {MouseEvent} event
- */
-export async function grantPerms(event) {
-    console.debug('grantPerms:', event)
-    await requestPerms()
 }
