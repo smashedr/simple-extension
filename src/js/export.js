@@ -283,7 +283,7 @@ export async function injectFunction(func, args) {
  * Copy Text of ctx.linkText or from Active Element
  * NOTE: Chrome does not support ctx.linkText
  * @function copyActiveElementText
- * @param {Object} ctx
+ * @param {OnClickData} ctx
  */
 export function copyActiveElementText(ctx) {
     console.debug('copyActiveElementText:', ctx)
@@ -305,7 +305,7 @@ export function copyActiveElementText(ctx) {
  * Copy Image SRC of document.activeElement.querySelector img
  * This is Injected because Chrome SW has no DOM and requires offscreen
  * @function copyActiveImageSrc
- * @param {Object} ctx
+ * @param {OnClickData} ctx
  */
 export function copyActiveImageSrc(ctx) {
     console.debug('copyActiveImageSrc:', ctx.srcUrl)
