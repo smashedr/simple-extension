@@ -10,13 +10,15 @@ import {
 } from './export.js'
 
 chrome.permissions.onAdded.addListener(onAdded)
-chrome.permissions.onAdded.addListener(onAdded)
 chrome.permissions.onRemoved.addListener(onRemoved)
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
-document.getElementById('grant-perms').addEventListener('click', grantPerms)
-document.getElementById('revoke-perms').addEventListener('click', revokePerms)
-
+document
+    .querySelectorAll('.revoke-permissions')
+    .forEach((el) => el.addEventListener('click', revokePerms))
+document
+    .querySelectorAll('.grant-permissions')
+    .forEach((el) => el.addEventListener('click', grantPerms))
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', linkClick))

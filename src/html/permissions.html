@@ -23,8 +23,10 @@
     </div>
     <div class="d-none grant-perms">
         <p class="lead">To run a content script on every site, host permissions are needed.</p>
-        <a id="grant-perms" class="btn btn-lg btn-success w-100 mb-3" role="button">
-            <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</a>
+        <button class="btn btn-lg btn-success w-100 mb-3 grant-permissions" type="button"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+                data-bs-title="This Extension Requires Host Permissions to Function.">
+            <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</button>
     </div>
     <p>
         This web extension injects the <a href="../js/content-script.js" target="_blank">content-script.js</a> script into every site.

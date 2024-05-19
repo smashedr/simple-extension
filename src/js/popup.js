@@ -12,11 +12,9 @@ import {
 
 document.addEventListener('DOMContentLoaded', initPopup)
 document.getElementById('inject-script').addEventListener('click', injectScript)
-// document.getElementById('revoke-perms').addEventListener('click', revokePerms)
-
 document
-    .getElementById('grant-perms')
-    .addEventListener('click', (e) => grantPerms(e, true))
+    .querySelectorAll('.grant-permissions')
+    .forEach((el) => el.addEventListener('click', (e) => grantPerms(e, true)))
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', (e) => linkClick(e, true)))
@@ -53,8 +51,6 @@ async function initPopup() {
 
     // const views = chrome.extension.getViews()
     // console.log('views:', views)
-    // const result = views.find((item) => item.location.href.endsWith('html/home.html'))
-    // console.log('result:', result)
 }
 
 /**
