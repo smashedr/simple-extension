@@ -62,13 +62,15 @@
             <div class="form-text" id="testInputHelp">Just a test text input.</div>
         </div>
     </form>
-    <div class="d-none grant-perms my-3">
-        <a id="grant-perms" class="btn btn-lg btn-success w-100 mb-2" role="button">
-            <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</a>
-        <p class="text-center"><a role="button" href="../html/permissions.html">More Information on Permissions</a></p>
+    <div class="d-none my-3 grant-perms">
+        <button class="btn btn-lg btn-success w-100 mb-2 grant-permissions" type="button"
+                data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
+                data-bs-title="This Extension Requires Host Permissions to Function.">
+            <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</button>
+        <p class="text-center"><a href="../html/permissions.html">More Information on Permissions</a></p>
     </div>
-    <div class="d-none has-perms my-3">
-        <button id="revoke-perms" class="btn btn-link link-danger" type="button"
+    <div class="d-none my-3 has-perms">
+        <button class="btn btn-link link-danger revoke-permissions" type="button"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
                 data-bs-title="Google Chrome does not allow removing required permissions via this method.">
             Remove Host Permissions</button>
