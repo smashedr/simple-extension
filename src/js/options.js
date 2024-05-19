@@ -72,9 +72,9 @@ function onChanged(changes, namespace) {
  * @param {String} selector
  */
 async function setShortcuts(selector = '#keyboard-shortcuts') {
-    const tbody = document.querySelector(selector).querySelector('tbody')
-    const source = tbody.querySelector('tr.d-none').cloneNode(true)
-    source.classList.remove('d-none')
+    const table = document.querySelector(selector)
+    const tbody = table.querySelector('tbody')
+    const source = table.querySelector('tfoot > tr').cloneNode(true)
     const commands = await chrome.commands.getAll()
     for (const command of commands) {
         // console.debug('command:', command)

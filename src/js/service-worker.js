@@ -78,7 +78,7 @@ async function onInstalled(details) {
  * On Clicked Callback
  * @function onClicked
  * @param {OnClickData} ctx
- * @param {chrome.tabs.Tab} tab
+ * @param {Tab} tab
  */
 async function onClicked(ctx, tab) {
     console.debug('onClicked:', ctx, tab)
