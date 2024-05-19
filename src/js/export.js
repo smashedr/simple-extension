@@ -133,14 +133,16 @@ export async function linkClick(event, close = false) {
  */
 export async function activateOrOpen(url, open = true) {
     console.debug('activateOrOpen:', url)
+    // Get Tab from Tabs (requires host permissions)
     const tabs = await chrome.tabs.query({ currentWindow: true })
-    // console.debug('tabs:', tabs)
+    console.debug('tabs:', tabs)
     for (const tab of tabs) {
         if (tab.url === url) {
-            console.debug('tab:', tab)
+            console.debug('found tab in tabs:', tab)
             return await chrome.tabs.update(tab.id, { active: true })
         }
     }
+    console.debug('tab not found, open:', open)
     if (open) {
         return await chrome.tabs.create({ active: true, url })
     }
