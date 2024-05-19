@@ -41,7 +41,32 @@ async function initPopup() {
         showToast(chrome.runtime.lastError.message, 'warning')
     }
 
-    await checkPerms()
+    // Check Host Permissions
+    const hasPerms = await checkPerms()
+    if (!hasPerms) {
+        return console.debug('Host Permissions Not Granted')
+    }
+
+    // Check Tab Permissions
+    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
+    console.debug('tab:', tab)
+    try {
+        await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            injectImmediately: true,
+            func: function () {
+                return true
+            },
+        })
+    } catch (e) {
+        document
+            .querySelectorAll('.has-perms')
+            .forEach((el) => el.classList.add('d-none'))
+        document
+            .querySelectorAll('.tab-perms')
+            .forEach((el) => el.classList.remove('d-none'))
+        return console.log('No Tab Permissions', e, tab)
+    }
 
     // const platformInfo = await chrome.runtime.getPlatformInfo()
     // console.log('platformInfo:', platformInfo)
