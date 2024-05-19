@@ -3,7 +3,7 @@
 /**
  * Save Options Callback
  * @function saveOptions
- * @param {InputEvent} event
+ * @param {UIEvent} event
  */
 export async function saveOptions(event) {
     console.debug('saveOptions:', event)
@@ -69,6 +69,13 @@ export function updateOptions(options) {
     }
 }
 
+/**
+ * Hide or Show Element with JQuery
+ * @function hideShowElement
+ * @param {String} selector
+ * @param {Boolean} [show]
+ * @param {String} [speed]
+ */
 function hideShowElement(selector, show, speed = 'fast') {
     const element = $(`${selector}`)
     // console.debug('hideShowElement:', show, element)
@@ -83,7 +90,7 @@ function hideShowElement(selector, show, speed = 'fast') {
  * Link Click Callback
  * Firefox requires a call to window.close()
  * @function linkClick
- * @param {Event} event
+ * @param {MouseEvent} event
  * @param {Boolean} [close]
  */
 export async function linkClick(event, close = false) {
@@ -131,12 +138,11 @@ export async function activateOrOpen(url, open = true) {
     for (const tab of tabs) {
         if (tab.url === url) {
             console.debug('tab:', tab)
-            await chrome.tabs.update(tab.id, { active: true })
-            return
+            return await chrome.tabs.update(tab.id, { active: true })
         }
     }
     if (open) {
-        await chrome.tabs.create({ active: true, url })
+        return await chrome.tabs.create({ active: true, url })
     }
 }
 
@@ -197,7 +203,7 @@ export async function requestPerms() {
  * NOTE: For many reasons Chrome will determine host_perms are required and
  *       will ask for them at install time and not allow them to be revoked
  * @function revokePerms
- * @param {Event} event
+ * @param {MouseEvent} event
  */
 export async function revokePerms(event) {
     console.debug('revokePerms:', event)
@@ -216,7 +222,7 @@ export async function revokePerms(event) {
 
 /**
  * Permissions On Added Callback
- * @param permissions
+ * @param {chrome.permissions} permissions
  */
 export async function onAdded(permissions) {
     console.debug('onAdded', permissions)
@@ -225,7 +231,7 @@ export async function onAdded(permissions) {
 
 /**
  * Permissions On Removed Callback
- * @param permissions
+ * @param {chrome.permissions} permissions
  */
 export async function onRemoved(permissions) {
     console.debug('onRemoved', permissions)
@@ -254,6 +260,10 @@ export function showToast(message, type = 'success') {
     toast.show()
 }
 
+/**
+ * Update DOM with Manifest Details
+ * @function updateManifest
+ */
 export function updateManifest() {
     const manifest = chrome.runtime.getManifest()
     document
@@ -269,10 +279,11 @@ export function updateManifest() {
  * @function injectFunction
  * @param {Function} func
  * @param {Array} args
+ * @return {InjectionResult}
  */
 export async function injectFunction(func, args) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-    await chrome.scripting.executeScript({
+    return await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         func: func,
         args: args,
