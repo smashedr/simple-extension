@@ -1,7 +1,7 @@
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white&label=google%20users)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/link-extractor?logo=mozilla&label=mozilla%20users)](https://addons.mozilla.org/addon/link-extractor)
-[![Chrome Web Store Stars](https://img.shields.io/chrome-web-store/rating/ifefifghpkllfibejafbakmflidjcjfp)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Mozilla Add-on Stars](https://img.shields.io/amo/stars/link-extractor)](https://addons.mozilla.org/addon/link-extractor)
+[![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Mozilla Add-on Rating](https://img.shields.io/amo/rating/link-extractor?logo=mozilla&logoColor=white)](https://addons.mozilla.org/addon/link-extractor)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/ifefifghpkllfibejafbakmflidjcjfp?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/link-extractor?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/link-extractor)
 [![GitHub Release Version](https://img.shields.io/github/v/release/smashedr/simple-extension?logo=github)](https://github.com/smashedr/simple-extension/releases/latest)
@@ -56,18 +56,31 @@ For more information on regex, see: https://regex101.com/
 
 **Quick Start**
 
-To install and run chrome or firefox with web-ext.
+First, clone (or download) this repository and change into the directory:
+```shell
+git clone https://github.com/smashedr/simple-extension.git
+cd simple-extension
+```
+
+Second, install the dependencies:
 ```shell
 npm isntall
+```
+
+Finally, to run Chrome or Firefox with web-ext, run one of the following:
+```shell
 npm run chrome
 npm run firefox
 ```
 
-To Load Unpacked/Temporary Add-on make a `manifest.json` and run from the [src](src) folder.
+Additionally, to Load Unpacked/Temporary Add-on make a `manifest.json` and run from the [src](src) folder, run one of the following:
 ```shell
 npm run manifest:chrome
 npm run manifest:firefox
 ```
+
+Chrome: [https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked](https://developer.chrome.com/docs/extensions/get-started/tutorial/hello-world#load-unpacked)  
+Firefox: [https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/](https://extensionworkshop.com/documentation/develop/temporary-installation-in-firefox/)
 
 For more information on web-ext, [read this documentation](https://extensionworkshop.com/documentation/develop/web-ext-command-reference/).  
 To pass additional arguments to an `npm run` command, use `--`.  
@@ -81,20 +94,14 @@ See [gulpfile.js](gulpfile.js) for more information on `postinstall`.
 npm install
 ```
 
-To load unpacked or temporary addon from the [src](src) folder, you must generate the `src/manifest.json` for the desired browser.
-```shell
-npm run manifest:chrome
-npm run manifest:firefox
-```
-
-If you would like to create a `.zip` archive of the [src](src) directory for the desired browser.
+To create a `.zip` archive of the [src](src) directory for the desired browser run one of the following:
 ```shell
 npm run build
 npm run build:chrome
 npm run build:firefox
 ```
 
-For more information on building, see the scripts in the [package.json](package.json) file.
+For more information on building, see the scripts in the [package.json](package.json) file scripts section.
 
 ## Chrome Setup
 
