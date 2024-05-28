@@ -47,7 +47,6 @@ You can pin the Addon by clicking the `Puzzle Piece`, find the Web Extension ico
 **Firefox,** click the `Settings Wheel` and `Pin to Toolbar`.
 
 To open the options, click on the icon (from above) then click `Open Options`.  
-Here you can set flags and add as many saved regular expressions as you would like for easy use later.
 
 # Development
 
