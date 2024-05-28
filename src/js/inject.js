@@ -27,5 +27,5 @@ console.log(contentScriptFunction())
  * @param {Function} sendResponse
  */
 function onMessage(message, sender, sendResponse) {
-    console.log(`onMessage: message: ${message}`)
+    console.log(`onMessage: message: ${message}`, sender, sendResponse)
 }
