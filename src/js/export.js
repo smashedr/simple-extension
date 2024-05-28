@@ -149,6 +149,20 @@ export async function activateOrOpen(url, open = true) {
 }
 
 /**
+ * Update DOM with Manifest Details
+ * @function updateManifest
+ */
+export function updateManifest() {
+    const manifest = chrome.runtime.getManifest()
+    document
+        .querySelectorAll('.version')
+        .forEach((el) => (el.textContent = manifest.version))
+    document
+        .querySelectorAll('[href="homepage_url"]')
+        .forEach((el) => (el.href = manifest.homepage_url))
+}
+
+/**
  * Check Host Permissions
  * @function checkPerms
  * @return {Boolean}
@@ -260,20 +274,6 @@ export function showToast(message, type = 'success') {
     const toast = new bootstrap.Toast(element)
     element.addEventListener('mousemove', () => toast.hide())
     toast.show()
-}
-
-/**
- * Update DOM with Manifest Details
- * @function updateManifest
- */
-export function updateManifest() {
-    const manifest = chrome.runtime.getManifest()
-    document
-        .querySelectorAll('.version')
-        .forEach((el) => (el.textContent = manifest.version))
-    document
-        .querySelectorAll('[href="homepage_url"]')
-        .forEach((el) => (el.href = manifest.homepage_url))
 }
 
 /**
