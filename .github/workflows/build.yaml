@@ -20,16 +20,14 @@ jobs:
         with:
           node-version: 20
 
+      - name: "Update Manifest Version"
+        uses: cssnr/update-json-value-action@master
+        if: ${{ github.event_name == 'release' }}
+
       - name: "Build All"
         run: |
           npm install
           npm run build
-
-      - name: "Update Manifest Version"
-        uses: cssnr/update-json-value-action@master
-        if: ${{ github.event_name == 'release' }}
-        with:
-          file: src/manifest.json
 
       - name: "Upload to Actions"
         uses: actions/upload-artifact@v4
