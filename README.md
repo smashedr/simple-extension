@@ -5,7 +5,6 @@
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/ifefifghpkllfibejafbakmflidjcjfp?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/link-extractor?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/link-extractor)
 [![GitHub Release Version](https://img.shields.io/github/v/release/smashedr/simple-extension?logo=github)](https://github.com/smashedr/simple-extension/releases/latest)
-[![Manifest Version](https://img.shields.io/github/manifest-json/v/smashedr/simple-extension?filename=manifest.json&logo=json&label=manifest)](https://github.com/smashedr/simple-extension/blob/master/manifest.json)
 [![Build](https://github.com/smashedr/simple-extension/actions/workflows/build.yaml/badge.svg)](https://github.com/smashedr/simple-extension/actions/workflows/build.yaml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=smashedr_simple-extension&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=smashedr_simple-extension)
 # Simple Extension

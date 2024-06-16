@@ -1,4 +1,5 @@
 {
+  "name": "simple-extension",
   "scripts": {
     "postinstall": "npx gulp",
     "lint": "npx eslint src/js",
