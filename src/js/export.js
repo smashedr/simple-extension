@@ -47,6 +47,7 @@ export function updateOptions(options) {
             console.warn('Value undefined for key:', key)
             continue
         }
+        // Option Key should be `radioXXX` and values should be the option IDs
         if (key.startsWith('radio')) {
             key = value
             value = true
@@ -58,7 +59,7 @@ export function updateOptions(options) {
         }
         if (el.tagName !== 'INPUT') {
             el.textContent = value.toString()
-        } else if (el.type === 'checkbox') {
+        } else if (['checkbox', 'radio'].includes(el.type)) {
             el.checked = value
         } else {
             el.value = value
