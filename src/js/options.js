@@ -50,6 +50,10 @@ async function initOptions() {
     const { options } = await chrome.storage.sync.get(['options'])
     console.debug('options:', options)
     updateOptions(options)
+
+    await chrome.action.setPopup({
+        popup: chrome.runtime.getURL('/html/popup.html'),
+    })
 }
 
 /**
@@ -75,7 +79,11 @@ function onChanged(changes, namespace) {
  * @param {String} selector
  */
 async function setShortcuts(selector = '#keyboard-shortcuts') {
+    if (!chrome.commands) {
+        return console.debug('Skipping: chrome.commands')
+    }
     const table = document.querySelector(selector)
+    table.classList.remove('d-none')
     const tbody = table.querySelector('tbody')
     const source = table.querySelector('tfoot > tr').cloneNode(true)
     const commands = await chrome.commands.getAll()

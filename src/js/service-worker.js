@@ -10,8 +10,8 @@ import {
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
-chrome.contextMenus.onClicked.addListener(onClicked)
-chrome.commands.onCommand.addListener(onCommand)
+chrome.contextMenus?.onClicked.addListener(onClicked)
+chrome.commands?.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
 
@@ -72,6 +72,8 @@ async function onInstalled(details) {
     // console.log('uninstallURL:', uninstallURL.href)
     // await chrome.runtime.setUninstallURL(uninstallURL.href)
     await chrome.runtime.setUninstallURL(`${githubURL}/issues`)
+    const info = await chrome.runtime.getPlatformInfo()
+    console.debug('info:', info)
 }
 
 /**
@@ -165,6 +167,9 @@ function onChanged(changes, namespace) {
  * @function createContextMenus
  */
 function createContextMenus() {
+    if (!chrome.contextMenus) {
+        return console.debug('Skipping: chrome.contextMenus')
+    }
     console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
     const contexts = [
