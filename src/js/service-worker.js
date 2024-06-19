@@ -6,6 +6,7 @@ import {
     copyActiveElementText,
     copyActiveImageSrc,
     injectFunction,
+    openSidePanel,
 } from './export.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
@@ -94,6 +95,13 @@ async function onClicked(ctx, tab) {
             width: 720,
             height: 480,
         })
+    } else if (ctx.menuItemId === 'showSidePanel') {
+        await openSidePanel()
+        // if (chrome.sidePanel) {
+        //     await chrome.sidePanel.open({ tabId: tab.id })
+        // } else {
+        //     await browser.sidebarAction.open()
+        // }
     } else if (ctx.menuItemId === 'copyText') {
         console.debug('injectFunction: copy')
         await injectFunction(copyActiveElementText, [ctx])
@@ -115,6 +123,18 @@ async function onCommand(command) {
     if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
+    } else if (command === 'showSidePanel') {
+        await openSidePanel()
+        // if (chrome.sidePanel) {
+        //     chrome.tabs.query(
+        //         { active: true, currentWindow: true },
+        //         ([tab]) => {
+        //             chrome.sidePanel.open({ windowId: tab.windowId })
+        //         }
+        //     )
+        // } else {
+        //     await browser.sidebarAction.open()
+        // }
     } else if (command === 'showPanel') {
         await chrome.windows.create({
             type: 'panel',
@@ -173,6 +193,7 @@ function createContextMenus() {
         [['link', 'image', 'audio', 'video'], 's-1', 'separator', 'separator'],
         [['all'], 'openHome', 'normal', 'Home Page'],
         [['all'], 'showPanel', 'normal', 'Extension Panel'],
+        [['all'], 'showSidePanel', 'normal', 'Side Panel'],
         [['all'], 's-2', 'separator', 'separator'],
         [['all'], 'openOptions', 'normal', 'Open Options'],
     ]

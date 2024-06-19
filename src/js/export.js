@@ -278,6 +278,45 @@ export function showToast(message, type = 'success') {
 }
 
 /**
+ * Open Side Panel Callback
+ * @function openSidePanel
+ * @param {MouseEvent} [event]
+ */
+export async function openSidePanel(event) {
+    console.debug('openSidePanel:', event)
+    if (chrome.sidePanel) {
+        chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+            chrome.sidePanel.open({ windowId: tab.windowId })
+        })
+    } else if (chrome.sidebarAction) {
+        await chrome.sidebarAction.open()
+    } else {
+        console.log('Side Panel Not Supported')
+        if (event) {
+            showToast('Side Panel Not Supported', 'danger')
+            return
+        }
+    }
+    // if (chrome.sidePanel) {
+    //     const [tab] = await chrome.tabs.query({
+    //         currentWindow: true,
+    //         active: true,
+    //     })
+    //     console.debug('tab:', tab)
+    //     await chrome.sidePanel.open({ tabId: tab.id })
+    // } else {
+    //     await browser.sidebarAction.open()
+    // }
+
+    if (event) {
+        window.close()
+    }
+    // if (typeof window !== 'undefined') {
+    //     window.close()
+    // }
+}
+
+/**
  * Inject Function into Current Tab with args
  * @function injectFunction
  * @param {Function} func

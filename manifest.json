@@ -37,6 +37,12 @@
       },
       "description": "Open Home Page"
     },
+    "showSidePanel": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Show Side Panel"
+    },
     "showPanel": {
       "suggested_key": {
         "default": "Alt+Shift+W"
