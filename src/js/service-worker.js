@@ -167,23 +167,44 @@ function onChanged(changes, namespace) {
 function createContextMenus() {
     console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
+    /** @type {Array[String[], String, String, String]} */
     const contexts = [
-        [['link'], 'copyText', 'normal', 'Copy Link Text'],
-        [['image', 'audio', 'video'], 'copySrc', 'normal', 'Copy Source URL'],
-        [['link', 'image', 'audio', 'video'], 's-1', 'separator', 'separator'],
-        [['all'], 'openHome', 'normal', 'Home Page'],
-        [['all'], 'showPanel', 'normal', 'Extension Panel'],
-        [['all'], 's-2', 'separator', 'separator'],
-        [['all'], 'openOptions', 'normal', 'Open Options'],
+        [['link'], 'copyText', 'Copy Link Text'],
+        [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
+        [['link', 'image', 'audio', 'video'], 'separator'],
+        [['all'], 'openHome', 'Home Page'],
+        [['all'], 'showPanel', 'Extension Panel'],
+        [['all'], 'separator'],
+        [['all'], 'openOptions', 'Open Options'],
     ]
-    contexts.forEach((context) => {
+    contexts.forEach(addContext)
+}
+
+/**
+ * Add Context from Array
+ * @function addContext
+ * @param {[[String],String,String]} context
+ * TODO: Update to handle parentId contexts
+ */
+function addContext(context) {
+    try {
+        console.debug('addContext:', context)
+        if (context[1] === 'separator') {
+            const id = Math.random().toString().substring(2, 7)
+            // context = [[context], id, 'separator', 'separator']
+            context[1] = `${id}`
+            context.push('separator', 'separator')
+        }
+        // console.debug('menus.create:', context)
         chrome.contextMenus.create({
             contexts: context[0],
             id: context[1],
-            type: context[2],
-            title: context[3],
+            title: context[2],
+            type: context[3] || 'normal',
         })
-    })
+    } catch (e) {
+        console.log('Error Adding Context:', e)
+    }
 }
 
 /**
