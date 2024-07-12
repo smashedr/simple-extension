@@ -1,20 +1,26 @@
-[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white&label=google%20users)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Mozilla Add-on Users](https://img.shields.io/amo/users/link-extractor?logo=mozilla&label=mozilla%20users)](https://addons.mozilla.org/addon/link-extractor)
+[![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white&label=users)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Mozilla Add-on Users](https://img.shields.io/amo/users/link-extractor?logo=mozilla&label=users)](https://addons.mozilla.org/addon/link-extractor)
 [![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Rating](https://img.shields.io/amo/rating/link-extractor?logo=mozilla&logoColor=white)](https://addons.mozilla.org/addon/link-extractor)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/ifefifghpkllfibejafbakmflidjcjfp?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/link-extractor?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/link-extractor)
-[![GitHub Release Version](https://img.shields.io/github/v/release/smashedr/simple-extension?logo=github)](https://github.com/smashedr/simple-extension/releases/latest)
-[![Build](https://github.com/smashedr/simple-extension/actions/workflows/build.yaml/badge.svg)](https://github.com/smashedr/simple-extension/actions/workflows/build.yaml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=smashedr_simple-extension&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=smashedr_simple-extension)
-# Simple Extension
+[![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/link-extractor?logo=github)](https://github.com/cssnr/link-extractor/releases/latest)
+[![Build](https://img.shields.io/github/actions/workflow/status/cssnr/link-extractor/build.yaml?logo=github&logoColor=white&label=build)](https://github.com/cssnr/link-extractor/actions/workflows/build.yaml)
+[![Test](https://img.shields.io/github/actions/workflow/status/cssnr/link-extractor/test.yaml?logo=github&logoColor=white&label=test)](https://github.com/cssnr/link-extractor/actions/workflows/test.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_link-extractor&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_link-extractor)
+[![Discord](https://img.shields.io/discord/899171661457293343?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/wXy6m2X8wY)
+# Link Extractor
 
-Modern Chrome Web Extension and Firefox Browser Addon Simple Extension Example.
+Modern Chrome Web Extension and Firefox Browser Addon Simple Extension Example.  
 [README.md](README.md) copied from [link-extractor](https://github.com/cssnr/link-extractor) as an example.
+
+Website: https://link-extractor.cssnr.com/
 
 *   [Install](#install)
 *   [Features](#features)
+    -   [Upcoming](#planned-upcoming-features)
 *   [Configuration](#configuration)
+*   [Support](#support)
 *   [Development](#development)
     -   [Building](#building)
 
@@ -23,29 +29,84 @@ Modern Chrome Web Extension and Firefox Browser Addon Simple Extension Example.
 *   [Google Chrome Web Store](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 *   [Mozilla Firefox Add-ons](https://addons.mozilla.org/addon/link-extractor)
 
-[![Chrome](https://raw.githubusercontent.com/alrra/browser-logos/main/src/chrome/chrome_48x48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Firefox](https://raw.githubusercontent.com/alrra/browser-logos/main/src/firefox/firefox_48x48.png)](https://addons.mozilla.org/addon/link-extractor)
-[![Edge](https://raw.githubusercontent.com/alrra/browser-logos/main/src/edge/edge_48x48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Chromium](https://raw.githubusercontent.com/alrra/browser-logos/main/src/chromium/chromium_48x48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Brave](https://raw.githubusercontent.com/alrra/browser-logos/main/src/brave/brave_48x48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Vivaldi](https://raw.githubusercontent.com/alrra/browser-logos/main/src/vivaldi/vivaldi_48x48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
-[![Opera](https://raw.githubusercontent.com/alrra/browser-logos/main/src/opera/opera_48x48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Chrome](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/chrome_48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Firefox](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/firefox_48.png)](https://addons.mozilla.org/addon/link-extractor)
+[![Edge](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/edge_48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Brave](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/brave_48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Opera](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/opera_48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Chromium](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/chromium_48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+[![Yandex](https://raw.githubusercontent.com/smashedr/logo-icons/master/browsers/yandex_48.png)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 
 All **Chromium** Based Browsers can install the extension from the
 [Chrome Web Store](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp).
 
+Mobile browser support available for
+[Firefox](https://addons.mozilla.org/addon/link-extractor) and
+[Yandex](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp).
+
 # Features
 
-Please submit a [Feature Request](https://github.com/smashedr/simple-extension/discussions/categories/feature-requests) for new features.  
-For any issues, bugs or concerns; please [Open an Issue](https://github.com/smashedr/simple-extension/issues).
+Please submit a [Feature Request](https://github.com/cssnr/link-extractor/discussions/new?category=feature-requests) for new features.  
+For any issues, bugs or concerns; please [Open an Issue](https://github.com/cssnr/link-extractor/issues/new).
+
+*   Extract All Links and Domains from Any Site
+*   Extract Links from Selected Text on any Site
+*   Extract Links from Clipboard or Any Text
+*   Extract Links from All Selected Tabs
+*   Display Additional Link Details and Text
+*   Open Multiple Links in Tabs from Text
+*   Download Links and Domains as a Text File
+*   Copy the Text from a Link via Context Menu
+*   Quick Filter Links with a Regular Expression
+*   Store Regular Expressions for Quick Filtering
+*   Import and Export Saved Regular Expressions
+*   Automatic Dark/Light Mode based on Browser Setting
+*   Activate from Icon, Context Menu, or Keyboard Shortcuts
+
+[![Link Extractor Screenshots](/assets/banner.jpg)](https://link-extractor.cssnr.com/screenshots/)
+
+## Planned Upcoming Features
+
+*   Option to Set Names/Titles for Saved Filters
+*   Option to Extract Using Multiple Filters with AND/OR
+
+> [!TIP]
+> **Don't see your feature here?**
+> Request one on the [Feature Request Discussion](https://github.com/cssnr/link-extractor/discussions/categories/feature-requests).
 
 # Configuration
 
-You can pin the Addon by clicking the `Puzzle Piece`, find the Web Extension icon, then;  
+- [View Configuration Documentation on Website](https://link-extractor.cssnr.com/docs/#configure)
+
+You can pin the Addon by clicking the `Puzzle Piece`, find the Link Extractor icon, then;  
 **Chrome,** click the `Pin` icon.  
 **Firefox,** click the `Settings Wheel` and `Pin to Toolbar`.
 
 To open the options, click on the icon (from above) then click `Open Options`.  
+You can also access `Options` through the right-click context menu (enabled by default).  
+Here you can set flags and add as many saved regular expressions as you would like for easy use later.  
+Make sure to click`Save Options` when finished.
+
+For more information on regex, see: https://regex101.com/
+
+# Support
+
+For help using the web extension, utilize any these resources:
+
+- Documentation: https://link-extractor.cssnr.com/docs/
+- Q&A Discussion: https://github.com/cssnr/link-extractor/discussions/categories/q-a
+- Request a Feature: https://github.com/cssnr/link-extractor/discussions/categories/feature-requests
+
+If you are experiencing an issue/bug or getting unexpected results, use:
+
+- Report an Issue: https://github.com/cssnr/link-extractor/issues
+- Chat with us on Discord: https://discord.gg/wXy6m2X8wY
+- Provide Anonymous Feedback: https://cssnr.github.io/feedback
+
+Logs can be found inspecting the page (Ctrl+Shift+I), clicking on the Console, and;
+Firefox: toggling Debug logs, Chrome: toggling Verbose from levels dropdown.
+
+Note: When providing anonymous feedback there is no way to follow up and get more information unless you provide a contact method.
 
 # Development
 
@@ -96,7 +157,7 @@ For more information on building, see the scripts section in the [package.json](
 
 ## Chrome Setup
 
-1.  Build or Download a [Release](https://github.com/smashedr/simple-extension/releases).
+1.  Build or Download a [Release](https://github.com/cssnr/link-extractor/releases).
 1.  Unzip the archive, place the folder where it must remain and note its location for later.
 1.  Open Chrome, click the `3 dots` in the top right, click `Extensions`, click `Manage Extensions`.
 1.  In the top right, click `Developer Mode` then on the top left click `Load unpacked`.
@@ -104,13 +165,13 @@ For more information on building, see the scripts section in the [package.json](
 
 ## Firefox Setup
 
-1.  Build or Download a [Release](https://github.com/smashedr/simple-extension/releases).
+1.  Build or Download a [Release](https://github.com/cssnr/link-extractor/releases).
 1.  Unzip the archive, place the folder where it must remain and note its location for later.
 1.  Go to `about:debugging#/runtime/this-firefox` and click `Load Temporary Add-on...`
 1.  Navigate to the folder you extracted earlier, select `manifest.json` then click `Select File`.
-1.  Optional: Open `about:config` search for `extensions.webextensions.keepStorageOnUninstall` and set to `true`.
+1.  Optional: open `about:config` search for `extensions.webextensions.keepStorageOnUninstall` and set to `true`.
 
-If you need to test a restart, you must pack the addon. This only works in ESR, Development, or Nightly. 
+If you need to test a restart, you must pack the addon. This only works in ESR, Development, or Nightly.
 You may also use an Unbranded Build: [https://wiki.mozilla.org/Add-ons/Extension_Signing#Unbranded_Builds](https://wiki.mozilla.org/Add-ons/Extension_Signing#Unbranded_Builds)
 
 1.  Run `npm run build:firefox` then use `web-ext-artifacts/{name}-firefox-{version}.zip`.
