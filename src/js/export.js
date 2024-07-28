@@ -136,7 +136,7 @@ export async function linkClick(event, close = false) {
  * @function activateOrOpen
  * @param {String} url
  * @param {Boolean} [open]
- * @return {Boolean}
+ * @return {Promise<*|Boolean>}
  */
 export async function activateOrOpen(url, open = true) {
     console.debug('activateOrOpen:', url)
@@ -172,7 +172,7 @@ export function updateManifest() {
 /**
  * Check Host Permissions
  * @function checkPerms
- * @return {Boolean}
+ * @return {Promise<*|Boolean>}
  */
 export async function checkPerms() {
     const hasPerms = await chrome.permissions.contains({
@@ -197,14 +197,13 @@ export async function checkPerms() {
 
 /**
  * Grant Permissions Click Callback
- * Promise from requestPerms is ignored so we can close the popup immediately
  * @function grantPerms
  * @param {MouseEvent} event
  * @param {Boolean} [close]
  */
 export async function grantPerms(event, close = false) {
     console.debug('grantPerms:', event)
-    requestPerms()
+    requestPerms() // Firefox: do not await so that we can call window.close()
     if (close) {
         window.close()
     }
@@ -213,7 +212,7 @@ export async function grantPerms(event, close = false) {
 /**
  * Request Host Permissions
  * @function requestPerms
- * @return {chrome.permissions.request}
+ * @return {Promise<*|chrome.permissions.request>}
  */
 export async function requestPerms() {
     return await chrome.permissions.request({
@@ -288,7 +287,7 @@ export function showToast(message, type = 'success') {
  * @function injectFunction
  * @param {Function} func
  * @param {Array} args
- * @return {InjectionResult}
+ * @return {Promise<*|InjectionResult>}
  */
 export async function injectFunction(func, args) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
