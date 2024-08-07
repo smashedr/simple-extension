@@ -98,11 +98,10 @@ export async function linkClick(event, close = false) {
     console.debug('linkClick:', event)
     console.debug('close:', close)
     event.preventDefault()
-    const anchor = event.target.closest('a')
-    if (anchor.dataset.link === 'no') {
-        return console.debug('return on dataset.link: no')
-    }
-    const href = anchor.getAttribute('href').replace(/^\.+/g, '')
+    // console.debug('event.currentTarget:', event.currentTarget)
+    // console.debug('event.currentTarget.href:', event.currentTarget.href)
+    // console.debug('...getAttribute:', event.currentTarget.getAttribute('href'))
+    const href = event.currentTarget.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
     if (href.startsWith('#')) {
         return console.debug('return on anchor link')
