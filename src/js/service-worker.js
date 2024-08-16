@@ -6,6 +6,7 @@ import {
     copyActiveElementText,
     copyActiveImageSrc,
     injectFunction,
+    showPanel,
 } from './export.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
@@ -86,12 +87,7 @@ async function onClicked(ctx, tab) {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
     } else if (ctx.menuItemId === 'showPanel') {
-        await chrome.windows.create({
-            type: 'panel',
-            url: '/html/panel.html',
-            width: 720,
-            height: 480,
-        })
+        await showPanel()
     } else if (ctx.menuItemId === 'copyText') {
         console.debug('injectFunction: copy')
         await injectFunction(copyActiveElementText, [ctx])
@@ -114,12 +110,7 @@ async function onCommand(command) {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
     } else if (command === 'showPanel') {
-        await chrome.windows.create({
-            type: 'panel',
-            url: '/html/panel.html',
-            width: 480,
-            height: 360,
-        })
+        await showPanel()
     }
 }
 
@@ -209,7 +200,7 @@ function addContext(context) {
  * Set Default Options
  * @function setDefaultOptions
  * @param {Object} defaultOptions
- * @return {Promise<*|Object>}
+ * @return {Promise<Object>}
  */
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions', defaultOptions)

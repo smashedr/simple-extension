@@ -95,29 +95,20 @@ function hideShowElement(selector, show, speed = 'fast') {
  * @param {Boolean} [close]
  */
 export async function linkClick(event, close = false) {
-    console.debug('linkClick:', event)
-    console.debug('close:', close)
+    console.debug('linkClick:', close, event)
     event.preventDefault()
-    // console.debug('event.currentTarget:', event.currentTarget)
-    // console.debug('event.currentTarget.href:', event.currentTarget.href)
-    // console.debug('...getAttribute:', event.currentTarget.getAttribute('href'))
     const href = event.currentTarget.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
-    if (href.startsWith('#')) {
-        return console.debug('return on anchor link')
-    }
     let url
-    if (href.endsWith('html/options.html')) {
+    if (href.startsWith('#')) {
+        console.debug('return on anchor link')
+        return
+    } else if (href.endsWith('html/options.html')) {
         chrome.runtime.openOptionsPage()
         if (close) window.close()
         return
     } else if (href.endsWith('html/panel.html')) {
-        await chrome.windows.create({
-            type: 'panel',
-            url: '/html/panel.html',
-            width: 720,
-            height: 480,
-        })
+        await showPanel()
         if (close) window.close()
         return
     } else if (href.startsWith('http')) {
@@ -135,7 +126,7 @@ export async function linkClick(event, close = false) {
  * @function activateOrOpen
  * @param {String} url
  * @param {Boolean} [open]
- * @return {Promise<*|Boolean>}
+ * @return {Promise<Boolean>}
  */
 export async function activateOrOpen(url, open = true) {
     console.debug('activateOrOpen:', url)
@@ -171,7 +162,7 @@ export function updateManifest() {
 /**
  * Check Host Permissions
  * @function checkPerms
- * @return {Promise<*|Boolean>}
+ * @return {Promise<Boolean>}
  */
 export async function checkPerms() {
     const hasPerms = await chrome.permissions.contains({
@@ -211,7 +202,7 @@ export async function grantPerms(event, close = false) {
 /**
  * Request Host Permissions
  * @function requestPerms
- * @return {Promise<*|chrome.permissions.request>}
+ * @return {Promise<Boolean>}
  */
 export async function requestPerms() {
     return await chrome.permissions.request({
@@ -260,6 +251,21 @@ export async function onRemoved(permissions) {
 }
 
 /**
+ * Show Extension Panel
+ * @function showPanel
+ * @param {Number} height
+ * @param {Number} width
+ */
+export async function showPanel(height = 520, width = 480) {
+    return await chrome.windows.create({
+        type: 'panel',
+        url: '/html/panel.html',
+        width,
+        height,
+    })
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message
@@ -286,7 +292,7 @@ export function showToast(message, type = 'success') {
  * @function injectFunction
  * @param {Function} func
  * @param {Array} args
- * @return {Promise<*|InjectionResult>}
+ * @return {Promise<InjectionResult[]>}
  */
 export async function injectFunction(func, args) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
