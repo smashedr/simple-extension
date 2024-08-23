@@ -7,6 +7,7 @@ import {
     copyActiveImageSrc,
     injectFunction,
     openExtPanel,
+    openSidePanel,
 } from './export.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
@@ -91,6 +92,8 @@ async function onClicked(ctx, tab) {
         await activateOrOpen(url)
     } else if (ctx.menuItemId === 'openExtPanel') {
         await openExtPanel()
+    } else if (ctx.menuItemId === 'openSidePanel') {
+        await openSidePanel()
     } else if (ctx.menuItemId === 'copyText') {
         console.debug('injectFunction: copy')
         await injectFunction(copyActiveElementText, [ctx])
@@ -117,6 +120,8 @@ async function onCommand(command, tab) {
         await activateOrOpen(url)
     } else if (command === 'openExtPanel') {
         await openExtPanel()
+    } else if (command === 'openSidePanel') {
+        await openSidePanel()
     } else {
         console.warn(`Unknown Command: ${command}`)
     }
@@ -174,6 +179,7 @@ function createContextMenus() {
         [['link', 'image', 'audio', 'video'], 'separator'],
         [['all'], 'openHome', 'Home Page'],
         [['all'], 'openExtPanel', 'Extension Panel'],
+        [['all'], 'openSidePanel', 'Side Panel'],
         [['all'], 'separator'],
         [['all'], 'openOptions', 'Open Options'],
     ]

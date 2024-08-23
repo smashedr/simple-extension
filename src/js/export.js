@@ -267,6 +267,34 @@ export async function openExtPanel(height = 520, width = 480) {
 }
 
 /**
+ * Open Side Panel Callback
+ * @function openSidePanel
+ * @param {Event} [event]
+ */
+export async function openSidePanel(event) {
+    console.debug('openSidePanel:', event)
+    if (chrome.sidePanel) {
+        chrome.tabs.query({ active: true, currentWindow: true }, ([tab]) => {
+            chrome.sidePanel.open({ windowId: tab.windowId })
+        })
+    } else if (chrome.sidebarAction) {
+        await chrome.sidebarAction.open()
+    } else {
+        console.log('Side Panel Not Supported')
+        if (event) {
+            showToast('Side Panel Not Supported', 'danger')
+            return
+        }
+    }
+    if (event) {
+        window.close()
+    }
+    // if (typeof window !== 'undefined') {
+    //     window.close()
+    // }
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message

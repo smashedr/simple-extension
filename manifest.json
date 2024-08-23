@@ -37,6 +37,12 @@
       },
       "description": "Open Options Page"
     },
+    "openSidePanel": {
+      "suggested_key": {
+        "default": "Alt+Shift+I"
+      },
+      "description": "Open Side Panel"
+    },
     "openExtPanel": {
       "suggested_key": {
         "default": "Alt+Shift+W"
@@ -44,9 +50,6 @@
       "description": "Open Extension Panel"
     },
     "openHome": {
-      "suggested_key": {
-        "default": "Alt+Shift+P"
-      },
       "description": "Open Home Page"
     }
   },

@@ -5,6 +5,7 @@ import {
     grantPerms,
     injectFunction,
     linkClick,
+    openSidePanel,
     saveOptions,
     showToast,
     updateManifest,
@@ -13,6 +14,7 @@ import {
 
 document.addEventListener('DOMContentLoaded', initPopup)
 document.getElementById('inject-script').addEventListener('click', injectScript)
+document.getElementById('side-panel').addEventListener('click', openSidePanel)
 document
     .querySelectorAll('.grant-permissions')
     .forEach((el) => el.addEventListener('click', (e) => grantPerms(e, true)))
