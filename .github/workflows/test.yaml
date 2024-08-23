@@ -1,17 +1,17 @@
 name: "Test"
 
 on:
-  push:
-    branches: ["master"]
-    paths:
-      - "src/**"
-      - "tests/**"
-  pull_request:
-    branches: ["master"]
-    paths:
-      - "src/**"
-      - "tests/**"
   workflow_dispatch:
+  push:
+#    branches: ["master"]
+#    paths:
+#      - "src/**"
+#      - "tests/**"
+#  pull_request:
+#    branches: ["master"]
+#    paths:
+#      - "src/**"
+#      - "tests/**"
 
 jobs:
   test:
@@ -31,7 +31,7 @@ jobs:
 
       - name: "Install"
         run: |
-          npm install
+          npm ci
 
       - name: "Lint"
         run: |
@@ -52,3 +52,4 @@ jobs:
       #    port: ${{ secrets.RSYNC_PORT }}
       #    webhost: "https://artifacts.hosted-domains.com"
       #    webhook: ${{ secrets.DISCORD_WEBHOOK }}
+      #    token: ${{ secrets.GITHUB_TOKEN }}

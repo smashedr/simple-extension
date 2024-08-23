@@ -3,6 +3,7 @@
 import {
     checkPerms,
     grantPerms,
+    injectFunction,
     linkClick,
     saveOptions,
     showToast,
@@ -25,6 +26,8 @@ document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
 
+const hostnameEl = document.getElementById('hostname')
+
 /**
  * Initialize Popup
  * @function initPopup
@@ -44,38 +47,50 @@ async function initPopup() {
     // Check Host Permissions
     const hasPerms = await checkPerms()
     if (!hasPerms) {
-        return console.debug('Host Permissions Not Granted')
+        return console.log('%cHost Permissions Not Granted', 'color: Red')
     }
 
     // Check Tab Permissions
-    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-    console.debug('tab:', tab)
-    try {
-        await chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            injectImmediately: true,
-            func: function () {
-                return true
-            },
-        })
-    } catch (e) {
+    const siteInfo = await getSiteInfo()
+    if (!siteInfo) {
         document
             .querySelectorAll('.has-perms')
             .forEach((el) => el.classList.add('d-none'))
-        document
-            .querySelectorAll('.tab-perms')
-            .forEach((el) => el.classList.remove('d-none'))
-        return console.log('No Tab Permissions', e, tab)
+        return console.log('%cNo Tab Permissions', 'color: Yellow')
     }
 
-    // const platformInfo = await chrome.runtime.getPlatformInfo()
-    // console.log('platformInfo:', platformInfo)
+    // Update Site Data
+    hostnameEl.classList.replace('border-danger', 'border-success')
+    hostnameEl.textContent = siteInfo.hostname
+
+    // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
+    // console.debug('tab:', tab)
 
     // const tabs = await chrome.tabs.query({ highlighted: true })
     // console.log('tabs:', tabs)
 
     // const views = chrome.extension.getViews()
     // console.log('views:', views)
+
+    // const platform = await chrome.runtime.getPlatformInfo()
+    // console.debug('platform:', platform)
+}
+
+async function getSiteInfo() {
+    async function getInfo() {
+        return {
+            hostname: window.location.hostname,
+        }
+    }
+    try {
+        const results = await injectFunction(getInfo)
+        console.debug('results:', results)
+        const result = results[0]?.result
+        console.debug('result:', result)
+        return result
+    } catch (e) {
+        console.debug(`%cInjection error: ${e.message}`, 'color: OrangeRed')
+    }
 }
 
 /**
@@ -87,10 +102,11 @@ async function injectScript(event) {
     console.debug('injectScript:', event)
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     try {
-        await chrome.scripting.executeScript({
+        const result = await chrome.scripting.executeScript({
             target: { tabId: tab.id },
             files: ['/js/inject.js'],
         })
+        console.debug('Injection Result:', result)
         window.close()
     } catch (e) {
         showToast(e.toString(), 'danger')

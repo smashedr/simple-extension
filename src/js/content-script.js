@@ -1,14 +1,11 @@
 // JS Content Script
 
-// // DOMContentLoaded is fired before document_idle which is default runtime
-//
-// window.addEventListener('DOMContentLoaded', domContentLoaded)
-//
-// async function domContentLoaded() {
-//     console.log('domContentLoaded')
-//     // const { options } = await chrome.storage.sync.get(['options'])
-//     // console.debug('options:', options)
-// }
+console.log('%cRUNNING content-script.js', 'color: Khaki')
+
+if (!chrome.storage.onChanged.hasListener(onChanged)) {
+    console.debug('Adding storage.onChanged Listener')
+    chrome.storage.onChanged.addListener(onChanged)
+}
 
 ;(async () => {
     // get options
@@ -21,13 +18,6 @@
     // work with response from service worker
     console.log('response:', response)
 })()
-
-console.info('RUNNING content-script.js')
-
-if (!chrome.storage.onChanged.hasListener(onChanged)) {
-    console.debug('Adding storage.onChanged Listener')
-    chrome.storage.onChanged.addListener(onChanged)
-}
 
 /**
  * On Changed Callback

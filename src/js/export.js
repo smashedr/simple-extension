@@ -28,15 +28,15 @@ export async function saveOptions(event) {
     }
     if (value !== undefined) {
         options[key] = value
-        console.info(`Set: ${key}:`, value)
+        console.log(`%cSet: ${key}:`, 'color: Lime', value)
         await chrome.storage.sync.set({ options })
     } else {
-        console.warn('No Value for key:', key)
+        console.warn(`No Value for key: ${key}`)
     }
 }
 
 /**
- * Update Options based on type
+ * Update Options
  * @function initOptions
  * @param {Object} options
  */
@@ -49,8 +49,8 @@ export function updateOptions(options) {
         }
         // Option Key should be `radioXXX` and values should be the option IDs
         if (key.startsWith('radio')) {
-            key = value
-            value = true
+            key = value //NOSONAR
+            value = true //NOSONAR
         }
         // console.debug(`${key}: ${value}`)
         const el = document.getElementById(key)
@@ -89,7 +89,7 @@ function hideShowElement(selector, show, speed = 'fast') {
 
 /**
  * Link Click Callback
- * Firefox requires a call to window.close()
+ * Note: Firefox popup requires a call to window.close()
  * @function linkClick
  * @param {MouseEvent} event
  * @param {Boolean} [close]
@@ -126,10 +126,10 @@ export async function linkClick(event, close = false) {
  * @function activateOrOpen
  * @param {String} url
  * @param {Boolean} [open]
- * @return {Promise<Boolean>}
+ * @return {Promise<chrome.tabs.Tab>}
  */
 export async function activateOrOpen(url, open = true) {
-    console.debug('activateOrOpen:', url)
+    console.debug('activateOrOpen:', url, open)
     // Get Tab from Tabs (requires host permissions)
     const tabs = await chrome.tabs.query({ currentWindow: true })
     console.debug('tabs:', tabs)
@@ -139,10 +139,11 @@ export async function activateOrOpen(url, open = true) {
             return await chrome.tabs.update(tab.id, { active: true })
         }
     }
-    console.debug('tab not found, open:', open)
     if (open) {
+        console.debug('tab not found, opening url:', url)
         return await chrome.tabs.create({ active: true, url })
     }
+    console.warn('tab not found and open not set!')
 }
 
 /**
@@ -193,7 +194,7 @@ export async function checkPerms() {
  */
 export async function grantPerms(event, close = false) {
     console.debug('grantPerms:', event)
-    requestPerms() // Firefox: do not await so that we can call window.close()
+    requestPerms().then()
     if (close) {
         window.close()
     }
@@ -212,8 +213,7 @@ export async function requestPerms() {
 
 /**
  * Revoke Permissions Click Callback
- * NOTE: For many reasons Chrome will determine host_perms are required and
- *       will ask for them at install time and not allow them to be revoked
+ * Note: This method does not work on Chrome if permissions are required.
  * @function revokePerms
  * @param {MouseEvent} event
  */
@@ -255,6 +255,7 @@ export async function onRemoved(permissions) {
  * @function showPanel
  * @param {Number} height
  * @param {Number} width
+ * @return {Promise<chrome.windows.Window>}
  */
 export async function showPanel(height = 520, width = 480) {
     return await chrome.windows.create({
@@ -279,7 +280,7 @@ export function showToast(message, type = 'success') {
         return console.warn('Missing clone or container:', clone, container)
     }
     const element = clone.cloneNode(true)
-    element.querySelector('.toast-body').innerHTML = message
+    element.querySelector('.toast-body').textContent = message
     element.classList.add(`text-bg-${type}`)
     container.appendChild(element)
     const toast = new bootstrap.Toast(element)
@@ -291,8 +292,8 @@ export function showToast(message, type = 'success') {
  * Inject Function into Current Tab with args
  * @function injectFunction
  * @param {Function} func
- * @param {Array} args
- * @return {Promise<InjectionResult[]>}
+ * @param {Array} [args]
+ * @return {Promise<chrome.scripting.InjectionResult[]>}
  */
 export async function injectFunction(func, args) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
@@ -305,7 +306,7 @@ export async function injectFunction(func, args) {
 
 /**
  * Copy Text of ctx.linkText or from Active Element
- * NOTE: Chrome does not support ctx.linkText
+ * Note: Chrome does not support ctx.linkText
  * @function copyActiveElementText
  * @param {OnClickData} ctx
  */
@@ -327,7 +328,7 @@ export function copyActiveElementText(ctx) {
 
 /**
  * Copy Image SRC of document.activeElement.querySelector img
- * This is Injected because Chrome SW has no DOM and requires offscreen
+ * Note: This is injected because Chrome SW has no DOM and requires offscreen
  * @function copyActiveImageSrc
  * @param {OnClickData} ctx
  */

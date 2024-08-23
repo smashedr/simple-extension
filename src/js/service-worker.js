@@ -11,8 +11,8 @@ import {
 
 chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
-chrome.contextMenus.onClicked.addListener(onClicked)
-chrome.commands.onCommand.addListener(onCommand)
+chrome.contextMenus?.onClicked.addListener(onClicked)
+chrome.commands?.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
 
@@ -42,9 +42,9 @@ async function onInstalled(details) {
     const githubURL = 'https://github.com/smashedr/simple-extension'
     // const uninstallURL = new URL('https://link-extractor.cssnr.com/uninstall/')
     const options = await setDefaultOptions({
+        testInput: 'Default Value',
         contextMenu: true,
         showUpdate: false,
-        testInput: 'Default Value',
     })
     console.debug('options:', options)
     if (options.contextMenu) {
@@ -71,13 +71,16 @@ async function onInstalled(details) {
     // console.log('uninstallURL:', uninstallURL.href)
     // await chrome.runtime.setUninstallURL(uninstallURL.href)
     await chrome.runtime.setUninstallURL(`${githubURL}/issues`)
+
+    const platform = await chrome.runtime.getPlatformInfo()
+    console.debug('platform:', platform)
 }
 
 /**
  * On Clicked Callback
  * @function onClicked
  * @param {OnClickData} ctx
- * @param {Tab} tab
+ * @param {chrome.tabs.Tab} tab
  */
 async function onClicked(ctx, tab) {
     console.debug('onClicked:', ctx, tab)
@@ -103,10 +106,13 @@ async function onClicked(ctx, tab) {
  * On Command Callback
  * @function onCommand
  * @param {String} command
+ * @param {chrome.tabs.Tab} tab
  */
-async function onCommand(command) {
-    console.debug(`onCommand: ${command}`)
-    if (command === 'openHome') {
+async function onCommand(command, tab) {
+    console.debug(`onCommand: ${command}`, tab)
+    if (command === 'openOptions') {
+        chrome.runtime.openOptionsPage()
+    } else if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
     } else if (command === 'showPanel') {
@@ -142,7 +148,7 @@ function onChanged(changes, namespace) {
                     createContextMenus()
                 } else {
                     console.info('Disabled contextMenu...')
-                    chrome.contextMenus.removeAll()
+                    chrome.contextMenus?.removeAll()
                 }
             }
         }
@@ -154,9 +160,12 @@ function onChanged(changes, namespace) {
  * @function createContextMenus
  */
 function createContextMenus() {
+    if (!chrome.contextMenus) {
+        return console.debug('Skipping: chrome.contextMenus')
+    }
     console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
-    /** @type {Array[String[], String, String, String]} */
+    /** @type {Array[String[], String, String]} */
     const contexts = [
         [['link'], 'copyText', 'Copy Link Text'],
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
@@ -172,8 +181,7 @@ function createContextMenus() {
 /**
  * Add Context from Array
  * @function addContext
- * @param {[[String],String,String]} context
- * TODO: Update to handle parentId contexts
+ * @param {[String[],String,String?]} context
  */
 function addContext(context) {
     try {
@@ -212,7 +220,7 @@ async function setDefaultOptions(defaultOptions) {
         if (options[key] === undefined) {
             changed = true
             options[key] = value
-            console.log(`Set ${key}:`, value)
+            console.log(`%cSet ${key}:`, 'color: Khaki', value)
         }
     }
     if (changed) {
