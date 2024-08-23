@@ -6,7 +6,7 @@ import {
     copyActiveElementText,
     copyActiveImageSrc,
     injectFunction,
-    showPanel,
+    openExtPanel,
 } from './export.js'
 
 chrome.runtime.onStartup.addListener(onStartup)
@@ -89,8 +89,8 @@ async function onClicked(ctx, tab) {
     } else if (ctx.menuItemId === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
-    } else if (ctx.menuItemId === 'showPanel') {
-        await showPanel()
+    } else if (ctx.menuItemId === 'openExtPanel') {
+        await openExtPanel()
     } else if (ctx.menuItemId === 'copyText') {
         console.debug('injectFunction: copy')
         await injectFunction(copyActiveElementText, [ctx])
@@ -115,8 +115,10 @@ async function onCommand(command, tab) {
     } else if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
-    } else if (command === 'showPanel') {
-        await showPanel()
+    } else if (command === 'openExtPanel') {
+        await openExtPanel()
+    } else {
+        console.warn(`Unknown Command: ${command}`)
     }
 }
 
@@ -171,7 +173,7 @@ function createContextMenus() {
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
         [['link', 'image', 'audio', 'video'], 'separator'],
         [['all'], 'openHome', 'Home Page'],
-        [['all'], 'showPanel', 'Extension Panel'],
+        [['all'], 'openExtPanel', 'Extension Panel'],
         [['all'], 'separator'],
         [['all'], 'openOptions', 'Open Options'],
     ]
@@ -184,11 +186,10 @@ function createContextMenus() {
  * @param {[String[],String,String?]} context
  */
 function addContext(context) {
+    // console.debug('addContext:', context)
     try {
-        console.debug('addContext:', context)
         if (context[1] === 'separator') {
             const id = Math.random().toString().substring(2, 7)
-            // context = [[context], id, 'separator', 'separator']
             context[1] = `${id}`
             context.push('separator', 'separator')
         }

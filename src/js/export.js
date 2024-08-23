@@ -108,7 +108,7 @@ export async function linkClick(event, close = false) {
         if (close) window.close()
         return
     } else if (href.endsWith('html/panel.html')) {
-        await showPanel()
+        await openExtPanel()
         if (close) window.close()
         return
     } else if (href.startsWith('http')) {
@@ -251,13 +251,13 @@ export async function onRemoved(permissions) {
 }
 
 /**
- * Show Extension Panel
- * @function showPanel
+ * Open Extension Panel
+ * @function openExtPanel
  * @param {Number} height
  * @param {Number} width
  * @return {Promise<chrome.windows.Window>}
  */
-export async function showPanel(height = 520, width = 480) {
+export async function openExtPanel(height = 520, width = 480) {
     return await chrome.windows.create({
         type: 'panel',
         url: '/html/panel.html',

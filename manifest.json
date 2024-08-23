@@ -37,17 +37,17 @@
       },
       "description": "Open Options Page"
     },
-    "openHome": {
-      "suggested_key": {
-        "default": "Alt+Shift+X"
-      },
-      "description": "Open Home Page"
-    },
-    "showPanel": {
+    "openExtPanel": {
       "suggested_key": {
         "default": "Alt+Shift+W"
       },
-      "description": "Show Extension Panel"
+      "description": "Open Extension Panel"
+    },
+    "openHome": {
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      },
+      "description": "Open Home Page"
     }
   },
   "action": {
