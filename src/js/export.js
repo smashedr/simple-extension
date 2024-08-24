@@ -302,7 +302,7 @@ export async function openSidePanel(event) {
  */
 export function showToast(message, type = 'success') {
     console.debug(`showToast: ${type}: ${message}`)
-    const clone = document.querySelector('.d-none > .toast')
+    const clone = document.querySelector('#clone > .toast')
     const container = document.getElementById('toast-container')
     if (!clone || !container) {
         return console.warn('Missing clone or container:', clone, container)

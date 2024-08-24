@@ -57,15 +57,21 @@
 
     <div id="hostname" class="text-center border border-2 border-danger rounded p-1 mb-2">
         No Access to the Current Tab.
-    </div>
+    </div> <!-- hostname -->
 
     <div class="d-grid g-2 gap-2">
-        <button id="inject-script" class="btn btn-outline-warning has-perms" type="button">
-            <i class="fa-solid fa-code me-1"></i> Inject Script</button>
-        <a class="btn btn-primary" href="../html/home.html">
-            <i class="fa-solid fa-house-chimney me-1"></i> Open Home Page</a>
-        <a class="btn btn-primary" href="../html/panel.html">
-            <i class="fa-regular fa-window-maximize me-1"></i> Open Extension Panel</a>
+        <button id="inject-script" class="btn btn-outline-warning d-flex align-items-center hvr-grow-sm has-perms">
+            <i class="fa-solid fa-code me-1"></i>
+            <span class="flex-fill text-center me-4">Inject Script</span>
+        </button>
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/home.html">
+            <i class="fa-solid fa-house-chimney me-1"></i>
+            <span class="flex-fill text-center me-4">Open Home Page</span>
+        </a>
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html">
+            <i class="fa-regular fa-window-maximize me-1"></i>
+            <span class="flex-fill text-center me-4">Open Extension Panel</span>
+        </a>
         <button id="side-panel" class="btn btn-primary">
             <i class="fa-regular fa-window-maximize me-1"></i> Open Side Panel</button>
     </div> <!-- d-grid -->
@@ -108,13 +114,13 @@
     <div id="toast-container" class="toast-container bottom-0 end-0 p-3"></div>
 </div> <!-- toast -->
 
-<div class="d-none">
-    <div class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="5000">
+<div id="clone" class="d-none">
+    <div class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="6000">
         <div class="d-flex">
             <div class="toast-body text-break small"></div>
         </div>
     </div>
-</div> <!-- d-none -->
+</div> <!-- clone -->
 
 <script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
