@@ -44,14 +44,13 @@ document
  */
 async function initOptions() {
     console.debug('initOptions')
-
-    updateManifest()
-    setShortcuts().then()
-    checkPerms().then()
-
-    const { options } = await chrome.storage.sync.get(['options'])
-    console.debug('options:', options)
-    updateOptions(options)
+    void updateManifest()
+    void setShortcuts()
+    void checkPerms()
+    chrome.storage.sync.get(['options']).then((items) => {
+        console.debug('options:', items.options)
+        updateOptions(items.options)
+    })
 }
 
 /**
