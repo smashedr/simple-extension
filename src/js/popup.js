@@ -34,11 +34,11 @@ const hostnameEl = document.getElementById('hostname')
  */
 async function initPopup() {
     console.debug('initPopup')
-    updateManifest()
-
-    const { options } = await chrome.storage.sync.get(['options'])
-    console.debug('options:', options)
-    updateOptions(options)
+    void updateManifest()
+    chrome.storage.sync.get(['options']).then((items) => {
+        console.debug('options:', items.options)
+        updateOptions(items.options)
+    })
 
     if (chrome.runtime.lastError) {
         showToast(chrome.runtime.lastError.message, 'warning')

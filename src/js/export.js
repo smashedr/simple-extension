@@ -150,7 +150,7 @@ export async function activateOrOpen(url, open = true) {
  * Update DOM with Manifest Details
  * @function updateManifest
  */
-export function updateManifest() {
+export async function updateManifest() {
     const manifest = chrome.runtime.getManifest()
     document
         .querySelectorAll('.version')

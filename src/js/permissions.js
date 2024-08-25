@@ -25,8 +25,10 @@ document
  */
 async function domContentLoaded() {
     console.debug('domContentLoaded')
-    updateManifest()
-    await checkPerms()
+    void updateManifest()
+    checkPerms().then((hasPerms) => {
+        if (!hasPerms) console.log('%cMissing Host Permissions', 'color: Red')
+    })
 }
 
 /**
