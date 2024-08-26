@@ -25,7 +25,7 @@ document
  */
 async function domContentLoaded() {
     console.debug('domContentLoaded')
-    void updateManifest()
+    updateManifest()
     checkPerms().then((hasPerms) => {
         if (!hasPerms) console.log('%cMissing Host Permissions', 'color: Red')
     })
