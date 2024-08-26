@@ -34,7 +34,7 @@ const hostnameEl = document.getElementById('hostname')
  */
 async function initPopup() {
     console.debug('initPopup')
-    void updateManifest()
+    updateManifest()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
         updateOptions(items.options)

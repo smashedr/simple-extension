@@ -32,7 +32,7 @@ document
  */
 async function domContentLoaded() {
     console.debug('domContentLoaded')
-    void checkPerms()
+    checkPerms()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
     })
