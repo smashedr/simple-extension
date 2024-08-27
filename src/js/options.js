@@ -44,8 +44,11 @@ document
  */
 async function initOptions() {
     console.debug('initOptions')
+    // noinspection ES6MissingAwait
     updateManifest()
+    // noinspection ES6MissingAwait
     setShortcuts()
+    // noinspection ES6MissingAwait
     checkPerms()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)

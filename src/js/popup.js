@@ -13,9 +13,11 @@ import {
 
 document.addEventListener('DOMContentLoaded', initPopup)
 document.getElementById('inject-script').addEventListener('click', injectScript)
+// noinspection JSCheckFunctionSignatures
 document
     .querySelectorAll('.grant-permissions')
     .forEach((el) => el.addEventListener('click', (e) => grantPerms(e, true)))
+// noinspection JSCheckFunctionSignatures
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', (e) => linkClick(e, true)))
@@ -34,6 +36,7 @@ const hostnameEl = document.getElementById('hostname')
  */
 async function initPopup() {
     console.debug('initPopup')
+    // noinspection ES6MissingAwait
     updateManifest()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
