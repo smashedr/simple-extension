@@ -29,16 +29,16 @@ Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox
 ## Features
 
 * Options Page
+* Toolbar Popup
 * Extension Page
 * Extension Panel
-* Toolbar Popup
 * Context Menu
 * Keyboard Shortcuts
-* Service Worker
 * Content Script
+* Service Worker
 * Host Permissions
-* Auto Dark/Light Mode w/ Theme Switcher
-* Mobile Compatible
+* Dark/Light Theme Switcher
+* Fully Mobile Compatible
 
 ## Configuration
 
@@ -128,6 +128,8 @@ To support this project install, star, or provide a 5-star rating on other Web E
 
 - [Link Extractor](https://github.com/cssnr/link-extractor)
 - [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab)
+- [Cache Cleaner](https://github.com/cssnr/cache-cleaner)
+- [Auto Auth](https://github.com/cssnr/auto-auth)
 - [Cache Cleaner](https://github.com/cssnr/cache-cleaner)
 - [Auto Auth](https://github.com/cssnr/auto-auth)
 - [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader)
