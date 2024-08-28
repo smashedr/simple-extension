@@ -2,7 +2,9 @@
 
 import { showToast } from './export.js'
 
+// noinspection TypeScriptUMDGlobal
 if (typeof ClipboardJS !== 'undefined') {
+    // noinspection TypeScriptUMDGlobal
     const clipboard = new ClipboardJS(
         '[data-clipboard-text],[data-clipboard-target]'
     )
@@ -10,7 +12,9 @@ if (typeof ClipboardJS !== 'undefined') {
         // console.debug('clipboard.success:', event)
         const text = event.text.trim()
         console.debug(`text: "${text}"`)
+        // noinspection JSUnresolvedReference
         if (event.trigger.dataset.toast) {
+            // noinspection JSUnresolvedReference
             showToast(event.trigger.dataset.toast)
         } else {
             showToast('Copied to Clipboard')

@@ -29,6 +29,6 @@ if (!window.injected) {
  * @param {Function} sendResponse
  */
 function onMessage(message, sender, sendResponse) {
-    console.log(`onMessage: ${message}`, sender, sendResponse)
+    console.log('onMessage:', message, sender)
     sendResponse('Response from Injected onMessage handler')
 }

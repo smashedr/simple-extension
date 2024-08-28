@@ -15,9 +15,11 @@ import {
 document.addEventListener('DOMContentLoaded', initPopup)
 document.getElementById('inject-script').addEventListener('click', injectScript)
 document.getElementById('side-panel').addEventListener('click', openSidePanel)
+// noinspection JSCheckFunctionSignatures
 document
     .querySelectorAll('.grant-permissions')
     .forEach((el) => el.addEventListener('click', (e) => grantPerms(e, true)))
+// noinspection JSCheckFunctionSignatures
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', (e) => linkClick(e, true)))
@@ -36,6 +38,7 @@ const hostnameEl = document.getElementById('hostname')
  */
 async function initPopup() {
     console.debug('initPopup')
+    // noinspection ES6MissingAwait
     updateManifest()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
@@ -112,6 +115,6 @@ async function injectScript(event) {
         window.close()
     } catch (e) {
         showToast(e.toString(), 'danger')
-        console.info(e)
+        console.log(e)
     }
 }

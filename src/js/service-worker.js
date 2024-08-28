@@ -10,28 +10,12 @@ import {
     openSidePanel,
 } from './export.js'
 
-chrome.runtime.onStartup.addListener(onStartup)
 chrome.runtime.onInstalled.addListener(onInstalled)
+chrome.runtime.onStartup.addListener(onStartup)
 chrome.contextMenus?.onClicked.addListener(onClicked)
 chrome.commands?.onCommand.addListener(onCommand)
 chrome.runtime.onMessage.addListener(onMessage)
 chrome.storage.onChanged.addListener(onChanged)
-
-/**
- * On Startup Callback
- * @function onStartup
- */
-async function onStartup() {
-    console.log('onStartup')
-    if (typeof browser !== 'undefined') {
-        console.log('Firefox CTX Menu Workaround')
-        const { options } = await chrome.storage.sync.get(['options'])
-        console.debug('options:', options)
-        if (options.contextMenu) {
-            createContextMenus()
-        }
-    }
-}
 
 /**
  * On Installed Callback
@@ -41,7 +25,6 @@ async function onStartup() {
 async function onInstalled(details) {
     console.log('onInstalled:', details)
     const githubURL = 'https://github.com/smashedr/simple-extension'
-    // const uninstallURL = new URL('https://link-extractor.cssnr.com/uninstall/')
     const options = await setDefaultOptions({
         testInput: 'Default Value',
         contextMenu: true,
@@ -68,13 +51,36 @@ async function onInstalled(details) {
             }
         }
     }
-    // uninstallURL.searchParams.append('version', manifest.version)
-    // console.log('uninstallURL:', uninstallURL.href)
-    // await chrome.runtime.setUninstallURL(uninstallURL.href)
-    await chrome.runtime.setUninstallURL(`${githubURL}/issues`)
+    setUninstallURL()
 
     const platform = await chrome.runtime.getPlatformInfo()
     console.debug('platform:', platform)
+}
+
+/**
+ * On Startup Callback
+ * @function onStartup
+ */
+async function onStartup() {
+    console.log('onStartup')
+    // noinspection JSUnresolvedReference
+    if (typeof browser !== 'undefined') {
+        console.log('Firefox Startup Workarounds')
+        const { options } = await chrome.storage.sync.get(['options'])
+        console.debug('options:', options)
+        if (options.contextMenu) {
+            createContextMenus()
+        }
+        setUninstallURL()
+    }
+}
+
+function setUninstallURL() {
+    const manifest = chrome.runtime.getManifest()
+    const url = new URL('https://link-extractor.cssnr.com/uninstall/')
+    url.searchParams.append('version', manifest.version)
+    chrome.runtime.setUninstallURL(url.href)
+    console.debug(`setUninstallURL: ${url.href}`)
 }
 
 /**
@@ -135,7 +141,7 @@ async function onCommand(command, tab) {
  * @param {Function} sendResponse
  */
 function onMessage(message, sender, sendResponse) {
-    console.debug('onMessage: message, sender:', message, sender)
+    console.debug('onMessage:', message, sender)
     sendResponse('Success.')
 }
 
@@ -151,10 +157,10 @@ function onChanged(changes, namespace) {
         if (namespace === 'sync' && key === 'options' && oldValue && newValue) {
             if (oldValue.contextMenu !== newValue.contextMenu) {
                 if (newValue?.contextMenu) {
-                    console.info('Enabled contextMenu...')
+                    console.log('%cEnabled contextMenu...', 'color: Lime')
                     createContextMenus()
                 } else {
-                    console.info('Disabled contextMenu...')
+                    console.log('%cDisabled contextMenu...', 'color: OrangeRed')
                     chrome.contextMenus?.removeAll()
                 }
             }
@@ -207,7 +213,7 @@ function addContext(context) {
             type: context[3] || 'normal',
         })
     } catch (e) {
-        console.log('Error Adding Context:', e)
+        console.log('%cError Adding Context:', 'color: Yellow', e)
     }
 }
 
@@ -227,12 +233,12 @@ async function setDefaultOptions(defaultOptions) {
         if (options[key] === undefined) {
             changed = true
             options[key] = value
-            console.log(`%cSet ${key}:`, 'color: Khaki', value)
+            console.log(`Set %c${key}:`, 'color: Khaki', value)
         }
     }
     if (changed) {
         await chrome.storage.sync.set({ options })
-        console.log('changed:', options)
+        console.log('changed options:', options)
     }
     return options
 }

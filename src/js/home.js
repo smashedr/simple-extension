@@ -32,6 +32,7 @@ document
  */
 async function domContentLoaded() {
     console.debug('domContentLoaded')
+    // noinspection ES6MissingAwait
     checkPerms()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
