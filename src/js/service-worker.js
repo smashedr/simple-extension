@@ -21,7 +21,7 @@ chrome.storage.onChanged.addListener(onChanged)
 /**
  * On Installed Callback
  * @function onInstalled
- * @param {InstalledDetails} details
+ * @param {chrome.runtime.InstalledDetails} details
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
@@ -120,7 +120,7 @@ async function onClicked(ctx, tab) {
  * @param {chrome.tabs.Tab} tab
  */
 async function onCommand(command, tab) {
-    console.debug(`onCommand: ${command}`, tab)
+    console.debug('onCommand:', command, tab)
     if (command === 'openOptions') {
         chrome.runtime.openOptionsPage()
     } else if (command === 'openHome') {
