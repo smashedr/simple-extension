@@ -8,6 +8,7 @@ import {
     injectFunction,
     openExtPanel,
     openSidePanel,
+    githubURL,
 } from './export.js'
 
 chrome.runtime.onInstalled.addListener(onInstalled)
@@ -24,7 +25,6 @@ chrome.storage.onChanged.addListener(onChanged)
  */
 async function onInstalled(details) {
     console.log('onInstalled:', details)
-    const githubURL = 'https://github.com/smashedr/simple-extension'
     const options = await setDefaultOptions({
         testInput: 'Default Value',
         contextMenu: true,
@@ -76,11 +76,13 @@ async function onStartup() {
 }
 
 function setUninstallURL() {
-    const manifest = chrome.runtime.getManifest()
-    const url = new URL('https://link-extractor.cssnr.com/uninstall/')
-    url.searchParams.append('version', manifest.version)
-    chrome.runtime.setUninstallURL(url.href)
-    console.debug(`setUninstallURL: ${url.href}`)
+    // const manifest = chrome.runtime.getManifest()
+    // const url = new URL('https://link-extractor.cssnr.com/uninstall/')
+    // url.searchParams.append('version', manifest.version)
+    // chrome.runtime.setUninstallURL(url.href)
+    // console.debug(`setUninstallURL: ${url.href}`)
+    chrome.runtime.setUninstallURL(`${githubURL}/issues`)
+    console.debug(`setUninstallURL: ${githubURL}/issues`)
 }
 
 /**
