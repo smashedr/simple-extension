@@ -16,7 +16,7 @@
 <div class="container-fluid p-2">
     <div class="d-flex flex-row align-items-center">
         <div class="dropdown">
-            <a class="nav-link hvr-grow" id="bd-theme-disabled" title="Theme Switcher" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link" id="bd-theme-disabled" title="Theme Switcher" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 <i id="theme-icon" class="fa-solid fa-circle-half-stroke fa-lg" style="min-width: 20px;"></i> <i class="fa-solid fa-caret-down fa-xs mx-1"></i></a>
             <ul class="dropdown-menu auto dropdown-menu-end" aria-labelledby="bd-theme-disabled">
                 <li><button class="dropdown-item" data-bs-theme-value="dark" aria-pressed="false">
@@ -47,7 +47,7 @@
 <div class="container-fluid p-3">
 
     <div class="d-none grant-perms mb-2">
-        <button class="btn btn-lg btn-success w-100 mb-1 grant-permissions" type="button"
+        <button class="btn btn-lg btn-success w-100 hvr-grow-sm mb-1 grant-permissions" type="button"
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
                 data-bs-title="This Extension Requires Host Permissions to Function.">
             <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</button>
@@ -55,7 +55,7 @@
             More Information on Permissions</a></p>
     </div> <!-- grant-perms -->
 
-    <div id="hostname" class="text-center border border-2 border-danger rounded p-1 mb-2">
+    <div id="hostname" class="text-center text-ellipsis border border-2 border-danger rounded p-1 mb-2">
         No Access to the Current Tab.
     </div> <!-- hostname -->
 

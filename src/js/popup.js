@@ -113,6 +113,6 @@ async function injectScript(event) {
         window.close()
     } catch (e) {
         showToast(e.toString(), 'danger')
-        console.info(e)
+        console.log(e)
     }
 }

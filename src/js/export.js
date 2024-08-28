@@ -28,7 +28,7 @@ export async function saveOptions(event) {
     }
     if (value !== undefined) {
         options[key] = value
-        console.log(`%cSet: ${key}:`, 'color: Lime', value)
+        console.log(`Set %c${key}:`, 'color: Khaki', value)
         await chrome.storage.sync.set({ options })
     } else {
         console.warn(`No Value for key: ${key}`)
@@ -322,7 +322,7 @@ export function copyActiveElementText(ctx) {
     if (text?.length) {
         navigator.clipboard.writeText(text).then()
     } else {
-        console.info('No Text to Copy.')
+        console.log('%cNo Text to Copy.', 'color: Yellow')
     }
 }
 
@@ -338,7 +338,7 @@ export function copyActiveImageSrc(ctx) {
     // console.debug('copyActiveElementText:', ctx, document.activeElement)
     // const img = document.activeElement.querySelector('img')
     // if (!img?.src) {
-    //     return console.info('Image not found or no src.', img)
+    //     return console.log('Image not found or no src.', img)
     // }
     // console.log('img.src:', img.src)
     // navigator.clipboard.writeText(img.src).then()
