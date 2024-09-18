@@ -199,7 +199,8 @@ export async function checkPerms() {
  */
 export async function grantPerms(event, close = false) {
     console.debug('grantPerms:', event)
-    requestPerms().then()
+    // noinspection ES6MissingAwait
+    requestPerms()
     if (close) {
         window.close()
     }
