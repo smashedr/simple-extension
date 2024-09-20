@@ -199,7 +199,8 @@ export async function checkPerms() {
  */
 export async function grantPerms(event, close = false) {
     console.debug('grantPerms:', event)
-    requestPerms().then()
+    // noinspection ES6MissingAwait
+    requestPerms()
     if (close) {
         window.close()
     }
@@ -258,17 +259,26 @@ export async function onRemoved(permissions) {
 /**
  * Open Extension Panel
  * @function openExtPanel
- * @param {Number} height
- * @param {Number} width
+ * @param {String} [url]
+ * @param {Number} [width]
+ * @param {Number} [height]
  * @return {Promise<chrome.windows.Window>}
  */
-export async function openExtPanel(height = 520, width = 480) {
-    return await chrome.windows.create({
-        type: 'panel',
-        url: '/html/panel.html',
-        width,
-        height,
-    })
+export async function openExtPanel(
+    url = '/html/panel.html',
+    width = 1280,
+    height = 720
+) {
+    console.debug(`openExtPanel: ${url}`, width, height)
+    const windows = await chrome.windows.getAll({ populate: true })
+    for (const window of windows) {
+        // console.debug('window:', window)
+        if (window.tabs[0]?.url?.endsWith(url)) {
+            console.debug(`%c Panel found: ${window.id}`, 'color: Lime')
+            return chrome.windows.update(window.id, { focused: true })
+        }
+    }
+    return chrome.windows.create({ type: 'panel', url, width, height })
 }
 
 /**
