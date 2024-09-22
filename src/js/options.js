@@ -2,7 +2,7 @@
 
 import {
     checkPerms,
-    enableSite,
+    toggleSite,
     grantPerms,
     linkClick,
     onAdded,
@@ -181,7 +181,7 @@ async function deleteHost(event) {
     event.preventDefault()
     const site = event.currentTarget?.dataset?.site
     console.info(`Delete Host: ${site}`)
-    await enableSite(site, false)
+    await toggleSite(site)
     // const { sites } = await chrome.storage.local.get(['sites'])
     // console.debug('sites:', sites)
     // // if (site && site in sites) {

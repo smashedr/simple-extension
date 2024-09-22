@@ -2,12 +2,12 @@
 
 import {
     checkPerms,
-    enableSite,
     grantPerms,
     injectFunction,
     linkClick,
     saveOptions,
     showToast,
+    toggleSite,
     updateManifest,
     updateOptions,
 } from './export.js'
@@ -47,9 +47,9 @@ async function initPopup() {
         updateOptions(items.options)
     })
 
-    if (chrome.runtime.lastError) {
-        showToast(chrome.runtime.lastError.message, 'warning')
-    }
+    // if (chrome.runtime.lastError) {
+    //     showToast(chrome.runtime.lastError.message, 'warning')
+    // }
 
     // Check Host Permissions
     const hasPerms = await checkPerms()
@@ -136,18 +136,11 @@ async function injectScript(event) {
  */
 async function toggleSiteChange(event) {
     console.debug('toggleSiteChange:', event)
-    // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-    // console.debug('tab:', tab)
     const hostname = hostnameEl.textContent
-    console.debug('hostname:', hostname)
-    // const { sites } = await chrome.storage.local.get(['sites'])
-    console.debug('event.target.checked:', event.target.checked)
-    if (event.target.checked) {
+    const enabled = await toggleSite(hostname)
+    if (enabled) {
         switchEl.classList.replace('border-secondary', 'border-success')
-        await enableSite(hostname)
     } else {
         switchEl.classList.replace('border-success', 'border-secondary')
-        await enableSite(hostname, false)
     }
-    // window.close()
 }
