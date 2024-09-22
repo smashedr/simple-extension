@@ -53,6 +53,7 @@ async function onInstalled(details) {
         }
     }
     setUninstallURL()
+    await chrome.action.setBadgeBackgroundColor({ color: 'green' })
 
     const platform = await chrome.runtime.getPlatformInfo()
     console.debug('platform:', platform)
@@ -149,6 +150,15 @@ async function onCommand(command, tab) {
  */
 function onMessage(message, sender, sendResponse) {
     console.debug('onMessage:', message, sender)
+    const tabId = message.tabId || sender.tab?.id
+    if ('badgeText' in message && tabId) {
+        console.debug(`tabId: ${tabId} text:`, message.badgeText)
+        // noinspection JSIgnoredPromiseFromCall
+        chrome.action.setBadgeText({
+            tabId: tabId,
+            text: message.badgeText,
+        })
+    }
     sendResponse('Success.')
 }
 

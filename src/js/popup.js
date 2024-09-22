@@ -61,7 +61,7 @@ async function initPopup() {
     const siteInfo = await getSiteInfo()
     if (!siteInfo) {
         document
-            .querySelectorAll('.has-perms')
+            .querySelectorAll('.tab-perms')
             .forEach((el) => el.classList.add('d-none'))
         switchEl.classList.replace('border-secondary', 'border-danger')
         return console.log('%cNo Tab Permissions', 'color: Yellow')

@@ -296,7 +296,7 @@ export async function openExtPanel(
  * @param {String} message
  * @param {String} type
  */
-export function showToast(message, type = 'success') {
+export function showToast(message, type = 'primary') {
     console.debug(`showToast: ${type}: ${message}`)
     const clone = document.querySelector('#clone > .toast')
     const container = document.getElementById('toast-container')

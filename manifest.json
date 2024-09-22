@@ -50,9 +50,6 @@
       "description": "Open Extension Panel"
     },
     "openHome": {
-      "suggested_key": {
-        "default": "Alt+Shift+P"
-      },
       "description": "Open Home Page"
     }
   },

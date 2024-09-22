@@ -52,11 +52,11 @@ async function initOptions() {
     // noinspection ES6MissingAwait
     checkPerms()
     chrome.storage.sync.get(['options']).then((items) => {
-        console.debug('options:', items.options)
+        // console.debug('options:', items.options)
         updateOptions(items.options)
     })
     chrome.storage.local.get(['sites']).then((items) => {
-        console.debug('sites:', items.sites)
+        // console.debug('sites:', items.sites)
         updateTable(items.sites)
     })
 }
@@ -136,6 +136,7 @@ async function copySupport(event) {
  * @param {String[]} data
  */
 function updateTable(data) {
+    console.debug('updateTable:', data)
     const tbody = document.querySelector('#hosts-table > tbody')
     tbody.innerHTML = ''
 
@@ -192,13 +193,5 @@ async function deleteHost(event) {
     const site = event.currentTarget?.dataset?.site
     console.info(`Delete Host: ${site}`)
     await toggleSite(site)
-    // const { sites } = await chrome.storage.local.get(['sites'])
-    // console.debug('sites:', sites)
-    // // if (site && site in sites) {
-    // if (site && sites.includes(site)) {
-    //     // delete sites[site]
-    //     const removed = sites.splice(sites.indexOf(site), 1)
-    //     console.debug('removed:', removed)
-    //     await chrome.storage.local.set({ sites })
-    // }
+    showToast('Deleted Host', 'info')
 }
