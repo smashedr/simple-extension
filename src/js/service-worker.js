@@ -26,6 +26,7 @@ async function onInstalled(details) {
     console.log('onInstalled:', details)
     const options = await setDefaultOptions({
         testInput: 'Default Value',
+        testNumber: 60,
         contextMenu: true,
         showUpdate: false,
     })
@@ -80,7 +81,6 @@ function setUninstallURL() {
     // url.searchParams.append('version', manifest.version)
     // chrome.runtime.setUninstallURL(url.href)
     // console.debug(`setUninstallURL: ${url.href}`)
-    // chrome.runtime.setUninstallURL(url.href)
     chrome.runtime.setUninstallURL(`${githubURL}/issues`)
     console.debug(`setUninstallURL: ${githubURL}/issues`)
 }
@@ -176,7 +176,7 @@ function createContextMenus() {
     }
     console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
-    /** @type {Array[String[], String, String]} */
+    /** @type {Array[chrome.contextMenus.ContextType[], String, String]} */
     const contexts = [
         [['link'], 'copyText', 'Copy Link Text'],
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
@@ -192,7 +192,7 @@ function createContextMenus() {
 /**
  * Add Context from Array
  * @function addContext
- * @param {[String[],String,String?]} context
+ * @param {[chrome.contextMenus.ContextType[],String,String,chrome.contextMenus.ContextItemType?]} context
  */
 function addContext(context) {
     // console.debug('addContext:', context)

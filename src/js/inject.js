@@ -1,7 +1,7 @@
 // JS Execute Script inject.js
 
 ;(async () => {
-    console.log('%cRUNNING: inject.js', 'color: Khaki')
+    console.log('%cSimple Extension: inject.js', 'color: Khaki')
     // Use function from content-script.js
     const result = contentScriptFunction()
     console.log(`contentScriptFunction: ${result}`)

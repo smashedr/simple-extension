@@ -24,7 +24,16 @@ export async function saveOptions(event) {
     } else if (event.target.type === 'checkbox') {
         value = event.target.checked
     } else if (event.target.type === 'number') {
-        value = event.target.value.toString()
+        const number = parseFloat(event.target.value)
+        let min = parseFloat(event.target.min)
+        let max = parseFloat(event.target.max)
+        if (!isNaN(number) && number >= min && number <= max) {
+            event.target.value = number.toString()
+            value = number
+        } else {
+            event.target.value = options[event.target.id]
+            return
+        }
     } else {
         value = event.target.value
     }

@@ -1,6 +1,6 @@
 // JS Content Script
 
-console.log('%cRUNNING content-script.js', 'color: Khaki')
+console.log('%cSimple Extension: content-script.js', 'color: Khaki')
 
 if (!chrome.storage.onChanged.hasListener(onChanged)) {
     console.debug('Adding storage.onChanged Listener')
