@@ -20,6 +20,7 @@ chrome.permissions.onRemoved.addListener(onRemoved)
 
 document.addEventListener('DOMContentLoaded', initOptions)
 document.getElementById('copy-support').addEventListener('click', copySupport)
+document.getElementById('sites-input').addEventListener('change', sitesChange)
 document
     .querySelectorAll('.revoke-permissions')
     .forEach((el) => el.addEventListener('click', revokePerms))
@@ -38,6 +39,21 @@ document
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
+document
+    .querySelectorAll('.import-export')
+    .forEach((el) => el.addEventListener('click', importExportClick))
+document
+    .querySelectorAll('.form-control')
+    .forEach((el) =>
+        el.addEventListener('input', () => el.classList.remove('is-invalid'))
+    )
+document
+    .querySelectorAll('.modal')
+    .forEach((el) =>
+        el.addEventListener('shown.bs.modal', () =>
+            el.querySelector('input,textarea').focus()
+        )
+    )
 
 /**
  * Initialize Options
@@ -184,7 +200,7 @@ function updateTable(data) {
 }
 
 /**
- * Delete Host
+ * Delete Host Click Callback
  * @function deleteHost
  * @param {MouseEvent} event
  */
@@ -195,4 +211,119 @@ async function deleteHost(event) {
     console.info(`Delete Host: ${site}`)
     await toggleSite(site)
     showToast('Deleted Host', 'info')
+}
+
+/**
+ * Import/Export Click Callbacks
+ * @function importExportClick
+ * @param {MouseEvent} event
+ */
+async function importExportClick(event) {
+    console.debug('importExportClick:', event)
+    const target = event.currentTarget
+    event.preventDefault()
+    const action = target.dataset.action
+    console.debug('action:', action)
+    if (action === 'export') {
+        event.preventDefault()
+        const { sites } = await chrome.storage.sync.get(['sites'])
+        console.debug('sites:', sites)
+        if (sites.length === 0) {
+            return showToast('No Hosts to Export', 'warning')
+        }
+        const json = JSON.stringify(sites, null, 2)
+        textFileDownload('simple-extension-sites.txt', json)
+    } else if (action === 'file') {
+        document.getElementById('sites-input').click()
+    } else if (action === 'text') {
+        const el = document.getElementById(target.dataset.id)
+        console.debug('el:', el)
+        if (!el.value) {
+            el.focus()
+        } else {
+            try {
+                const data = JSON.parse(el.value)
+                console.debug('data:', data)
+                const count = await importSites(data)
+                const type = count ? 'success' : 'warning'
+                showToast(`Imported ${count}/${data.length} Hosts.`, type)
+                $('#import-modal').modal('hide')
+                el.value = ''
+            } catch (e) {
+                console.debug('Import Error:', e)
+                el.nextElementSibling.textContent = `Import Error: ${e.message}`
+                el.classList.add('is-invalid')
+                el.focus()
+                // showToast(`Import Error: ${e.message}`, 'danger')
+            }
+        }
+    } else if (action === 'clear') {
+        const el = document.getElementById(target.dataset.id)
+        console.debug('el:', el)
+        el.value = ''
+        el.classList.remove('is-invalid')
+        el.focus()
+    }
+}
+
+/**
+ * Sites Input Change Callback
+ * @function sitesChange
+ * @param {InputEvent} event
+ */
+async function sitesChange(event) {
+    console.debug('sitesChange:', event)
+    event.preventDefault()
+    try {
+        const file = event.target.files.item(0)
+        const text = await file.text()
+        const data = JSON.parse(text)
+        console.debug('data:', data)
+        const count = await importSites(data)
+        const type = count ? 'success' : 'warning'
+        showToast(`Imported ${count}/${data.length} Hosts.`, type)
+    } catch (e) {
+        console.log('Import error:', e)
+        showToast(`Import Error: ${e.message}`, 'danger')
+    }
+}
+
+/**
+ * Import Sites Handler
+ * @function sitesChange
+ * @param {String[]} data
+ * @return {Promise<Number>}
+ */
+async function importSites(data) {
+    console.debug('importSites:', data)
+    const { sites } = await chrome.storage.sync.get(['sites'])
+    let count = 0
+    for (const site of data) {
+        if (!sites.includes(site)) {
+            sites.push(site)
+            count++
+        }
+    }
+    await chrome.storage.sync.set({ sites })
+    return count
+}
+
+/**
+ * Text File Download
+ * @function textFileDownload
+ * @param {String} filename
+ * @param {String} text
+ */
+function textFileDownload(filename, text) {
+    console.debug(`textFileDownload: ${filename}`)
+    const element = document.createElement('a')
+    element.setAttribute(
+        'href',
+        'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+    )
+    element.setAttribute('download', filename)
+    element.classList.add('d-none')
+    document.body.appendChild(element)
+    element.click()
+    document.body.removeChild(element)
 }

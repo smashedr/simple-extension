@@ -7,6 +7,8 @@ if (!chrome.storage.onChanged.hasListener(onChanged)) {
     chrome.storage.onChanged.addListener(onChanged)
 }
 
+let tabEnabled = false
+
 ;(async () => {
     // get options
     // const { options } = await chrome.storage.sync.get(['options'])
@@ -19,6 +21,7 @@ if (!chrome.storage.onChanged.hasListener(onChanged)) {
     console.log('sites:', sites)
     console.log('window.location.hostname:', window.location.hostname)
     if (sites.includes(window.location.hostname)) {
+        tabEnabled = true
         const response = await chrome.runtime.sendMessage({ badgeText: 'On' })
         console.log('response:', response)
     }
@@ -38,12 +41,23 @@ async function onChanged(changes, namespace) {
         }
         if (namespace === 'sync' && key === 'sites') {
             console.debug('sync.sites', oldValue, newValue)
-            console.debug('window.location.hostname', window.location.hostname)
-            if (newValue.includes(window.location.hostname)) {
-                await chrome.runtime.sendMessage({ badgeText: 'On' })
-            } else {
-                await chrome.runtime.sendMessage({ badgeText: '' })
-            }
+            await sitesChange(newValue)
+        }
+    }
+}
+
+async function sitesChange(data) {
+    console.debug('sitesChange', data)
+    console.debug('window.location.hostname', window.location.hostname)
+    if (data.includes(window.location.hostname)) {
+        await chrome.runtime.sendMessage({ badgeText: 'On' })
+        if (!tabEnabled) {
+            tabEnabled = true
+        }
+    } else {
+        await chrome.runtime.sendMessage({ badgeText: '' })
+        if (tabEnabled) {
+            tabEnabled = false
         }
     }
 }

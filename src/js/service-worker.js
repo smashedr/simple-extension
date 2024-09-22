@@ -116,8 +116,8 @@ async function onClicked(ctx, tab) {
         await toggleSite(url.hostname)
     } else if (ctx.menuItemId === 'openPopup') {
         await chrome.action.openPopup()
-    } else if (ctx.menuItemId === 'openHome') {
-        const url = chrome.runtime.getURL('/html/home.html')
+    } else if (ctx.menuItemId === 'openPage') {
+        const url = chrome.runtime.getURL('/html/page.html')
         await activateOrOpen(url)
     } else if (ctx.menuItemId === 'openExtPanel') {
         await openExtPanel()
@@ -145,8 +145,8 @@ async function onCommand(command, tab) {
     } else if (command === 'toggleSite') {
         const url = new URL(tab.url)
         await toggleSite(url.hostname)
-    } else if (command === 'openHome') {
-        const url = chrome.runtime.getURL('/html/home.html')
+    } else if (command === 'openPage') {
+        const url = chrome.runtime.getURL('/html/page.html')
         await activateOrOpen(url)
     } else if (command === 'openExtPanel') {
         await openExtPanel()
@@ -217,7 +217,7 @@ function createContextMenus() {
         [['all'], 'toggleSite', 'Toggle Site'],
         [['all'], 'separator'],
         [['all'], 'openPopup', 'Open Popup'],
-        [['all'], 'openHome', 'Home Page'],
+        [['all'], 'openPage', 'Extension Page'],
         [['all'], 'openExtPanel', 'Extension Panel'],
         [['all'], 'separator'],
         [['all'], 'openOptions', 'Open Options'],

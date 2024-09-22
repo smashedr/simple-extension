@@ -49,8 +49,8 @@
       },
       "description": "Open Extension Panel"
     },
-    "openHome": {
-      "description": "Open Home Page"
+    "openPage": {
+      "description": "Open Extension Page"
     }
   },
   "action": {

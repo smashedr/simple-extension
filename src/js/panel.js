@@ -1,4 +1,4 @@
-// JS for home.html
+// JS for panel.html
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document.getElementById('close').addEventListener('click', closePanel)
