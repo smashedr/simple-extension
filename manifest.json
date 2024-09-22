@@ -31,6 +31,12 @@
       },
       "description": "Show Popup Action"
     },
+    "toggleSite": {
+      "suggested_key": {
+        "default": "Alt+Shift+N"
+      },
+      "description": "Toggle Current Site"
+    },
     "openOptions": {
       "suggested_key": {
         "default": "Alt+Shift+O"

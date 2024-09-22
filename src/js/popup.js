@@ -2,6 +2,7 @@
 
 import {
     checkPerms,
+    enableSite,
     grantPerms,
     injectFunction,
     linkClick,
@@ -31,7 +32,7 @@ document
 const hostnameEl = document.getElementById('hostname')
 const switchEl = document.getElementById('switch')
 const toggleSiteEl = document.getElementById('toggle-site')
-toggleSiteEl.addEventListener('change', toggleSite)
+toggleSiteEl.addEventListener('change', toggleSiteChange)
 
 /**
  * Initialize Popup
@@ -130,33 +131,23 @@ async function injectScript(event) {
 
 /**
  * Toggle Site Change Callback
- * @function toggleSite
+ * @function toggleSiteChange
  * @param {InputEvent} event
  */
-async function toggleSite(event) {
-    console.debug('toggleSiteClick:', event)
+async function toggleSiteChange(event) {
+    console.debug('toggleSiteChange:', event)
     // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     // console.debug('tab:', tab)
     const hostname = hostnameEl.textContent
     console.debug('hostname:', hostname)
-    const { sites } = await chrome.storage.local.get(['sites'])
+    // const { sites } = await chrome.storage.local.get(['sites'])
     console.debug('event.target.checked:', event.target.checked)
     if (event.target.checked) {
         switchEl.classList.replace('border-secondary', 'border-success')
-        // if (!(hostname in sites)) {
-        if (!sites.includes(hostname)) {
-            // sites[hostname] = {}
-            console.debug('added:', hostname)
-            sites.push(hostname)
-        }
-        // } else if (hostname in sites) {
-    } else if (sites.includes(hostname)) {
+        await enableSite(hostname)
+    } else {
         switchEl.classList.replace('border-success', 'border-secondary')
-        // delete sites[hostname]
-        const idx = sites.indexOf(hostname)
-        const removed = sites.splice(idx, 1)
-        console.debug('removed:', removed)
+        await enableSite(hostname, false)
     }
-    await chrome.storage.local.set({ sites })
     // window.close()
 }

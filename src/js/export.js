@@ -367,3 +367,68 @@ export function copyActiveImageSrc(ctx) {
     // console.log('img.src:', img.src)
     // navigator.clipboard.writeText(img.src).then()
 }
+
+/**
+ * Toggle Site Handler
+ * @function toggleSite
+ * @param {String} hostname
+ */
+export async function toggleSite(hostname) {
+    console.debug('toggleSite:', hostname)
+    if (!hostname) {
+        return console.warn('No hostname:', hostname)
+    }
+    let changed = false
+    const { sites } = await chrome.storage.local.get(['sites'])
+    // if (!(hostname in sites)) {
+    if (!sites.includes(hostname)) {
+        console.log(`Enabling Site: ${hostname}`)
+        // sites[hostname] = {}
+        sites.push(hostname)
+        changed = true
+    } else {
+        console.log(`Disabling Site: ${hostname}`)
+        // delete sites[hostname]
+        sites.splice(sites.indexOf(hostname), 1)
+        changed = true
+    }
+    if (changed) {
+        await chrome.storage.local.set({ sites })
+        console.debug('changed sites:', sites)
+    }
+}
+
+/**
+ * Enable Site Handler
+ * @param {String} hostname
+ * @param {Boolean} [enabled]
+ */
+export async function enableSite(hostname, enabled = true) {
+    console.debug(`toggleSite: ${hostname}`, enabled)
+    if (!hostname) {
+        return console.warn('No hostname:', hostname)
+    }
+    const { sites } = await chrome.storage.local.get(['sites'])
+    let changed = false
+    if (enabled) {
+        // if (!(hostname in sites)) {
+        if (!sites.includes(hostname)) {
+            // sites[hostname] = {}
+            sites.push(hostname)
+            console.debug('added:', hostname)
+            changed = true
+        }
+        // } else if (hostname in sites) {
+    } else if (sites.includes(hostname)) {
+        // delete sites[hostname]
+        const idx = sites.indexOf(hostname)
+        const removed = sites.splice(idx, 1)
+        console.debug('removed:', removed)
+        changed = true
+    }
+    if (changed) {
+        // noinspection JSIgnoredPromiseFromCall
+        await chrome.storage.local.set({ sites })
+        console.debug('changed sites:', sites)
+    }
+}

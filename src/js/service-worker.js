@@ -7,6 +7,7 @@ import {
     copyActiveImageSrc,
     injectFunction,
     openExtPanel,
+    toggleSite,
     githubURL,
 } from './export.js'
 
@@ -95,6 +96,9 @@ async function onClicked(ctx, tab) {
     console.debug('onClicked:', ctx, tab)
     if (ctx.menuItemId === 'openOptions') {
         chrome.runtime.openOptionsPage()
+    } else if (ctx.menuItemId === 'toggleSite') {
+        const url = new URL(tab.url)
+        await toggleSite(url.hostname)
     } else if (ctx.menuItemId === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
@@ -122,7 +126,8 @@ async function onCommand(command, tab) {
     if (command === 'openOptions') {
         chrome.runtime.openOptionsPage()
     } else if (command === 'toggleSite') {
-        // ts
+        const url = new URL(tab.url)
+        await toggleSite(url.hostname)
     } else if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
@@ -184,6 +189,7 @@ function createContextMenus() {
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
         [['link', 'image', 'audio', 'video'], 'separator'],
         [['all'], 'toggleSite', 'Toggle Site'],
+        [['all'], 'separator'],
         [['all'], 'openHome', 'Home Page'],
         [['all'], 'openExtPanel', 'Extension Panel'],
         [['all'], 'separator'],
