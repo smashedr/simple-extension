@@ -29,6 +29,9 @@ document
     .forEach((el) => new bootstrap.Tooltip(el))
 
 const hostnameEl = document.getElementById('hostname')
+const switchEl = document.getElementById('switch')
+const toggleSiteEl = document.getElementById('toggle-site')
+toggleSiteEl.addEventListener('change', toggleSite)
 
 /**
  * Initialize Popup
@@ -59,12 +62,22 @@ async function initPopup() {
         document
             .querySelectorAll('.has-perms')
             .forEach((el) => el.classList.add('d-none'))
+        switchEl.classList.replace('border-secondary', 'border-danger')
         return console.log('%cNo Tab Permissions', 'color: Yellow')
     }
 
     // Update Site Data
-    hostnameEl.classList.replace('border-danger', 'border-success')
     hostnameEl.textContent = siteInfo.hostname
+    console.debug('siteInfo.hostname:', siteInfo.hostname)
+    document.getElementById('toggle-site').disabled = false
+    chrome.storage.local.get(['sites']).then((items) => {
+        console.debug('sites:', items.sites)
+        // if (siteInfo.hostname in items.sites) {
+        if (items.sites.includes(siteInfo.hostname)) {
+            switchEl.classList.replace('border-secondary', 'border-success')
+            toggleSiteEl.checked = true
+        }
+    })
 
     // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     // console.debug('tab:', tab)
@@ -81,9 +94,7 @@ async function initPopup() {
 
 async function getSiteInfo() {
     async function getInfo() {
-        return {
-            hostname: window.location.hostname,
-        }
+        return { ...window.location }
     }
     try {
         const results = await injectFunction(getInfo)
@@ -115,4 +126,37 @@ async function injectScript(event) {
         showToast(e.toString(), 'danger')
         console.log(e)
     }
+}
+
+/**
+ * Toggle Site Change Callback
+ * @function toggleSite
+ * @param {InputEvent} event
+ */
+async function toggleSite(event) {
+    console.debug('toggleSiteClick:', event)
+    // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
+    // console.debug('tab:', tab)
+    const hostname = hostnameEl.textContent
+    console.debug('hostname:', hostname)
+    const { sites } = await chrome.storage.local.get(['sites'])
+    console.debug('event.target.checked:', event.target.checked)
+    if (event.target.checked) {
+        switchEl.classList.replace('border-secondary', 'border-success')
+        // if (!(hostname in sites)) {
+        if (!sites.includes(hostname)) {
+            // sites[hostname] = {}
+            console.debug('added:', hostname)
+            sites.push(hostname)
+        }
+        // } else if (hostname in sites) {
+    } else if (sites.includes(hostname)) {
+        switchEl.classList.replace('border-success', 'border-secondary')
+        // delete sites[hostname]
+        const idx = sites.indexOf(hostname)
+        const removed = sites.splice(idx, 1)
+        console.debug('removed:', removed)
+    }
+    await chrome.storage.local.set({ sites })
+    // window.close()
 }

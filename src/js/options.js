@@ -54,6 +54,10 @@ async function initOptions() {
         console.debug('options:', items.options)
         updateOptions(items.options)
     })
+    chrome.storage.local.get(['sites']).then((items) => {
+        console.debug('sites:', items.sites)
+        updateTable(items.sites)
+    })
 }
 
 /**
@@ -65,10 +69,11 @@ async function initOptions() {
 function onChanged(changes, namespace) {
     console.debug('onChanged:', changes, namespace)
     for (const [key, { newValue }] of Object.entries(changes)) {
-        if (namespace === 'sync') {
-            if (key === 'options') {
-                updateOptions(newValue)
-            }
+        if (namespace === 'sync' && key === 'options') {
+            updateOptions(newValue)
+        }
+        if (namespace === 'local' && key === 'sites') {
+            updateTable(newValue)
         }
     }
 }
@@ -122,4 +127,67 @@ async function copySupport(event) {
     ]
     await navigator.clipboard.writeText(result.join('\n'))
     showToast('Support Information Copied.')
+}
+
+/**
+ * Update Popup Table with Data
+ * @function updateTable
+ * @param {String[]} data
+ */
+function updateTable(data) {
+    const tbody = document.querySelector('#hosts-table > tbody')
+    tbody.innerHTML = ''
+
+    // for (const [site, value] of Object.entries(data)) {
+    for (const site of data) {
+        // console.debug(`site: ${site}:`, value)
+        console.debug('site:', site)
+        const row = tbody.insertRow()
+
+        const deleteBtn = document.createElement('a')
+        const svg = document
+            .querySelector('.d-none > .fa-regular.fa-trash-can')
+            .cloneNode(true)
+        deleteBtn.appendChild(svg)
+        deleteBtn.title = 'Delete'
+        deleteBtn.dataset.site = site
+        deleteBtn.classList.add('link-danger')
+        deleteBtn.setAttribute('role', 'button')
+        deleteBtn.addEventListener('click', deleteHost)
+        const cell1 = row.insertCell()
+        cell1.classList.add('text-center')
+        cell1.appendChild(deleteBtn)
+
+        const hostLink = document.createElement('a')
+        hostLink.text = site
+        hostLink.title = site
+        hostLink.href = `https://${site}`
+        hostLink.target = '_blank'
+        hostLink.setAttribute('role', 'button')
+        const cell2 = row.insertCell()
+        cell2.classList.add('text-break')
+        cell2.appendChild(hostLink)
+    }
+}
+
+/**
+ * Delete Host
+ * @function deleteHost
+ * @param {MouseEvent} event
+ */
+async function deleteHost(event) {
+    console.debug('deleteHost:', event)
+    event.preventDefault()
+    const site = event.currentTarget?.dataset?.site
+    console.info(`Delete Host: ${site}`)
+    const { sites } = await chrome.storage.local.get(['sites'])
+    console.debug('sites:', sites)
+    // if (site && site in sites) {
+    if (site && sites.includes(site)) {
+        // delete sites[site]
+        const idx = sites.indexOf(site)
+        const removed = sites.splice(idx, 1)
+        console.debug('removed:', removed)
+        await chrome.storage.local.set({ sites })
+    }
 }

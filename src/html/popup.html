@@ -56,9 +56,19 @@
             More Information on Permissions</a></p>
     </div> <!-- grant-perms -->
 
-    <div id="hostname" class="text-center text-ellipsis border border-2 border-danger rounded p-1 mb-2">
-        No Access to the Current Tab.
-    </div> <!-- hostname -->
+    <label for="toggle-site" class="w-100 mb-3">
+        <div id="switch" class="border border-secondary border-2 rounded p-1 text-center">
+            <!--            <div class="text-center">-->
+            <kbd id="hostname" class="text-center text-ellipsis d-inline-block ">
+                No Access to the Current Tab
+            </kbd> <!-- hostname -->
+            <!--            </div>-->
+            <div class="form-check form-switch form-select-lg m-auto d-flex justify-content-center align-items-center py-0">
+                <input class="form-check-input me-3" type="checkbox" role="switch" id="toggle-site" disabled>
+                Enable/Disable Site
+            </div>
+        </div>
+    </label>
 
     <div class="d-grid g-2 gap-2">
         <button id="inject-script" class="btn btn-outline-warning d-flex align-items-center hvr-grow-sm has-perms">

@@ -121,6 +121,8 @@ async function onCommand(command, tab) {
     console.debug('onCommand:', command, tab)
     if (command === 'openOptions') {
         chrome.runtime.openOptionsPage()
+    } else if (command === 'toggleSite') {
+        // ts
     } else if (command === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
@@ -181,6 +183,7 @@ function createContextMenus() {
         [['link'], 'copyText', 'Copy Link Text'],
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
         [['link', 'image', 'audio', 'video'], 'separator'],
+        [['all'], 'toggleSite', 'Toggle Site'],
         [['all'], 'openHome', 'Home Page'],
         [['all'], 'openExtPanel', 'Extension Panel'],
         [['all'], 'separator'],
@@ -222,6 +225,15 @@ function addContext(context) {
  */
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions', defaultOptions)
+    // sites
+    let { sites } = await chrome.storage.local.get(['sites'])
+    if (!sites) {
+        console.debug('initialize empty local sites')
+        // chrome.storage.local.set({ sites: {} })
+        // noinspection ES6MissingAwait
+        chrome.storage.local.set({ sites: [] })
+    }
+    // options
     let { options } = await chrome.storage.sync.get(['options'])
     options = options || {}
     let changed = false
