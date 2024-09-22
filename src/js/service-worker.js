@@ -53,7 +53,19 @@ async function onInstalled(details) {
         }
     }
     setUninstallURL()
+
+    // Set Global Badge Background Color
     await chrome.action.setBadgeBackgroundColor({ color: 'green' })
+
+    // Set a UUID unique to each install
+    chrome.storage.local.get(['uuid']).then((items) => {
+        console.debug('uuid:', items.uuid)
+        if (!items.uuid) {
+            const uuid = crypto.randomUUID()
+            console.log('Generating New UUID:', uuid)
+            chrome.storage.local.set({ uuid })
+        }
+    })
 
     const platform = await chrome.runtime.getPlatformInfo()
     console.debug('platform:', platform)
@@ -75,6 +87,8 @@ async function onStartup() {
         }
         setUninstallURL()
     }
+    // Set Global Badge Background Color
+    await chrome.action.setBadgeBackgroundColor({ color: 'green' })
 }
 
 function setUninstallURL() {
@@ -245,13 +259,20 @@ function addContext(context) {
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions', defaultOptions)
     // sites
-    let { sites } = await chrome.storage.local.get(['sites'])
-    if (!sites) {
-        console.debug('initialize empty local sites')
-        // chrome.storage.local.set({ sites: {} })
-        // noinspection ES6MissingAwait
-        chrome.storage.local.set({ sites: [] })
-    }
+    // let { sites } = await chrome.storage.sync.get(['sites'])
+    // if (!sites) {
+    //     console.debug('initialize empty sync sites')
+    //     // noinspection ES6MissingAwait
+    //     chrome.storage.sync.set({ sites: [] })
+    // }
+    chrome.storage.sync.get(['sites']).then((items) => {
+        if (!items.sites) {
+            console.debug('initialize empty sync sites')
+            // noinspection ES6MissingAwait
+            chrome.storage.sync.set({ sites: [] })
+        }
+    })
+
     // options
     let { options } = await chrome.storage.sync.get(['options'])
     options = options || {}

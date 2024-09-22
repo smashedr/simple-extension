@@ -323,6 +323,7 @@ export async function injectFunction(func, args) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     return await chrome.scripting.executeScript({
         target: { tabId: tab.id },
+        injectImmediately: true,
         func: func,
         args: args,
     })
@@ -382,7 +383,7 @@ export async function toggleSite(hostname) {
     }
     let changed
     let enabled = false
-    const { sites } = await chrome.storage.local.get(['sites'])
+    const { sites } = await chrome.storage.sync.get(['sites'])
     // if (!(hostname in sites)) {
     if (!sites.includes(hostname)) {
         console.log(`Enabling Site: ${hostname}`)
@@ -397,7 +398,7 @@ export async function toggleSite(hostname) {
         changed = true
     }
     if (changed) {
-        await chrome.storage.local.set({ sites })
+        await chrome.storage.sync.set({ sites })
         console.debug('changed sites:', sites)
     }
     return enabled
@@ -413,7 +414,7 @@ export async function toggleSite(hostname) {
 //     if (!hostname) {
 //         return console.warn('No hostname:', hostname)
 //     }
-//     const { sites } = await chrome.storage.local.get(['sites'])
+//     const { sites } = await chrome.storage.sync.get(['sites'])
 //     let changed = false
 //     if (enabled) {
 //         // if (!(hostname in sites)) {
@@ -433,7 +434,7 @@ export async function toggleSite(hostname) {
 //     }
 //     if (changed) {
 //         // noinspection JSIgnoredPromiseFromCall
-//         await chrome.storage.local.set({ sites })
+//         await chrome.storage.sync.set({ sites })
 //         console.debug('changed sites:', sites)
 //     }
 // }

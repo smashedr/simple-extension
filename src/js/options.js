@@ -51,12 +51,13 @@ async function initOptions() {
     setShortcuts()
     // noinspection ES6MissingAwait
     checkPerms()
-    chrome.storage.sync.get(['options']).then((items) => {
+    // chrome.storage.local.get(['sites']).then((items) => {
+    //     // console.debug('sites:', items.sites)
+    //     updateTable(items.sites)
+    // })
+    chrome.storage.sync.get(['options', 'sites']).then((items) => {
         // console.debug('options:', items.options)
         updateOptions(items.options)
-    })
-    chrome.storage.local.get(['sites']).then((items) => {
-        // console.debug('sites:', items.sites)
         updateTable(items.sites)
     })
 }
@@ -73,7 +74,7 @@ function onChanged(changes, namespace) {
         if (namespace === 'sync' && key === 'options') {
             updateOptions(newValue)
         }
-        if (namespace === 'local' && key === 'sites') {
+        if (namespace === 'sync' && key === 'sites') {
             updateTable(newValue)
         }
     }

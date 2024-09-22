@@ -9,13 +9,13 @@ if (!chrome.storage.onChanged.hasListener(onChanged)) {
 
 ;(async () => {
     // get options
-    // const { options, sites } = await chrome.storage.sync.get([
-    //     'options',
-    //     'sites',
-    // ])
-    const { options } = await chrome.storage.sync.get(['options'])
+    // const { options } = await chrome.storage.sync.get(['options'])
+    // const { sites } = await chrome.storage.local.get(['sites'])
+    const { options, sites } = await chrome.storage.sync.get([
+        'options',
+        'sites',
+    ])
     console.log('options:', options)
-    const { sites } = await chrome.storage.local.get(['sites'])
     console.log('sites:', sites)
     console.log('window.location.hostname:', window.location.hostname)
     if (sites.includes(window.location.hostname)) {
@@ -36,22 +36,19 @@ async function onChanged(changes, namespace) {
         if (namespace === 'sync' && key === 'options') {
             console.debug('sync.options', oldValue, newValue)
         }
-        if (namespace === 'local' && key === 'sites') {
-            console.debug('sync.options', oldValue, newValue)
+        if (namespace === 'sync' && key === 'sites') {
+            console.debug('sync.sites', oldValue, newValue)
             console.debug('window.location.hostname', window.location.hostname)
             if (newValue.includes(window.location.hostname)) {
-                chrome.runtime.sendMessage({ badgeText: 'On' })
+                await chrome.runtime.sendMessage({ badgeText: 'On' })
             } else {
-                chrome.runtime.sendMessage({ badgeText: '' })
+                await chrome.runtime.sendMessage({ badgeText: '' })
             }
         }
     }
 }
 
-/**
- * contentScriptFunction
- * @return {string}
- */
+// eslint-disable-next-line no-unused-vars
 function contentScriptFunction() {
     return 'Hello from content-script.js'
 }

@@ -71,7 +71,7 @@ async function initPopup() {
     hostnameEl.textContent = siteInfo.hostname
     console.debug('siteInfo.hostname:', siteInfo.hostname)
     document.getElementById('toggle-site').disabled = false
-    chrome.storage.local.get(['sites']).then((items) => {
+    chrome.storage.sync.get(['sites']).then((items) => {
         console.debug('sites:', items.sites)
         // if (siteInfo.hostname in items.sites) {
         if (items.sites.includes(siteInfo.hostname)) {
