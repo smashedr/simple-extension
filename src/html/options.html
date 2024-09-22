@@ -13,8 +13,8 @@
 </head>
 <body class="h-100">
 
-<div class="container-fluid py-3 px-2 px-sm-3 h-100">
-<div class="d-flex align-items-center h-100">
+<div class="d-flex align-items-center justify-content-center pt-3 px-1 px-sm-3 h-100">
+<div class="m-auto">
 <div class="card w-100 mx-auto">
 <div class="card-body">
     <div class="d-flex justify-content-center align-items-center">
@@ -80,20 +80,23 @@
             Remove Host Permissions</button>
     </div>
 
-    <p class="fst-italic small mt-3">
-        <a id="copy-support" href="#0">Copy Support Information</a> for issue reporting.
-    </p>
-
     <table id="hosts-table" class="table table-sm table-hover bg-transparent">
         <caption>Enabled Hosts</caption>
         <thead><tr>
-            <th scope="col" class="text-center" style="width: 36px;">
+            <th scope="col" class="text-center">
                 <i class="fa-solid fa-trash-can"></i>
             </th>
             <th scope="col">Host</th>
+            <th scope="col" class="text-center">
+                <i class="fa-solid fa-copy"></i>
+            </th>
         </tr></thead>
         <tbody></tbody>
     </table>
+
+    <p class="fst-italic small mt-3">
+        <a id="copy-support" href="#0">Copy Support Information</a> for issue reporting.
+    </p>
 
     <hr class="mt-0">
 
@@ -110,7 +113,7 @@
 </div> <!-- card-body -->
 </div> <!-- card -->
 </div> <!-- flex -->
-</div> <!-- container -->
+</div> <!-- m-auto -->
 
 <button type="button" class="btn btn-outline-primary" id="back-to-top">
     <i class="fa-regular fa-square-caret-up"></i>
@@ -128,8 +131,10 @@
         <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
     </svg>
     <i class="fa-regular fa-trash-can"></i>
+    <i class="fa-regular fa-copy"></i>
 </div> <!-- clone -->
 
+<script type="text/javascript" src="../dist/clipboard/clipboard.min.js"></script>
 <script type="text/javascript" src="../dist/jquery/jquery.min.js"></script>
 <script type="text/javascript" src="../dist/bootstrap/bootstrap.bundle.min.js"></script>
 <script type="module" src="../js/main.js"></script>

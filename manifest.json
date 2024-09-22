@@ -25,17 +25,17 @@
     "open_in_tab": true
   },
   "commands": {
-    "_execute_action": {
-      "suggested_key": {
-        "default": "Alt+Shift+A"
-      },
-      "description": "Show Popup Action"
-    },
     "toggleSite": {
       "suggested_key": {
         "default": "Alt+Shift+N"
       },
       "description": "Toggle Current Site"
+    },
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "Show Popup Action"
     },
     "openOptions": {
       "suggested_key": {

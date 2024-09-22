@@ -139,6 +139,9 @@ function updateTable(data) {
     const tbody = document.querySelector('#hosts-table > tbody')
     tbody.innerHTML = ''
 
+    const faCopy = document.querySelector('#clone > .fa-copy')
+    const faTrashCan = document.querySelector('#clone > .fa-trash-can')
+
     // for (const [site, value] of Object.entries(data)) {
     for (const site of data) {
         // console.debug(`site: ${site}:`, value)
@@ -146,10 +149,7 @@ function updateTable(data) {
         const row = tbody.insertRow()
 
         const deleteBtn = document.createElement('a')
-        const svg = document
-            .querySelector('.d-none > .fa-regular.fa-trash-can')
-            .cloneNode(true)
-        deleteBtn.appendChild(svg)
+        deleteBtn.appendChild(faTrashCan.cloneNode(true))
         deleteBtn.title = 'Delete'
         deleteBtn.dataset.site = site
         deleteBtn.classList.add('link-danger')
@@ -160,7 +160,7 @@ function updateTable(data) {
         cell1.appendChild(deleteBtn)
 
         const hostLink = document.createElement('a')
-        hostLink.text = site
+        hostLink.textContent = site
         hostLink.title = site
         hostLink.href = `https://${site}`
         hostLink.target = '_blank'
@@ -168,6 +168,16 @@ function updateTable(data) {
         const cell2 = row.insertCell()
         cell2.classList.add('text-break')
         cell2.appendChild(hostLink)
+
+        const copyLink = document.createElement('a')
+        copyLink.appendChild(faCopy.cloneNode(true))
+        copyLink.title = 'Copy'
+        copyLink.dataset.clipboardText = site
+        copyLink.classList.add('link-info')
+        copyLink.setAttribute('role', 'button')
+        const cell3 = row.insertCell()
+        cell3.classList.add('text-center')
+        cell3.appendChild(copyLink)
     }
 }
 

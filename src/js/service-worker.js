@@ -99,6 +99,8 @@ async function onClicked(ctx, tab) {
     } else if (ctx.menuItemId === 'toggleSite') {
         const url = new URL(tab.url)
         await toggleSite(url.hostname)
+    } else if (ctx.menuItemId === 'openPopup') {
+        await chrome.action.openPopup()
     } else if (ctx.menuItemId === 'openHome') {
         const url = chrome.runtime.getURL('/html/home.html')
         await activateOrOpen(url)
@@ -190,6 +192,7 @@ function createContextMenus() {
         [['link', 'image', 'audio', 'video'], 'separator'],
         [['all'], 'toggleSite', 'Toggle Site'],
         [['all'], 'separator'],
+        [['all'], 'openPopup', 'Open Popup'],
         [['all'], 'openHome', 'Home Page'],
         [['all'], 'openExtPanel', 'Extension Panel'],
         [['all'], 'separator'],
