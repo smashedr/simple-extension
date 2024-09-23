@@ -25,6 +25,12 @@
     "open_in_tab": true
   },
   "commands": {
+    "toggleSite": {
+      "suggested_key": {
+        "default": "Alt+Shift+N"
+      },
+      "description": "Toggle Current Site"
+    },
     "_execute_action": {
       "suggested_key": {
         "default": "Alt+Shift+A"
@@ -32,9 +38,6 @@
       "description": "Show Popup Action"
     },
     "openOptions": {
-      "suggested_key": {
-        "default": "Alt+Shift+O"
-      },
       "description": "Open Options Page"
     },
     "openSidePanel": {
@@ -49,8 +52,8 @@
       },
       "description": "Open Extension Panel"
     },
-    "openHome": {
-      "description": "Open Home Page"
+    "openPage": {
+      "description": "Open Extension Page"
     }
   },
   "action": {

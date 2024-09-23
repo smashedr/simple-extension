@@ -24,7 +24,16 @@ export async function saveOptions(event) {
     } else if (event.target.type === 'checkbox') {
         value = event.target.checked
     } else if (event.target.type === 'number') {
-        value = event.target.value.toString()
+        const number = parseFloat(event.target.value)
+        let min = parseFloat(event.target.min)
+        let max = parseFloat(event.target.max)
+        if (!isNaN(number) && number >= min && number <= max) {
+            event.target.value = number.toString()
+            value = number
+        } else {
+            event.target.value = options[event.target.id]
+            return
+        }
     } else {
         value = event.target.value
     }
@@ -315,7 +324,7 @@ export async function openSidePanel(event) {
  * @param {String} message
  * @param {String} type
  */
-export function showToast(message, type = 'success') {
+export function showToast(message, type = 'primary') {
     console.debug(`showToast: ${type}: ${message}`)
     const clone = document.querySelector('#clone > .toast')
     const container = document.getElementById('toast-container')
@@ -342,6 +351,7 @@ export async function injectFunction(func, args) {
     const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     return await chrome.scripting.executeScript({
         target: { tabId: tab.id },
+        injectImmediately: true,
         func: func,
         args: args,
     })
@@ -386,3 +396,73 @@ export function copyActiveImageSrc(ctx) {
     // console.log('img.src:', img.src)
     // navigator.clipboard.writeText(img.src).then()
 }
+
+/**
+ * Toggle Site Handler
+ * @function toggleSite
+ * @param {String} hostname
+ * @return {Promise<Boolean|undefined>} true if enabled
+ */
+export async function toggleSite(hostname) {
+    console.debug('toggleSite:', hostname)
+    if (!hostname) {
+        console.warn('No hostname:', hostname)
+        return
+    }
+    let changed
+    let enabled = false
+    const { sites } = await chrome.storage.sync.get(['sites'])
+    // if (!(hostname in sites)) {
+    if (!sites.includes(hostname)) {
+        console.log(`Enabling Site: ${hostname}`)
+        // sites[hostname] = {}
+        sites.push(hostname)
+        changed = true
+        enabled = true
+    } else {
+        console.log(`Disabling Site: ${hostname}`)
+        // delete sites[hostname]
+        sites.splice(sites.indexOf(hostname), 1)
+        changed = true
+    }
+    if (changed) {
+        await chrome.storage.sync.set({ sites })
+        console.debug('changed sites:', sites)
+    }
+    return enabled
+}
+
+// /**
+//  * Enable Site Handler
+//  * @param {String} hostname
+//  * @param {Boolean} [enabled]
+//  */
+// export async function enableSite(hostname, enabled = true) {
+//     console.debug(`toggleSite: ${hostname}`, enabled)
+//     if (!hostname) {
+//         return console.warn('No hostname:', hostname)
+//     }
+//     const { sites } = await chrome.storage.sync.get(['sites'])
+//     let changed = false
+//     if (enabled) {
+//         // if (!(hostname in sites)) {
+//         if (!sites.includes(hostname)) {
+//             // sites[hostname] = {}
+//             sites.push(hostname)
+//             console.debug('added:', hostname)
+//             changed = true
+//         }
+//         // } else if (hostname in sites) {
+//     } else if (sites.includes(hostname)) {
+//         // delete sites[hostname]
+//         const idx = sites.indexOf(hostname)
+//         const removed = sites.splice(idx, 1)
+//         console.debug('removed:', removed)
+//         changed = true
+//     }
+//     if (changed) {
+//         // noinspection JSIgnoredPromiseFromCall
+//         await chrome.storage.sync.set({ sites })
+//         console.debug('changed sites:', sites)
+//     }
+// }

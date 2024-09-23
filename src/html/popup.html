@@ -54,20 +54,31 @@
             <i class="fa-solid fa-check-double me-1"></i> Grant Host Permissions</button>
         <p class="text-center mb-0"><a href="../html/permissions.html" class="">
             More Information on Permissions</a></p>
+        <hr>
     </div> <!-- grant-perms -->
 
-    <div id="hostname" class="text-center text-ellipsis border border-2 border-danger rounded p-1 mb-2">
-        No Access to the Current Tab.
-    </div> <!-- hostname -->
+    <label for="toggle-site" class="w-100 has-perms">
+        <div id="switch" class="border border-secondary border-2 rounded p-1 mb-2 text-center">
+            <!--            <div class="text-center">-->
+            <kbd id="hostname" class="text-center text-ellipsis d-inline-block ">
+                No Access to the Current Tab
+            </kbd> <!-- hostname -->
+            <!--            </div>-->
+            <div class="form-check form-switch form-select-lg m-auto d-flex justify-content-center align-items-center py-0">
+                <input class="form-check-input me-3" type="checkbox" role="switch" id="toggle-site" disabled>
+                Enable/Disable Site
+            </div>
+        </div>
+    </label>
 
     <div class="d-grid g-2 gap-2">
-        <button id="inject-script" class="btn btn-outline-warning d-flex align-items-center hvr-grow-sm has-perms">
+        <button id="inject-script" class="btn btn-outline-warning d-flex align-items-center hvr-grow-sm has-perms tab-perms">
             <i class="fa-solid fa-code me-1"></i>
             <span class="flex-fill text-center me-4">Inject Script</span>
         </button>
-        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/home.html">
-            <i class="fa-solid fa-house-chimney me-1"></i>
-            <span class="flex-fill text-center me-4">Open Home Page</span>
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/page.html">
+            <i class="fa-regular fa-id-card me-1"></i>
+            <span class="flex-fill text-center me-4">Open Extension Page</span>
         </a>
         <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html">
             <i class="fa-regular fa-window-maximize me-1"></i>
@@ -84,13 +95,13 @@
     <form id="options-form" class="">
         <div class="form-check form-switch">
             <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
-            <label class="form-check-label me-1" for="contextMenu">Enable Right Click Menu</label>
-            <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
+            <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
+            <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
         </div>
         <div class="form-check form-switch">
             <input class="form-check-input" id="showUpdate" type="checkbox" role="switch">
-            <label class="form-check-label me-1" for="showUpdate">Show Release Notes on Update</label>
-            <i class="fa-solid fa-circle-info" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
+            <label class="form-check-label" for="showUpdate">Show Release Notes on Update</label>
+            <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
         </div>
     </form> <!-- options-form -->
 

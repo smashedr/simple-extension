@@ -1,4 +1,4 @@
-// JS for home.html
+// JS for page.html
 
 import {
     checkPerms,

@@ -8,6 +8,7 @@ import {
     injectFunction,
     openExtPanel,
     openSidePanel,
+    toggleSite,
     githubURL,
 } from './export.js'
 
@@ -27,6 +28,7 @@ async function onInstalled(details) {
     console.log('onInstalled:', details)
     const options = await setDefaultOptions({
         testInput: 'Default Value',
+        testNumber: 60,
         contextMenu: true,
         showUpdate: false,
     })
@@ -53,6 +55,19 @@ async function onInstalled(details) {
     }
     setUninstallURL()
 
+    // Set Global Badge Background Color
+    await chrome.action.setBadgeBackgroundColor({ color: 'green' })
+
+    // Set a UUID unique to each install
+    chrome.storage.local.get(['uuid']).then((items) => {
+        console.debug('uuid:', items.uuid)
+        if (!items.uuid) {
+            const uuid = crypto.randomUUID()
+            console.log('Generating New UUID:', uuid)
+            chrome.storage.local.set({ uuid })
+        }
+    })
+
     const platform = await chrome.runtime.getPlatformInfo()
     console.debug('platform:', platform)
 }
@@ -73,6 +88,8 @@ async function onStartup() {
         }
         setUninstallURL()
     }
+    // Set Global Badge Background Color
+    await chrome.action.setBadgeBackgroundColor({ color: 'green' })
 }
 
 function setUninstallURL() {
@@ -81,7 +98,6 @@ function setUninstallURL() {
     // url.searchParams.append('version', manifest.version)
     // chrome.runtime.setUninstallURL(url.href)
     // console.debug(`setUninstallURL: ${url.href}`)
-    // chrome.runtime.setUninstallURL(url.href)
     chrome.runtime.setUninstallURL(`${githubURL}/issues`)
     console.debug(`setUninstallURL: ${githubURL}/issues`)
 }
@@ -96,8 +112,13 @@ async function onClicked(ctx, tab) {
     console.debug('onClicked:', ctx, tab)
     if (ctx.menuItemId === 'openOptions') {
         chrome.runtime.openOptionsPage()
-    } else if (ctx.menuItemId === 'openHome') {
-        const url = chrome.runtime.getURL('/html/home.html')
+    } else if (ctx.menuItemId === 'toggleSite') {
+        const url = new URL(tab.url)
+        await toggleSite(url.hostname)
+    } else if (ctx.menuItemId === 'openPopup') {
+        await chrome.action.openPopup()
+    } else if (ctx.menuItemId === 'openPage') {
+        const url = chrome.runtime.getURL('/html/page.html')
         await activateOrOpen(url)
     } else if (ctx.menuItemId === 'openExtPanel') {
         await openExtPanel()
@@ -124,8 +145,11 @@ async function onCommand(command, tab) {
     console.debug('onCommand:', command, tab)
     if (command === 'openOptions') {
         chrome.runtime.openOptionsPage()
-    } else if (command === 'openHome') {
-        const url = chrome.runtime.getURL('/html/home.html')
+    } else if (command === 'toggleSite') {
+        const url = new URL(tab.url)
+        await toggleSite(url.hostname)
+    } else if (command === 'openPage') {
+        const url = chrome.runtime.getURL('/html/page.html')
         await activateOrOpen(url)
     } else if (command === 'openExtPanel') {
         await openExtPanel()
@@ -145,6 +169,15 @@ async function onCommand(command, tab) {
  */
 function onMessage(message, sender, sendResponse) {
     console.debug('onMessage:', message, sender)
+    const tabId = message.tabId || sender.tab?.id
+    if ('badgeText' in message && tabId) {
+        console.debug(`tabId: ${tabId} text:`, message.badgeText)
+        // noinspection JSIgnoredPromiseFromCall
+        chrome.action.setBadgeText({
+            tabId: tabId,
+            text: message.badgeText,
+        })
+    }
     sendResponse('Success.')
 }
 
@@ -181,12 +214,15 @@ function createContextMenus() {
     }
     console.debug('createContextMenus')
     chrome.contextMenus.removeAll()
-    /** @type {Array[String[], String, String]} */
+    /** @type {Array[chrome.contextMenus.ContextType[], String, String]} */
     const contexts = [
         [['link'], 'copyText', 'Copy Link Text'],
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
         [['link', 'image', 'audio', 'video'], 'separator'],
-        [['all'], 'openHome', 'Home Page'],
+        [['all'], 'toggleSite', 'Toggle Site'],
+        [['all'], 'separator'],
+        [['all'], 'openPopup', 'Open Popup'],
+        [['all'], 'openPage', 'Extension Page'],
         [['all'], 'openExtPanel', 'Extension Panel'],
         [['all'], 'openSidePanel', 'Side Panel'],
         [['all'], 'separator'],
@@ -198,7 +234,7 @@ function createContextMenus() {
 /**
  * Add Context from Array
  * @function addContext
- * @param {[String[],String,String?]} context
+ * @param {[chrome.contextMenus.ContextType[],String,String,chrome.contextMenus.ContextItemType?]} context
  */
 function addContext(context) {
     // console.debug('addContext:', context)
@@ -228,6 +264,22 @@ function addContext(context) {
  */
 async function setDefaultOptions(defaultOptions) {
     console.log('setDefaultOptions', defaultOptions)
+    // sites
+    // let { sites } = await chrome.storage.sync.get(['sites'])
+    // if (!sites) {
+    //     console.debug('initialize empty sync sites')
+    //     // noinspection ES6MissingAwait
+    //     chrome.storage.sync.set({ sites: [] })
+    // }
+    chrome.storage.sync.get(['sites']).then((items) => {
+        if (!items.sites) {
+            console.debug('initialize empty sync sites')
+            // noinspection ES6MissingAwait
+            chrome.storage.sync.set({ sites: [] })
+        }
+    })
+
+    // options
     let { options } = await chrome.storage.sync.get(['options'])
     options = options || {}
     let changed = false

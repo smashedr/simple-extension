@@ -8,6 +8,7 @@ import {
     openSidePanel,
     saveOptions,
     showToast,
+    toggleSite,
     updateManifest,
     updateOptions,
 } from './export.js'
@@ -31,6 +32,9 @@ document
     .forEach((el) => new bootstrap.Tooltip(el))
 
 const hostnameEl = document.getElementById('hostname')
+const switchEl = document.getElementById('switch')
+const toggleSiteEl = document.getElementById('toggle-site')
+toggleSiteEl.addEventListener('change', toggleSiteChange)
 
 /**
  * Initialize Popup
@@ -45,9 +49,9 @@ async function initPopup() {
         updateOptions(items.options)
     })
 
-    if (chrome.runtime.lastError) {
-        showToast(chrome.runtime.lastError.message, 'warning')
-    }
+    // if (chrome.runtime.lastError) {
+    //     showToast(chrome.runtime.lastError.message, 'warning')
+    // }
 
     // Check Host Permissions
     const hasPerms = await checkPerms()
@@ -59,14 +63,24 @@ async function initPopup() {
     const siteInfo = await getSiteInfo()
     if (!siteInfo) {
         document
-            .querySelectorAll('.has-perms')
+            .querySelectorAll('.tab-perms')
             .forEach((el) => el.classList.add('d-none'))
+        switchEl.classList.replace('border-secondary', 'border-danger')
         return console.log('%cNo Tab Permissions', 'color: Yellow')
     }
 
     // Update Site Data
-    hostnameEl.classList.replace('border-danger', 'border-success')
     hostnameEl.textContent = siteInfo.hostname
+    console.debug('siteInfo.hostname:', siteInfo.hostname)
+    document.getElementById('toggle-site').disabled = false
+    chrome.storage.sync.get(['sites']).then((items) => {
+        console.debug('sites:', items.sites)
+        // if (siteInfo.hostname in items.sites) {
+        if (items.sites.includes(siteInfo.hostname)) {
+            switchEl.classList.replace('border-secondary', 'border-success')
+            toggleSiteEl.checked = true
+        }
+    })
 
     // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     // console.debug('tab:', tab)
@@ -83,9 +97,7 @@ async function initPopup() {
 
 async function getSiteInfo() {
     async function getInfo() {
-        return {
-            hostname: window.location.hostname,
-        }
+        return { ...window.location }
     }
     try {
         const results = await injectFunction(getInfo)
@@ -116,5 +128,21 @@ async function injectScript(event) {
     } catch (e) {
         showToast(e.toString(), 'danger')
         console.log(e)
+    }
+}
+
+/**
+ * Toggle Site Change Callback
+ * @function toggleSiteChange
+ * @param {InputEvent} event
+ */
+async function toggleSiteChange(event) {
+    console.debug('toggleSiteChange:', event)
+    const hostname = hostnameEl.textContent
+    const enabled = await toggleSite(hostname)
+    if (enabled) {
+        switchEl.classList.replace('border-secondary', 'border-success')
+    } else {
+        switchEl.classList.replace('border-success', 'border-secondary')
     }
 }
