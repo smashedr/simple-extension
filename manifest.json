@@ -38,9 +38,6 @@
       "description": "Show Popup Action"
     },
     "openOptions": {
-      "suggested_key": {
-        "default": "Alt+Shift+O"
-      },
       "description": "Open Options Page"
     },
     "openExtPanel": {
