@@ -5,40 +5,37 @@ const fs = require('fs')
 const sourceDir = 'src'
 const screenshotsDir = 'tests/screenshots'
 
-/** @type {import('puppeteer').Browser}*/
-let browser
-/** @type {import('puppeteer').Page}*/
-let page
-
 let count = 1
 
 /**
- * @function screenshot
+ * @function ssOpts
  * @param {String} name
- * @return {Promise<void>}
+ * @param {Object} [options]
+ * @return {Object}
  */
-async function screenshot(name) {
-    if (!fs.existsSync(screenshotsDir)) {
-        fs.mkdirSync(screenshotsDir)
-    }
+function ssOpts(name, options = {}) {
     const n = count.toString().padStart(2, '0')
-    await page.screenshot({ path: `${screenshotsDir}/${n}_${name}.png` })
     count++
+    const opts = { path: `${screenshotsDir}/${n}_${name}.png` }
+    Object.assign(opts, options)
+    console.log('ssOpts:', opts)
+    return opts
 }
 
 /**
  * @function getPage
+ * @param {puppeteer.Browser} browser
  * @param {String} name
  * @param {Boolean=} log
  * @param {String=} size
  * @return {Promise<puppeteer.Page>}
  */
-async function getPage(name, log, size) {
+async function getPage(browser, name, log, size) {
     console.debug(`getPage: ${name}`, log, size)
     const target = await browser.waitForTarget(
         (target) => target.type() === 'page' && target.url().endsWith(name)
     )
-    page = await target.asPage()
+    const page = await target.asPage()
     await page.emulateMediaFeatures([
         { name: 'prefers-color-scheme', value: 'dark' },
     ])
@@ -56,9 +53,14 @@ async function getPage(name, log, size) {
 }
 
 ;(async () => {
+    if (fs.existsSync(screenshotsDir)) {
+        fs.rmdirSync(screenshotsDir, { recursive: true, force: true })
+    }
+    fs.mkdirSync(screenshotsDir)
+
     const pathToExtension = path.join(process.cwd(), sourceDir)
     console.log('pathToExtension:', pathToExtension)
-    browser = await puppeteer.launch({
+    const browser = await puppeteer.launch({
         args: [
             `--disable-extensions-except=${pathToExtension}`,
             `--load-extension=${pathToExtension}`,
@@ -80,21 +82,36 @@ async function getPage(name, log, size) {
 
     // Popup
     await worker.evaluate('chrome.action.openPopup();')
-    page = await getPage('popup.html')
+    let page = await getPage(browser, 'popup.html')
     console.log('page:', page)
     await page.waitForNetworkIdle()
-    await screenshot('popup')
+    await page.screenshot(ssOpts('popup'))
     await page.locator('[href="../html/options.html"]').click()
+
+    // Home Page / Popup
+    const manifest = await worker.evaluate('chrome.runtime.getManifest();')
+    console.log('manifest:', manifest)
+    const homepage = await browser.newPage()
+    await homepage.goto(manifest.homepage_url)
+    await worker.evaluate('chrome.action.openPopup();')
+    page = await getPage(browser, 'popup.html')
+    console.log('page:', page)
+    await page.waitForNetworkIdle()
+    await page.screenshot(ssOpts('github1'))
+
+    await page.locator('#toggle-site').click()
+    await page.screenshot(ssOpts('github2'))
 
     // Options
     // await worker.evaluate('chrome.runtime.openOptionsPage();')
-    page = await getPage('options.html')
+    page = await getPage(browser, 'options.html')
     console.log('page:', page)
     await page.waitForNetworkIdle()
-    await screenshot('options')
-    await page.locator('#testInput').fill('New Value')
-    await page.keyboard.press('Enter')
-    await screenshot('options')
+    await page.screenshot(ssOpts('options1'))
+    await page.locator('.fa-regular.fa-trash-can').click()
+    // await page.keyboard.press('Enter')
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    await page.screenshot(ssOpts('options2'))
     await page.close()
 
     await browser.close()
