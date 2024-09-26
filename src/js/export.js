@@ -398,6 +398,7 @@ export async function toggleSite(hostname) {
         changed = true
     }
     if (changed) {
+        sites.sort()
         await chrome.storage.sync.set({ sites })
         console.debug('changed sites:', sites)
     }
