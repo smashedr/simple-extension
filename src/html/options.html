@@ -80,6 +80,16 @@
             Remove Host Permissions</button>
     </div>
 
+    <form id="add-host">
+        <label class="form-label" for="site"><i class="fa-solid fa-globe me-2"></i> Add Host or Site</label>
+        <div class="input-group mb-3">
+            <input id="site" type="text" class="form-control" placeholder="Add Host" aria-label="Hostname" aria-describedby="add-host-btn" autocomplete="url" required>
+            <button class="btn btn-outline-success" type="submit" id="add-host-btn">
+                Add <i class="fa-solid fa-circle-plus ms-1"></i>
+            </button>
+        </div>
+    </form>
+
     <div class="mb-1 small">
         <a id="export-hosts" class="link-body-emphasis text-decoration-none import-export" data-action="export" role="button">
             Export <i class="fa-solid fa-file-arrow-down ms-1"></i></a>

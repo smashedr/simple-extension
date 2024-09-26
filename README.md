@@ -19,26 +19,26 @@
 Modern Chrome Web Extension and Firefox Browser Addon for Copying and Creating New Extensions.
 Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox, Yandex, Kiwi, etc.
 
-* [Features](#features)
-* [Configuration](#configuration)
-* [Development](#development)
-    - [Building](#building)
-    - [Chrome Setup](#Chrome-Setup)
-    - [Firefox Setup](#Firefox-Setup)
+- [Features](#features)
+- [Configuration](#configuration)
+- [Development](#development)
+  - [Building](#building)
+  - [Chrome Setup](#Chrome-Setup)
+  - [Firefox Setup](#Firefox-Setup)
 
 ## Features
 
-* Options Page
-* Toolbar Popup
-* Extension Page
-* Extension Panel
-* Context Menu
-* Keyboard Shortcuts
-* Content Script
-* Service Worker
-* Host Permissions
-* Dark/Light Theme Switcher
-* Fully Mobile Compatible
+- Options Page
+- Toolbar Popup
+- Extension Page
+- Extension Panel
+- Context Menu
+- Keyboard Shortcuts
+- Content Script
+- Service Worker
+- Host Permissions
+- Dark/Light Theme Switcher
+- Fully Mobile Compatible
 
 ## Configuration
 

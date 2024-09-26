@@ -21,6 +21,7 @@ chrome.permissions.onRemoved.addListener(onRemoved)
 document.addEventListener('DOMContentLoaded', initOptions)
 document.getElementById('copy-support').addEventListener('click', copySupport)
 document.getElementById('sites-input').addEventListener('change', sitesChange)
+document.getElementById('add-host').addEventListener('submit', addHost)
 document
     .querySelectorAll('.revoke-permissions')
     .forEach((el) => el.addEventListener('click', revokePerms))
@@ -304,7 +305,10 @@ async function importSites(data) {
             count++
         }
     }
-    await chrome.storage.sync.set({ sites })
+    if (count) {
+        sites.sort()
+        await chrome.storage.sync.set({ sites })
+    }
     return count
 }
 
@@ -326,4 +330,52 @@ function textFileDownload(filename, text) {
     document.body.appendChild(element)
     element.click()
     document.body.removeChild(element)
+}
+
+/**
+ * Add Host Callback
+ * @function addHost
+ * @param {SubmitEvent} event
+ */
+async function addHost(event) {
+    console.debug('addHost:', event)
+    event.preventDefault()
+    const input = event.target.elements.site
+    let value = input.value?.trim()
+    if (!value) {
+        input.focus()
+        input.select()
+        console.debug('Missing input.value:', input)
+        return
+    }
+    if (!value.includes('://')) {
+        value = `https://${value}`
+    }
+    console.debug('value:', value)
+    let url
+    try {
+        url = new URL(value)
+    } catch (e) {
+        input.focus()
+        input.select()
+        showToast(e.message, 'danger')
+        console.error(e)
+        return
+    }
+    console.log('url:', url)
+    const { sites } = await chrome.storage.sync.get(['sites'])
+    if (sites.includes(url.hostname)) {
+        input.focus()
+        input.select()
+        showToast(`Host Exists: ${url.hostname}`, 'warning')
+        console.log(`%c Existing Host: ${url.hostname}`, 'color: Yellow', url)
+    } else {
+        sites.push(url.hostname)
+        sites.sort()
+        await chrome.storage.sync.set({ sites })
+        input.value = ''
+        input.focus()
+        showToast(`Added Host: ${url.hostname}`)
+        console.log(`%c Added Host: ${url.hostname}`, 'color: Lime', url)
+    }
 }
