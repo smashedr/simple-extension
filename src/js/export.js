@@ -70,7 +70,7 @@ export function updateOptions(options) {
         }
         if (el.tagName !== 'INPUT') {
             el.textContent = value.toString()
-        } else if (['checkbox', 'radio'].includes(el.type)) {
+        } else if (typeof value === 'boolean') {
             el.checked = value
         } else {
             el.value = value
@@ -115,11 +115,15 @@ export async function linkClick(event, close = false) {
         console.debug('return on anchor link')
         return
     } else if (href.endsWith('html/options.html')) {
-        chrome.runtime.openOptionsPage()
+        await chrome.runtime.openOptionsPage()
         if (close) window.close()
         return
     } else if (href.endsWith('html/panel.html')) {
         await openExtPanel()
+        if (close) window.close()
+        return
+    } else if (href.endsWith('html/sidepanel.html')) {
+        await openSidePanel()
         if (close) window.close()
         return
     } else if (href.startsWith('http')) {
@@ -345,16 +349,23 @@ export function showToast(message, type = 'primary') {
  * @function injectFunction
  * @param {Function} func
  * @param {Array} [args]
- * @return {Promise<chrome.scripting.InjectionResult[]>}
+ * @return {Promise<chrome.scripting.InjectionResult.result>}
  */
 export async function injectFunction(func, args) {
-    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-    return await chrome.scripting.executeScript({
+    const [tab] = await chrome.tabs.query({
+        currentWindow: true,
+        active: true,
+    })
+    const results = await chrome.scripting.executeScript({
         target: { tabId: tab.id },
         injectImmediately: true,
         func: func,
         args: args,
     })
+    console.debug('injectFunction results:', results)
+    const result = results[0]?.result
+    console.debug('result:', result)
+    return result
 }
 
 /**

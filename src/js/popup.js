@@ -5,7 +5,6 @@ import {
     grantPerms,
     injectFunction,
     linkClick,
-    openSidePanel,
     saveOptions,
     showToast,
     toggleSite,
@@ -15,7 +14,6 @@ import {
 
 document.addEventListener('DOMContentLoaded', initPopup)
 document.getElementById('inject-script').addEventListener('click', injectScript)
-document.getElementById('side-panel').addEventListener('click', openSidePanel)
 // noinspection JSCheckFunctionSignatures
 document
     .querySelectorAll('.grant-permissions')
@@ -59,28 +57,39 @@ async function initPopup() {
         return console.log('%cHost Permissions Not Granted', 'color: Red')
     }
 
-    // Check Tab Permissions
-    const siteInfo = await getSiteInfo()
-    if (!siteInfo) {
-        document
-            .querySelectorAll('.tab-perms')
-            .forEach((el) => el.classList.add('d-none'))
-        switchEl.classList.replace('border-secondary', 'border-danger')
-        return console.log('%cNo Tab Permissions', 'color: Yellow')
-    }
-
-    // Update Site Data
-    hostnameEl.textContent = siteInfo.hostname
-    console.debug('siteInfo.hostname:', siteInfo.hostname)
-    document.getElementById('toggle-site').disabled = false
-    chrome.storage.sync.get(['sites']).then((items) => {
-        console.debug('sites:', items.sites)
-        // if (siteInfo.hostname in items.sites) {
-        if (items.sites.includes(siteInfo.hostname)) {
-            switchEl.classList.replace('border-secondary', 'border-success')
-            toggleSiteEl.checked = true
-        }
+    // Get Tab Info
+    injectFunction(() => {
+        return { ...window.location }
     })
+        .then((siteInfo) => {
+            console.debug('siteInfo:', siteInfo)
+            if (!siteInfo) {
+                document
+                    .querySelectorAll('.tab-perms')
+                    .forEach((el) => el.classList.add('d-none'))
+                switchEl.classList.replace('border-secondary', 'border-danger')
+                return console.log('%cNo Tab Permissions', 'color: Yellow')
+            }
+
+            // Update Site Data
+            hostnameEl.textContent = siteInfo.hostname
+            console.debug('siteInfo.hostname:', siteInfo.hostname)
+            document.getElementById('toggle-site').disabled = false
+            chrome.storage.sync.get(['sites']).then((items) => {
+                console.debug('sites:', items.sites)
+                // if (siteInfo.hostname in items.sites) {
+                if (items.sites.includes(siteInfo.hostname)) {
+                    switchEl.classList.replace(
+                        'border-secondary',
+                        'border-success'
+                    )
+                    toggleSiteEl.checked = true
+                }
+            })
+        })
+        .catch((e) => {
+            console.debug(e)
+        })
 
     // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     // console.debug('tab:', tab)
@@ -93,21 +102,6 @@ async function initPopup() {
 
     // const platform = await chrome.runtime.getPlatformInfo()
     // console.debug('platform:', platform)
-}
-
-async function getSiteInfo() {
-    async function getInfo() {
-        return { ...window.location }
-    }
-    try {
-        const results = await injectFunction(getInfo)
-        console.debug('results:', results)
-        const result = results[0]?.result
-        console.debug('result:', result)
-        return result
-    } catch (e) {
-        console.debug(`%cInjection error: ${e.message}`, 'color: OrangeRed')
-    }
 }
 
 /**

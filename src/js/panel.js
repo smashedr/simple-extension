@@ -1,7 +1,9 @@
 // JS for panel.html
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
-document.getElementById('close').addEventListener('click', closePanel)
+document
+    .querySelectorAll('.close-panel')
+    .forEach((el) => el.addEventListener('click', closePanel))
 
 /**
  * DOMContentLoaded
