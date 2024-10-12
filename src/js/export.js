@@ -275,23 +275,35 @@ export async function onRemoved(permissions) {
  * @param {String} [url]
  * @param {Number} [width]
  * @param {Number} [height]
+ * @param {String} [type]
  * @return {Promise<chrome.windows.Window>}
  */
 export async function openExtPanel(
     url = '/html/panel.html',
     width = 1280,
-    height = 720
+    height = 720,
+    type = 'panel'
 ) {
     console.debug(`openExtPanel: ${url}`, width, height)
-    const windows = await chrome.windows.getAll({ populate: true })
-    for (const window of windows) {
-        // console.debug('window:', window)
-        if (window.tabs[0]?.url?.endsWith(url)) {
-            console.debug(`%c Panel found: ${window.id}`, 'color: Lime')
-            return chrome.windows.update(window.id, { focused: true })
+    const { lastPanelID } = await chrome.storage.local.get(['lastPanelID'])
+    console.debug('lastPanelID:', lastPanelID)
+
+    try {
+        const window = await chrome.windows.get(lastPanelID)
+        if (window) {
+            console.debug(`%c Window found: ${window.id}`, 'color: Lime')
+            return await chrome.windows.update(lastPanelID, {
+                focused: true,
+            })
         }
+    } catch (e) {
+        console.log(e)
     }
-    return chrome.windows.create({ type: 'panel', url, width, height })
+
+    const window = await chrome.windows.create({ type, url, width, height })
+    console.debug(`%c Created new window: ${window.id}`, 'color: Yellow')
+    await chrome.storage.local.set({ lastPanelID: window.id })
+    return window
 }
 
 /**
