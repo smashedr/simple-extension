@@ -145,7 +145,7 @@ export async function linkClick(event, close = false) {
  */
 export async function activateOrOpen(url, open = true) {
     console.debug('activateOrOpen:', url, open)
-    // Get Tab from Tabs (requires host permissions)
+    // Note: To Get Tab from Tabs (requires host permissions or tabs)
     const tabs = await chrome.tabs.query({ currentWindow: true })
     console.debug('tabs:', tabs)
     for (const tab of tabs) {
@@ -167,6 +167,7 @@ export async function activateOrOpen(url, open = true) {
  */
 export async function updateManifest() {
     const manifest = chrome.runtime.getManifest()
+    console.debug('updateManifest:', manifest)
     document.querySelectorAll('.version').forEach((el) => {
         el.textContent = manifest.version
     })
@@ -176,6 +177,22 @@ export async function updateManifest() {
     document.querySelectorAll('[href="version_url"]').forEach((el) => {
         el.href = `${githubURL}/releases/tag/${manifest.version}`
     })
+}
+
+/**
+ * @function updateBrowser
+ * @return {Promise<void>}
+ */
+export async function updateBrowser() {
+    let selector = '.chrome'
+    // noinspection JSUnresolvedReference
+    if (typeof browser !== 'undefined') {
+        selector = '.firefox'
+    }
+    console.debug('updateBrowser:', selector)
+    document
+        .querySelectorAll(selector)
+        .forEach((el) => el.classList.remove('d-none'))
 }
 
 /**
@@ -280,8 +297,8 @@ export async function onRemoved(permissions) {
  */
 export async function openExtPanel(
     url = '/html/panel.html',
-    width = 1280,
-    height = 720,
+    width = 720,
+    height = 480,
     type = 'panel'
 ) {
     console.debug(`openExtPanel: ${url}`, width, height)
@@ -318,6 +335,7 @@ export async function openSidePanel(event) {
             chrome.sidePanel.open({ windowId: tab.windowId })
         })
     } else if (chrome.sidebarAction) {
+        // noinspection JSUnresolvedReference
         await chrome.sidebarAction.open()
     } else {
         console.log('Side Panel Not Supported')
@@ -388,6 +406,7 @@ export async function injectFunction(func, args) {
  */
 export function copyActiveElementText(ctx) {
     console.debug('copyActiveElementText:', ctx)
+    // noinspection JSUnresolvedReference
     let text =
         ctx.linkText?.trim() ||
         document.activeElement.innerText?.trim() ||

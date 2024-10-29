@@ -11,6 +11,7 @@ import {
     saveOptions,
     showToast,
     updateManifest,
+    updateBrowser,
     updateOptions,
 } from './export.js'
 
@@ -65,15 +66,13 @@ async function initOptions() {
     // noinspection ES6MissingAwait
     updateManifest()
     // noinspection ES6MissingAwait
-    setShortcuts()
+    updateBrowser()
     // noinspection ES6MissingAwait
     checkPerms()
-    // chrome.storage.local.get(['sites']).then((items) => {
-    //     // console.debug('sites:', items.sites)
-    //     updateTable(items.sites)
-    // })
+    // noinspection ES6MissingAwait
+    setShortcuts()
     chrome.storage.sync.get(['options', 'sites']).then((items) => {
-        // console.debug('options:', items.options)
+        // console.debug('options, sites:', items.options, items.sites)
         updateOptions(items.options)
         updateTable(items.sites)
     })
@@ -117,7 +116,7 @@ async function setShortcuts(selector = '#keyboard-shortcuts') {
         let description = command.description
         // Note: Chrome does not parse the description for _execute_action in manifest.json
         if (!description && command.name === '_execute_action') {
-            description = 'Show Popup Action'
+            description = 'Open Popup' // NOTE: Also defined in: manifest.json
         }
         row.querySelector('.description').textContent = description
         row.querySelector('kbd').textContent = command.shortcut || 'Not Set'

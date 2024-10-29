@@ -72,12 +72,15 @@ async function initPopup() {
             }
 
             // Update Site Data
+            // noinspection JSUnresolvedReference
             hostnameEl.textContent = siteInfo.hostname
+            // noinspection JSUnresolvedReference
             console.debug('siteInfo.hostname:', siteInfo.hostname)
             document.getElementById('toggle-site').disabled = false
             chrome.storage.sync.get(['sites']).then((items) => {
                 console.debug('sites:', items.sites)
                 // if (siteInfo.hostname in items.sites) {
+                // noinspection JSUnresolvedReference
                 if (items.sites.includes(siteInfo.hostname)) {
                     switchEl.classList.replace(
                         'border-secondary',

@@ -30,7 +30,9 @@ async function domContentLoaded() {
 async function closePanel(event) {
     console.debug('closePanel:', event)
     event?.preventDefault()
+    // noinspection JSUnresolvedReference
     if (typeof browser !== 'undefined') {
+        // noinspection JSUnresolvedReference
         await browser.sidebarAction.close()
     } else {
         window.close()
