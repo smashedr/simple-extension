@@ -13,15 +13,18 @@
 </head>
 <body class="h-100">
 
-<div class="d-flex align-items-center justify-content-center px-1 px-sm-3 h-100">
-<div class="m-auto w-100" style="max-width: 100%;">
-<div class="card w-100 mx-auto my-3" style="max-width: 767px;">
-<div class="card-body">
-    <div class="d-flex justify-content-center align-items-center">
+<div class="d-flex align-items-center justify-content-center p-1 p-sm-3 h-100">
+<div class="w-100 h-100"> <!-- this is needed to allow bottom padding/margin in d-flex -->
+<div class="rounded rounded-3 border border-1 w-100 m-auto p-3 mb-1 mb-sm-3" style="max-width: 767px;">
+    <div class="d-flex flex-row justify-content-center align-items-center">
         <img src="../images/logo48.png" class="me-2" height="48" width="48" alt="Simple Extension" title="Simple Extension">
-        <h1>Simple Extension</h1>
-    </div>
-    <p class="text-center lead">v<span class="version"></span></p>
+        <div>
+            <a class="link-body-emphasis text-decoration-none fs-1" title="Home Page" href="homepage_url" target="_blank" rel="nofollow">
+                Simple Extension</a>
+            <a class="link-body-emphasis text-decoration-none small" title="Release Notes" href="version_url" target="_blank" rel="nofollow">
+                v<span class="version"></span></a>
+        </div>
+    </div> <!-- header -->
 
     <div class="d-flex flex-row align-items-center justify-content-center">
         <hr class="w-100 my-0"><span class="text-nowrap mx-2">Keyboard Shortcuts</span><hr class="w-100 my-0">
@@ -110,12 +113,10 @@
     <div class="mb-1 small">
         <a id="export-hosts" class="link-body-emphasis text-decoration-none import-export" data-action="export" role="button">
             Export <i class="fa-solid fa-file-arrow-down ms-1"></i></a>
-        <!--        <span class="mx-1">/</span>-->
         <span class="mx-1">&bull;</span>
         <input id="sites-input" type="file" style="display: none;" />
         <a id="import-file" class="link-body-emphasis text-decoration-none import-export" data-action="file" role="button">
             Import File <i class="fa-solid fa-file-arrow-up ms-1"></i></a>
-        <!--        <span class="mx-1">/</span>-->
         <span class="mx-1">&bull;</span>
         <a class="link-body-emphasis text-decoration-none" role="button" data-bs-toggle="modal" data-bs-target="#import-modal">
             Import Text <i class="fa-solid fa-paste ms-1"></i></a>
@@ -151,10 +152,9 @@
         <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
            href="https://github.com/smashedr/simple-extension/issues">Open Issue</a>
     </div> <!-- footer -->
-</div> <!-- card-body -->
-</div> <!-- card -->
-</div> <!-- flex -->
-</div> <!-- m-auto -->
+</div> <!-- rounded -->
+</div> <!-- w-100 -->
+</div> <!-- d-flex -->
 
 <div id="import-modal" class="modal fade" tabindex="-1" aria-labelledby="import-modal-label" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered">
