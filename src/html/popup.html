@@ -36,7 +36,7 @@
                 v<span class="version"></span></a>
         </div> <!-- text-center -->
 
-        <div class="">
+        <div class="" data-mobile-add="d-none">
             <a class="btn btn-sm btn-outline-info" role="button" href="../html/sidepanel.html" title="Side Panel">
                 <i class="fa-solid fa-table-columns"></i></a>
         </div>
@@ -65,12 +65,12 @@
         <div id="switch" class="border border-secondary border-2 rounded p-1 mb-2 text-center">
             <kbd id="hostname" class="text-center text-ellipsis d-inline-block ">
                 No Access to the Current Tab
-            </kbd> <!-- hostname -->
+            </kbd>
             <div class="form-check form-switch form-select-lg m-auto d-flex justify-content-center align-items-center py-0">
                 <input class="form-check-input me-3" type="checkbox" role="switch" id="toggle-site" disabled>
                 Enable/Disable Site
             </div>
-        </div>
+        </div> <!-- switch -->
     </label> <!-- toggle-site -->
 
     <div class="d-grid g-2 gap-2">
@@ -78,11 +78,11 @@
             <i class="fa-solid fa-code me-1"></i>
             <span class="flex-fill text-center me-4">Inject Script</span>
         </button>
-        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/sidepanel.html">
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/sidepanel.html" data-mobile-add="d-none">
             <i class="fa-solid fa-table-columns me-1"></i>
             <span class="flex-fill text-center me-4">Open Side Panel</span>
         </a>
-        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html">
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html" data-mobile-add="d-none">
             <i class="fa-regular fa-window-restore me-1"></i>
             <span class="flex-fill text-center me-4">Open Extension Panel</span>
         </a>
@@ -90,16 +90,12 @@
             <i class="fa-regular fa-window-maximize me-1"></i>
             <span class="flex-fill text-center me-4">Open Extension Page</span>
         </a>
-        <a class="btn btn-outline-info d-flex align-items-center hvr-grow-sm" href="../html/options.html">
-            <i class="fa-solid fa-sliders me-1"></i>
-            <span class="flex-fill text-center me-4">More Options</span>
-        </a>
     </div> <!-- d-grid -->
 
     <hr>
 
     <form class="options">
-        <div class="form-check form-switch">
+        <div class="form-check form-switch" data-mobile-add="d-none">
             <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
             <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
             <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
@@ -110,6 +106,11 @@
             <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
         </div>
     </form> <!-- options -->
+
+    <a class="btn btn-outline-info d-flex align-items-center hvr-grow-sm mt-3" href="../html/options.html">
+        <i class="fa-solid fa-sliders me-1"></i>
+        <span class="flex-fill text-center me-4">More Options</span>
+    </a>
 
 <!--    <a class="btn btn-outline-info w-100" href="../html/options.html">-->
 <!--        <i class="fa-solid fa-sliders me-1"></i> Open Options</a>-->

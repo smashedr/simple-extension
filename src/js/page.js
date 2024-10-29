@@ -7,6 +7,7 @@ import {
     onAdded,
     onRemoved,
     revokePerms,
+    updatePlatform,
 } from './export.js'
 
 chrome.permissions.onAdded.addListener(onAdded)
@@ -32,6 +33,8 @@ document
  */
 async function domContentLoaded() {
     console.debug('domContentLoaded')
+    // noinspection ES6MissingAwait
+    updatePlatform()
     // noinspection ES6MissingAwait
     checkPerms()
     chrome.storage.sync.get(['options']).then((items) => {

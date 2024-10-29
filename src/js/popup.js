@@ -10,6 +10,7 @@ import {
     toggleSite,
     updateManifest,
     updateOptions,
+    updatePlatform,
 } from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
@@ -45,6 +46,8 @@ async function initPopup() {
     console.debug('initPopup')
     // noinspection ES6MissingAwait
     updateManifest()
+    // noinspection ES6MissingAwait
+    updatePlatform()
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
         updateOptions(items.options)

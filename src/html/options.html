@@ -26,6 +26,7 @@
         </div>
     </div> <!-- header -->
 
+    <div data-mobile-add="d-none">
     <div class="d-flex flex-row align-items-center justify-content-center">
         <hr class="w-100 my-0"><span class="text-nowrap mx-2">Keyboard Shortcuts</span><hr class="w-100 my-0">
     </div>
@@ -48,6 +49,7 @@
             https://mzl.la/3Qwp5QQ <i class="fa-solid fa-arrow-up-right-from-square fa-xs"></i></a>
         <a id="chrome-shortcuts" class="d-inline-block d-none chrome" role="button">chrome://extensions/shortcuts</a>
     </div>
+    </div> <!-- data-mobile-add -->
 
     <div class="d-flex flex-row align-items-center justify-content-center">
         <hr class="w-100 my-0"><span class="text-nowrap mx-2">Extension Options</span><hr class="w-100 my-0">
@@ -70,7 +72,7 @@
                 </div>
             </div>
         </div> <!-- row -->
-        <div class="form-check form-switch">
+        <div class="form-check form-switch" data-mobile-add="d-none">
             <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
             <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
             <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>

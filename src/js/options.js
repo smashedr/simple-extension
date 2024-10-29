@@ -13,6 +13,7 @@ import {
     updateManifest,
     updateBrowser,
     updateOptions,
+    updatePlatform,
 } from './export.js'
 
 chrome.storage.onChanged.addListener(onChanged)
@@ -67,6 +68,8 @@ async function initOptions() {
     updateManifest()
     // noinspection ES6MissingAwait
     updateBrowser()
+    // noinspection ES6MissingAwait
+    updatePlatform()
     // noinspection ES6MissingAwait
     checkPerms()
     // noinspection ES6MissingAwait
@@ -135,14 +138,16 @@ async function copySupport(event) {
     const manifest = chrome.runtime.getManifest()
     const permissions = await chrome.permissions.getAll()
     const { options } = await chrome.storage.sync.get(['options'])
-    const commands = await chrome.commands.getAll()
     const result = [
         `${manifest.name} - ${manifest.version}`,
         navigator.userAgent,
         `permissions.origins: ${JSON.stringify(permissions.origins)}`,
         `options: ${JSON.stringify(options)}`,
-        `commands: ${JSON.stringify(commands)}`,
     ]
+    const commands = await chrome.commands?.getAll()
+    if (commands) {
+        result.push(`commands: ${JSON.stringify(commands)}`)
+    }
     await navigator.clipboard.writeText(result.join('\n'))
     showToast('Support Information Copied.')
 }
