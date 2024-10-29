@@ -23,8 +23,11 @@ document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', (e) => linkClick(e, true)))
 document
-    .querySelectorAll('#options-form input')
+    .querySelectorAll('.options input')
     .forEach((el) => el.addEventListener('change', saveOptions))
+document
+    .querySelectorAll('form.options')
+    .forEach((el) => el.addEventListener('submit', (e) => e.preventDefault()))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
