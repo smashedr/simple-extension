@@ -422,26 +422,64 @@ export function showToast(message, type = 'primary') {
 
 /**
  * Inject Function into Current Tab with args
+ * @function injectScript
+ * @param {Array|String} files
+ * @return {Promise<chrome.scripting.InjectionResult.result>}
+ */
+export async function injectScript(files) {
+    if (typeof files === 'string') {
+        files = [files]
+    }
+    console.debug('injectScript files:', files)
+    try {
+        const [tab] = await chrome.tabs.query({
+            currentWindow: true,
+            active: true,
+        })
+        const results = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files,
+        })
+        console.debug('injectScript results:', results)
+        if (results[0]?.error) {
+            // noinspection JSUnresolvedReference
+            console.log('injectScript error:', results[0].error)
+        }
+        return results[0]?.result
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+/**
+ * Inject Function into Current Tab with args
  * @function injectFunction
  * @param {Function} func
  * @param {Array} [args]
  * @return {Promise<chrome.scripting.InjectionResult.result>}
  */
 export async function injectFunction(func, args) {
-    const [tab] = await chrome.tabs.query({
-        currentWindow: true,
-        active: true,
-    })
-    const results = await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        injectImmediately: true,
-        func: func,
-        args: args,
-    })
-    console.debug('injectFunction results:', results)
-    const result = results[0]?.result
-    console.debug('result:', result)
-    return result
+    console.debug('injectFunction:', func, args)
+    try {
+        const [tab] = await chrome.tabs.query({
+            currentWindow: true,
+            active: true,
+        })
+        const results = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            injectImmediately: true,
+            func: func,
+            args: args,
+        })
+        console.debug('injectFunction results:', results)
+        if (results[0]?.error) {
+            // noinspection JSUnresolvedReference
+            console.log('injectFunction error:', results[0].error)
+        }
+        return results[0]?.result
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 /**

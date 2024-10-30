@@ -4,6 +4,7 @@ import {
     checkPerms,
     grantPerms,
     injectFunction,
+    injectScript,
     linkClick,
     saveOptions,
     showToast,
@@ -14,7 +15,7 @@ import {
 } from './export.js'
 
 document.addEventListener('DOMContentLoaded', initPopup)
-document.getElementById('inject-script').addEventListener('click', injectScript)
+document.getElementById('inject-script').addEventListener('click', injectClick)
 // noinspection JSCheckFunctionSignatures
 document
     .querySelectorAll('.grant-permissions')
@@ -48,14 +49,12 @@ async function initPopup() {
     updateManifest()
     // noinspection ES6MissingAwait
     updatePlatform()
+
+    // Update Options
     chrome.storage.sync.get(['options']).then((items) => {
         console.debug('options:', items.options)
         updateOptions(items.options)
     })
-
-    // if (chrome.runtime.lastError) {
-    //     showToast(chrome.runtime.lastError.message, 'warning')
-    // }
 
     // Check Host Permissions
     const hasPerms = await checkPerms()
@@ -64,42 +63,38 @@ async function initPopup() {
     }
 
     // Get Tab Info
-    injectFunction(() => {
-        return { ...window.location }
+    // Note: contentScript is defined in the content-script.js and fails if not loaded
+    const siteInfo = await injectFunction(() => {
+        return { contentScript, ...window.location }
     })
-        .then((siteInfo) => {
-            console.debug('siteInfo:', siteInfo)
-            if (!siteInfo) {
-                document
-                    .querySelectorAll('.tab-perms')
-                    .forEach((el) => el.classList.add('d-none'))
-                switchEl.classList.replace('border-secondary', 'border-danger')
-                return console.log('%cNo Tab Permissions', 'color: Yellow')
-            }
+    console.debug('siteInfo:', siteInfo)
 
-            // Update Site Data
-            // Note: this does not mean we have full access to the current tab, only inject
-            // noinspection JSUnresolvedReference
-            hostnameEl.textContent = siteInfo.hostname
-            // noinspection JSUnresolvedReference
-            console.debug('siteInfo.hostname:', siteInfo.hostname)
-            document.getElementById('toggle-site').disabled = false
-            chrome.storage.sync.get(['sites']).then((items) => {
-                console.debug('sites:', items.sites)
-                // if (siteInfo.hostname in items.sites) {
-                // noinspection JSUnresolvedReference
-                if (items.sites.includes(siteInfo.hostname)) {
-                    switchEl.classList.replace(
-                        'border-secondary',
-                        'border-success'
-                    )
-                    toggleSiteEl.checked = true
-                }
-            })
-        })
-        .catch((e) => {
-            console.debug(e)
-        })
+    // Check if Current Tab is Accessible
+    if (!siteInfo) {
+        document
+            .querySelectorAll('.tab-perms')
+            .forEach((el) => el.classList.add('d-none'))
+        switchEl.classList.replace('border-secondary', 'border-danger')
+        return console.log('%cNo Tab Permissions', 'color: Orange')
+    }
+
+    // Update Site Data
+    try {
+        // noinspection JSUnresolvedReference
+        hostnameEl.textContent = siteInfo.hostname
+        // noinspection JSUnresolvedReference
+        console.debug('%c hostname:', 'color: Lime', siteInfo.hostname)
+        document.getElementById('toggle-site').disabled = false
+        const { sites } = await chrome.storage.sync.get(['sites'])
+        // noinspection JSUnresolvedReference
+        if (sites.includes(siteInfo.hostname)) {
+            switchEl.classList.replace('border-secondary', 'border-success')
+            toggleSiteEl.checked = true
+        }
+    } catch (e) {
+        console.warn(e)
+        showToast(e.message, 'danger')
+    }
 
     // const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     // console.debug('tab:', tab)
@@ -115,27 +110,14 @@ async function initPopup() {
 }
 
 /**
- * Grant Permissions Button Click Callback
- * @function injectScript
+ * Inject Button Click Callback
+ * @function injectClick
  * @param {MouseEvent} event
  */
-async function injectScript(event) {
-    console.debug('injectScript:', event)
-    try {
-        const [tab] = await chrome.tabs.query({
-            currentWindow: true,
-            active: true,
-        })
-        const result = await chrome.scripting.executeScript({
-            target: { tabId: tab.id },
-            files: ['/js/inject.js'],
-        })
-        console.debug('Injection Result:', result)
-        window.close()
-    } catch (e) {
-        showToast(e.toString(), 'danger')
-        console.log(e)
-    }
+async function injectClick(event) {
+    console.debug('injectClick:', event)
+    await injectScript('/js/inject.js')
+    window.close()
 }
 
 /**
@@ -145,8 +127,7 @@ async function injectScript(event) {
  */
 async function toggleSiteChange(event) {
     console.debug('toggleSiteChange:', event)
-    const hostname = hostnameEl.textContent
-    const enabled = await toggleSite(hostname)
+    const enabled = await toggleSite(hostnameEl.textContent)
     if (enabled) {
         switchEl.classList.replace('border-secondary', 'border-success')
     } else {
