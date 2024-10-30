@@ -58,6 +58,11 @@ document
         )
     )
 
+document.getElementById('chrome-shortcuts').addEventListener('click', () => {
+    // noinspection JSIgnoredPromiseFromCall
+    chrome.tabs.update({ url: 'chrome://extensions/shortcuts' })
+})
+
 /**
  * Initialize Options
  * @function initOptions

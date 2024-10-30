@@ -365,7 +365,8 @@ export async function openExtPanel(
 
     const window = await chrome.windows.create({ type, url, width, height })
     console.debug(`%c Created new window: ${window.id}`, 'color: Yellow')
-    await chrome.storage.local.set({ lastPanelID: window.id })
+    // noinspection ES6MissingAwait
+    chrome.storage.local.set({ lastPanelID: window.id })
     return window
 }
 
