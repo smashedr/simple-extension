@@ -335,7 +335,7 @@ export async function onRemoved(permissions) {
  * @param {Number} [width]
  * @param {Number} [height]
  * @param {String} [type]
- * @return {Promise<chrome.windows.Window>}
+ * @return {Promise<chrome.windows.Window|undefined>}
  */
 export async function openExtPanel(
     url = '/html/panel.html',
@@ -344,6 +344,10 @@ export async function openExtPanel(
     type = 'panel'
 ) {
     console.debug(`openExtPanel: ${url}`, width, height)
+    if (!chrome.windows) {
+        console.log('Browser does not support: chrome.windows')
+        return
+    }
     const { lastPanelID } = await chrome.storage.local.get(['lastPanelID'])
     console.debug('lastPanelID:', lastPanelID)
 

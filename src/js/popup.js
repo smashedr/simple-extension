@@ -78,6 +78,7 @@ async function initPopup() {
             }
 
             // Update Site Data
+            // Note: this does not mean we have full access to the current tab, only inject
             // noinspection JSUnresolvedReference
             hostnameEl.textContent = siteInfo.hostname
             // noinspection JSUnresolvedReference
@@ -120,8 +121,11 @@ async function initPopup() {
  */
 async function injectScript(event) {
     console.debug('injectScript:', event)
-    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
     try {
+        const [tab] = await chrome.tabs.query({
+            currentWindow: true,
+            active: true,
+        })
         const result = await chrome.scripting.executeScript({
             target: { tabId: tab.id },
             files: ['/js/inject.js'],
