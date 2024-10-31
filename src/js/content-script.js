@@ -7,6 +7,7 @@ if (!chrome.storage.onChanged.hasListener(onChanged)) {
     chrome.storage.onChanged.addListener(onChanged)
 }
 
+let contentScript = true // eslint-disable-line no-unused-vars
 let tabEnabled = false
 
 ;(async () => {

@@ -26,17 +26,21 @@
                 <li><button class="dropdown-item" data-bs-theme-value="auto" aria-pressed="false">
                     <i class="fa-solid fa-circle-half-stroke" style="min-width: 16px;"></i> <span class="ms-3">Auto</span></button></li>
             </ul>
-        </div>
+        </div> <!-- dropdown -->
 
         <div class="flex-fill text-center">
             <a class="link-body-emphasis text-decoration-none fs-4" title="Home Page" href="homepage_url">
                 <img src="../images/logo32.png" alt="Logo" class="mb-1" style="height: 1.1em;">
-                Simple Extension</a>
+                Simple Ext.</a>
             <a class="link-body-emphasis text-decoration-none small" title="Release Notes" href="version_url">
                 v<span class="version"></span></a>
-        </div>
+        </div> <!-- text-center -->
 
-        <div class="">
+        <div class="" data-mobile-add="d-none">
+            <a class="btn btn-sm btn-outline-info" role="button" href="../html/sidepanel.html" title="Side Panel">
+                <i class="fa-solid fa-table-columns"></i></a>
+        </div>
+        <div class="ms-2">
             <a class="btn btn-sm btn-outline-info" role="button" href="../html/options.html" title="Options">
                 <i class="fa-solid fa-gears"></i></a>
         </div>
@@ -59,47 +63,54 @@
 
     <label for="toggle-site" class="w-100 has-perms">
         <div id="switch" class="border border-secondary border-2 rounded p-1 mb-2 text-center">
-            <!--            <div class="text-center">-->
             <kbd id="hostname" class="text-center text-ellipsis d-inline-block ">
                 No Access to the Current Tab
-            </kbd> <!-- hostname -->
-            <!--            </div>-->
+            </kbd>
             <div class="form-check form-switch form-select-lg m-auto d-flex justify-content-center align-items-center py-0">
                 <input class="form-check-input me-3" type="checkbox" role="switch" id="toggle-site" disabled>
                 Enable/Disable Site
             </div>
-        </div>
-    </label>
+        </div> <!-- switch -->
+    </label> <!-- toggle-site -->
 
     <div class="d-grid g-2 gap-2">
         <button id="inject-script" class="btn btn-outline-warning d-flex align-items-center hvr-grow-sm has-perms tab-perms">
             <i class="fa-solid fa-code me-1"></i>
             <span class="flex-fill text-center me-4">Inject Script</span>
         </button>
-        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/page.html">
-            <i class="fa-regular fa-id-card me-1"></i>
-            <span class="flex-fill text-center me-4">Open Extension Page</span>
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/sidepanel.html" data-mobile-add="d-none">
+            <i class="fa-solid fa-table-columns me-1"></i>
+            <span class="flex-fill text-center me-4">Open Side Panel</span>
         </a>
-        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html">
-            <i class="fa-regular fa-window-maximize me-1"></i>
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html" data-mobile-add="d-none">
+            <i class="fa-regular fa-window-restore me-1"></i>
             <span class="flex-fill text-center me-4">Open Extension Panel</span>
+        </a>
+        <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/page.html">
+            <i class="fa-regular fa-window-maximize me-1"></i>
+            <span class="flex-fill text-center me-4">Open Extension Page</span>
         </a>
     </div> <!-- d-grid -->
 
     <hr>
 
-    <form id="options-form" class="">
-        <div class="form-check form-switch">
+    <form class="options">
+        <div class="form-check form-switch" data-mobile-add="d-none">
             <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
             <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
-            <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
+            <i class="fa-solid fa-circle-info p-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
         </div>
         <div class="form-check form-switch">
             <input class="form-check-input" id="showUpdate" type="checkbox" role="switch">
             <label class="form-check-label" for="showUpdate">Show Release Notes on Update</label>
-            <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
+            <i class="fa-solid fa-circle-info p-1" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
         </div>
-    </form> <!-- options-form -->
+    </form> <!-- options -->
+
+    <a class="btn btn-outline-info d-flex align-items-center hvr-grow-sm mt-3" href="../html/options.html">
+        <i class="fa-solid fa-sliders me-1"></i>
+        <span class="flex-fill text-center me-4">More Options</span>
+    </a>
 
 <!--    <a class="btn btn-outline-info w-100" href="../html/options.html">-->
 <!--        <i class="fa-solid fa-sliders me-1"></i> Open Options</a>-->

@@ -12,12 +12,12 @@ if (!window.injected) {
     window.injected = true
     console.debug('Adding runtime.onMessage Listener')
     chrome.runtime.onMessage.addListener(onMessage)
-    setTimeout(function () {
-        alert('Script injected script: inject.js')
+    setTimeout(() => {
+        alert('Success: Injected script: inject.js')
     }, 1)
 } else {
-    setTimeout(function () {
-        alert('Already injected script: inject.js')
+    setTimeout(() => {
+        alert('Warn: Already injected script: inject.js')
     }, 1)
 }
 

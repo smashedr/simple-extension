@@ -11,7 +11,9 @@ import {
     saveOptions,
     showToast,
     updateManifest,
+    updateBrowser,
     updateOptions,
+    updatePlatform,
 } from './export.js'
 
 chrome.storage.onChanged.addListener(onChanged)
@@ -32,11 +34,11 @@ document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', linkClick))
 document
-    .querySelectorAll('#options-form input')
+    .querySelectorAll('.options input')
     .forEach((el) => el.addEventListener('change', saveOptions))
 document
-    .getElementById('options-form')
-    .addEventListener('submit', (e) => e.preventDefault())
+    .querySelectorAll('form.options')
+    .forEach((el) => el.addEventListener('submit', (e) => e.preventDefault()))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
@@ -56,6 +58,11 @@ document
         )
     )
 
+document.getElementById('chrome-shortcuts').addEventListener('click', () => {
+    // noinspection JSIgnoredPromiseFromCall
+    chrome.tabs.update({ url: 'chrome://extensions/shortcuts' })
+})
+
 /**
  * Initialize Options
  * @function initOptions
@@ -65,15 +72,15 @@ async function initOptions() {
     // noinspection ES6MissingAwait
     updateManifest()
     // noinspection ES6MissingAwait
-    setShortcuts()
+    updateBrowser()
+    // noinspection ES6MissingAwait
+    updatePlatform()
     // noinspection ES6MissingAwait
     checkPerms()
-    // chrome.storage.local.get(['sites']).then((items) => {
-    //     // console.debug('sites:', items.sites)
-    //     updateTable(items.sites)
-    // })
+    // noinspection ES6MissingAwait
+    setShortcuts()
     chrome.storage.sync.get(['options', 'sites']).then((items) => {
-        // console.debug('options:', items.options)
+        // console.debug('options, sites:', items.options, items.sites)
         updateOptions(items.options)
         updateTable(items.sites)
     })
@@ -117,7 +124,7 @@ async function setShortcuts(selector = '#keyboard-shortcuts') {
         let description = command.description
         // Note: Chrome does not parse the description for _execute_action in manifest.json
         if (!description && command.name === '_execute_action') {
-            description = 'Show Popup Action'
+            description = 'Open Popup' // NOTE: Also defined in: manifest.json
         }
         row.querySelector('.description').textContent = description
         row.querySelector('kbd').textContent = command.shortcut || 'Not Set'
@@ -126,7 +133,7 @@ async function setShortcuts(selector = '#keyboard-shortcuts') {
 }
 
 /**
- * Copy Support/Debugging Information
+ * Copy Support Click Callback
  * @function copySupport
  * @param {MouseEvent} event
  */
@@ -136,14 +143,16 @@ async function copySupport(event) {
     const manifest = chrome.runtime.getManifest()
     const permissions = await chrome.permissions.getAll()
     const { options } = await chrome.storage.sync.get(['options'])
-    const commands = await chrome.commands.getAll()
     const result = [
         `${manifest.name} - ${manifest.version}`,
         navigator.userAgent,
         `permissions.origins: ${JSON.stringify(permissions.origins)}`,
         `options: ${JSON.stringify(options)}`,
-        `commands: ${JSON.stringify(commands)}`,
     ]
+    const commands = await chrome.commands?.getAll()
+    if (commands) {
+        result.push(`commands: ${JSON.stringify(commands)}`)
+    }
     await navigator.clipboard.writeText(result.join('\n'))
     showToast('Support Information Copied.')
 }
@@ -313,7 +322,7 @@ async function importSites(data) {
 }
 
 /**
- * Text File Download
+ * Text File Download Handler
  * @function textFileDownload
  * @param {String} filename
  * @param {String} text
@@ -333,7 +342,7 @@ function textFileDownload(filename, text) {
 }
 
 /**
- * Add Host Callback
+ * Add Host Submit Callback
  * @function addHost
  * @param {SubmitEvent} event
  */

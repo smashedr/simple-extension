@@ -13,15 +13,23 @@
 </head>
 <body class="h-100">
 
-<div class="d-flex align-items-center justify-content-center px-1 px-sm-3 h-100">
-<div class="m-auto w-100" style="max-width: 100%;">
-<div class="card w-100 mx-auto my-3" style="max-width: 767px;">
-<div class="card-body">
-    <div class="d-flex justify-content-center align-items-center">
-        <img src="../images/logo48.png" class="me-2" height="48" width="48" alt="Simple Extension" title="Simple Extension">
-        <h1>Simple Extension</h1>
+<div class="d-flex align-items-center justify-content-center p-1 p-sm-3 h-100">
+<div class="w-100 h-100"> <!-- this is needed to allow bottom padding/margin in d-flex -->
+<div class="rounded rounded-3 border border-1 w-100 m-auto p-3 mb-1 mb-sm-3" style="max-width: 767px;">
+    <div class="d-flex flex-row justify-content-center align-items-center">
+        <img src="../images/logo48.png" class="me-1" height="48" width="48" alt="Simple Extension" title="Simple Extension">
+        <div>
+            <a class="link-body-emphasis text-decoration-none fs-1" title="Home Page" href="homepage_url" target="_blank" rel="nofollow">
+                Simple Extension</a>
+            <a class="link-body-emphasis text-decoration-none small" title="Release Notes" href="version_url" target="_blank" rel="nofollow">
+                v<span class="version"></span></a>
+        </div>
+    </div> <!-- header -->
+
+    <div data-mobile-add="d-none">
+    <div class="d-flex flex-row align-items-center justify-content-center">
+        <hr class="w-100 my-0"><span class="text-nowrap mx-2">Keyboard Shortcuts</span><hr class="w-100 my-0">
     </div>
-    <p class="text-center lead">v<span class="version"></span></p>
 
     <table id="keyboard-shortcuts" class="table table-sm table-borderless table-hover d-none">
         <caption class="visually-hidden">Keyboard Shortcuts</caption>
@@ -33,38 +41,48 @@
             <td class="bg-transparent text-end" title="Keyboard Shortcut"><kbd>Unknown</kbd></td>
         </tr>
         </tfoot>
-    </table>
+    </table> <!-- keyboard-shortcuts -->
 
-    <hr>
+    <div class="mb-2">
+        Manage Keyboard Shortcuts:
+        <a class="text-decoration-none d-inline-block d-none firefox" href="https://support.mozilla.org/en-US/kb/manage-extension-shortcuts-firefox" target="_blank" rel="noopener">
+            https://mzl.la/3Qwp5QQ <i class="fa-solid fa-arrow-up-right-from-square fa-xs"></i></a>
+        <a id="chrome-shortcuts" class="d-inline-block d-none chrome" role="button">chrome://extensions/shortcuts</a>
+    </div>
+    </div> <!-- data-mobile-add -->
 
-    <form id="options-form" class="options">
+    <div class="d-flex flex-row align-items-center justify-content-center">
+        <hr class="w-100 my-0"><span class="text-nowrap mx-2">Extension Options</span><hr class="w-100 my-0">
+    </div>
+
+    <form class="options">
         <div class="row mb-2">
             <div class="col-12 col-sm-8 mb-2">
                 <label for="testInput" class="form-label"><i class="fa-regular fa-keyboard me-1"></i> Test Input</label>
-                <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Example Text Input."></i>
+                <i class="fa-solid fa-circle-info p-1" data-bs-toggle="tooltip" data-bs-title="Example Text Input."></i>
                 <input id="testInput" aria-describedby="testInputHelp" type="text" class="form-control" autocomplete="off">
                 <div class="form-text" id="testInputHelp">Just a test text input.</div>
             </div>
             <div class="col-12 col-sm-4  mb-2">
                 <label for="testNumber" class="form-label"><i class="fa-solid fa-hashtag me-1"></i> Number</label>
-                <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Example Number Input."></i>
+                <i class="fa-solid fa-circle-info p-1" data-bs-toggle="tooltip" data-bs-title="Example Number Input."></i>
                 <input id="testNumber" aria-describedby="testNumberHelp" type="number" step="5" min="5" max="360" class="form-control" autocomplete="off" placeholder="Minutes">
                 <div class="form-text" id="testNumberHelp">
                     A number 5-360.
                 </div>
             </div>
-        </div>
-        <div class="form-check form-switch">
+        </div> <!-- row -->
+        <div class="form-check form-switch" data-mobile-add="d-none">
             <input class="form-check-input" id="contextMenu" type="checkbox" role="switch">
             <label class="form-check-label" for="contextMenu">Enable Right Click Menu</label>
-            <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
+            <i class="fa-solid fa-circle-info p-1" data-bs-toggle="tooltip" data-bs-title="Show Context Menu on Right Click."></i>
         </div>
         <div class="form-check form-switch">
             <input class="form-check-input" id="showUpdate" type="checkbox" role="switch">
             <label class="form-check-label" for="showUpdate">Show Release Notes on Update</label>
-            <i class="fa-solid fa-circle-info ms-1" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
+            <i class="fa-solid fa-circle-info p-1" data-bs-toggle="tooltip" data-bs-title="Show Release Notes on Version Update."></i>
         </div>
-    </form>
+    </form> <!-- options -->
 
     <div class="d-none my-2 grant-perms">
         <button class="btn btn-lg btn-success w-100 mb-2 grant-permissions" type="button"
@@ -78,6 +96,10 @@
                 data-bs-toggle="tooltip" data-bs-placement="top" data-bs-trigger="hover"
                 data-bs-title="Google Chrome does not allow removing required permissions via this method.">
             Remove Host Permissions</button>
+    </div> <!-- grant-perms -->
+
+    <div class="d-flex flex-row align-items-center justify-content-center">
+        <hr class="w-100 my-0"><span class="text-nowrap mx-2">Enabled Hosts</span><hr class="w-100 my-0">
     </div>
 
     <form id="add-host">
@@ -88,21 +110,19 @@
                 Add <i class="fa-solid fa-circle-plus ms-1"></i>
             </button>
         </div>
-    </form>
+    </form> <!-- add-host -->
 
     <div class="mb-1 small">
         <a id="export-hosts" class="link-body-emphasis text-decoration-none import-export" data-action="export" role="button">
             Export <i class="fa-solid fa-file-arrow-down ms-1"></i></a>
-        <!--        <span class="mx-1">/</span>-->
         <span class="mx-1">&bull;</span>
         <input id="sites-input" type="file" style="display: none;" />
         <a id="import-file" class="link-body-emphasis text-decoration-none import-export" data-action="file" role="button">
             Import File <i class="fa-solid fa-file-arrow-up ms-1"></i></a>
-        <!--        <span class="mx-1">/</span>-->
         <span class="mx-1">&bull;</span>
         <a class="link-body-emphasis text-decoration-none" role="button" data-bs-toggle="modal" data-bs-target="#import-modal">
             Import Text <i class="fa-solid fa-paste ms-1"></i></a>
-    </div>
+    </div> <!-- import/export -->
 
     <table id="hosts-table" class="table table-sm table-hover bg-transparent">
         <caption>Enabled Hosts</caption>
@@ -116,7 +136,7 @@
             </th>
         </tr></thead>
         <tbody></tbody>
-    </table>
+    </table> <!-- hosts-table -->
 
     <p class="fst-italic small mt-3">
         <a id="copy-support" href="#0">Copy Support Information</a> for issue reporting.
@@ -133,11 +153,10 @@
         <svg><use xlink:href="#bi-dot" /></svg>
         <a class="link-body-emphasis text-decoration-none d-inline-block" target="_blank" rel="noopener"
            href="https://github.com/smashedr/simple-extension/issues">Open Issue</a>
-    </div>
-</div> <!-- card-body -->
-</div> <!-- card -->
-</div> <!-- flex -->
-</div> <!-- m-auto -->
+    </div> <!-- footer -->
+</div> <!-- rounded -->
+</div> <!-- w-100 -->
+</div> <!-- d-flex -->
 
 <div id="import-modal" class="modal fade" tabindex="-1" aria-labelledby="import-modal-label" aria-hidden="true">
 <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -145,7 +164,7 @@
     <div class="modal-header">
         <h1 class="modal-title fs-5" id="import-modal-label">Import Credentials</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" tabindex="-1"></button>
-    </div>
+    </div> <!-- modal-header -->
     <div class="modal-body">
         <div class="">
             <label for="sites-textarea" class="mb-1">
@@ -153,10 +172,10 @@
             </label>
             <textarea id="sites-textarea" class="form-control" placeholder="Paste text to import here..." style="height: 100px"></textarea>
             <div class="invalid-feedback"></div>
-            <div>
-                For data format, see the <a href="https://github.com/cssnr/auto-auth?tab=readme-ov-file#Migration" target="_blank" rel="noopener">
-                Migration Guide</a> on GitHub.
-            </div>
+<!--            <div>-->
+<!--                For data format, see the <a href="https://github.com/cssnr/auto-auth?tab=readme-ov-file#Migration" target="_blank" rel="noopener">-->
+<!--                Migration Guide</a> on GitHub.-->
+<!--            </div>-->
         </div>
     </div> <!-- modal-body -->
     <div class="modal-footer">
@@ -165,7 +184,7 @@
         </button>
         <button type="button" class="btn btn-outline-warning import-export" data-action="clear" data-id="sites-textarea">Clear</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-    </div>
+    </div> <!-- modal-footer -->
 </div> <!-- modal-content -->
 </div> <!-- modal-dialog -->
 </div><!-- import-modal -->
