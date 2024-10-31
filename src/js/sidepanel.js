@@ -2,6 +2,7 @@
 
 import { linkClick, openPopup, updateManifest } from './export.js'
 
+chrome.tabs.onActivated.addListener(onActivated)
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document
     .querySelectorAll('a[href]')
@@ -40,4 +41,25 @@ async function closePanel(event) {
     } else {
         window.close()
     }
+}
+
+/**
+ * Tab Change Callback
+ * @function onActivated
+ * @param {chrome.tabs.TabActiveInfo} activeInfo
+ */
+async function onActivated(activeInfo) {
+    console.debug('onActivated:', activeInfo)
+    const window = await chrome.windows.getCurrent()
+    // console.debug('window:', window)
+    if (window.id !== activeInfo.windowId) {
+        return console.debug('Tab Change in Different Window!')
+    }
+    console.debug('%c Tab Change - Update Tab Specific Data.', 'color: Lime')
+    const [tab] = await chrome.tabs.query({
+        currentWindow: true,
+        active: true,
+    })
+    console.debug('tab:', tab)
+    console.debug('tab.url:', tab.url)
 }

@@ -100,6 +100,7 @@ function setUninstallURL() {
     // url.searchParams.append('version', manifest.version)
     // chrome.runtime.setUninstallURL(url.href)
     // console.debug(`setUninstallURL: ${url.href}`)
+    // Note: If only setting to a static url, this function is not required.
     chrome.runtime.setUninstallURL(`${githubURL}/issues`)
     console.debug(`setUninstallURL: ${githubURL}/issues`)
 }
