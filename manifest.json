@@ -31,15 +31,6 @@
       },
       "description": "Toggle Current Site"
     },
-    "_execute_action": {
-      "suggested_key": {
-        "default": "Alt+Shift+A"
-      },
-      "description": "Show Popup Action"
-    },
-    "openOptions": {
-      "description": "Open Options Page"
-    },
     "openSidePanel": {
       "suggested_key": {
         "default": "Alt+Shift+I"
@@ -54,6 +45,15 @@
     },
     "openPage": {
       "description": "Open Extension Page"
+    },
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "Open Popup"
+    },
+    "openOptions": {
+      "description": "Open Options"
     }
   },
   "action": {

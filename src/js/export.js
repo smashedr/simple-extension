@@ -70,7 +70,7 @@ export function updateOptions(options) {
         }
         if (el.tagName !== 'INPUT') {
             el.textContent = value.toString()
-        } else if (['checkbox', 'radio'].includes(el.type)) {
+        } else if (typeof value === 'boolean') {
             el.checked = value
         } else {
             el.value = value
@@ -115,11 +115,15 @@ export async function linkClick(event, close = false) {
         console.debug('return on anchor link')
         return
     } else if (href.endsWith('html/options.html')) {
-        chrome.runtime.openOptionsPage()
+        await chrome.runtime.openOptionsPage()
         if (close) window.close()
         return
     } else if (href.endsWith('html/panel.html')) {
         await openExtPanel()
+        if (close) window.close()
+        return
+    } else if (href.endsWith('html/sidepanel.html')) {
+        await openSidePanel()
         if (close) window.close()
         return
     } else if (href.startsWith('http')) {
@@ -141,7 +145,7 @@ export async function linkClick(event, close = false) {
  */
 export async function activateOrOpen(url, open = true) {
     console.debug('activateOrOpen:', url, open)
-    // Get Tab from Tabs (requires host permissions)
+    // Note: To Get Tab from Tabs (requires host permissions or tabs)
     const tabs = await chrome.tabs.query({ currentWindow: true })
     console.debug('tabs:', tabs)
     for (const tab of tabs) {
@@ -160,9 +164,11 @@ export async function activateOrOpen(url, open = true) {
 /**
  * Update DOM with Manifest Details
  * @function updateManifest
+ * @function updateManifest
  */
 export async function updateManifest() {
     const manifest = chrome.runtime.getManifest()
+    console.debug('updateManifest:', manifest)
     document.querySelectorAll('.version').forEach((el) => {
         el.textContent = manifest.version
     })
@@ -172,6 +178,63 @@ export async function updateManifest() {
     document.querySelectorAll('[href="version_url"]').forEach((el) => {
         el.href = `${githubURL}/releases/tag/${manifest.version}`
     })
+}
+
+/**
+ * @function updateBrowser
+ * @return {Promise<void>}
+ */
+export async function updateBrowser() {
+    let selector = '.chrome'
+    // noinspection JSUnresolvedReference
+    if (typeof browser !== 'undefined') {
+        selector = '.firefox'
+    }
+    console.debug('updateBrowser:', selector)
+    document
+        .querySelectorAll(selector)
+        .forEach((el) => el.classList.remove('d-none'))
+}
+
+/**
+ * @function updatePlatform
+ * @return {Promise<void>}
+ */
+export async function updatePlatform() {
+    const platform = await chrome.runtime.getPlatformInfo()
+    console.debug('updatePlatform:', platform)
+    const splitCls = (cls) => cls.split(' ').filter(Boolean)
+    if (platform.os === 'android') {
+        // document.querySelectorAll('[class*="mobile-"]').forEach((el) => {
+        document
+            .querySelectorAll(
+                '[data-mobile-add],[data-mobile-remove],[data-mobile-replace]'
+            )
+            .forEach((el) => {
+                if (el.dataset.mobileAdd) {
+                    for (const cls of splitCls(el.dataset.mobileAdd)) {
+                        // console.debug('mobileAdd:', cls)
+                        el.classList.add(cls)
+                    }
+                }
+                if (el.dataset.mobileRemove) {
+                    for (const cls of splitCls(el.dataset.mobileRemove)) {
+                        // console.debug('mobileAdd:', cls)
+                        el.classList.remove(cls)
+                    }
+                }
+                if (el.dataset.mobileReplace) {
+                    const split = splitCls(el.dataset.mobileReplace)
+                    // console.debug('mobileReplace:', split)
+                    for (let i = 0; i < split.length; i += 2) {
+                        const one = split[i]
+                        const two = split[i + 1]
+                        // console.debug(`replace: ${one} >> ${two}`)
+                        el.classList.replace(one, two)
+                    }
+                }
+            })
+    }
 }
 
 /**
@@ -271,23 +334,40 @@ export async function onRemoved(permissions) {
  * @param {String} [url]
  * @param {Number} [width]
  * @param {Number} [height]
- * @return {Promise<chrome.windows.Window>}
+ * @param {String} [type]
+ * @return {Promise<chrome.windows.Window|undefined>}
  */
 export async function openExtPanel(
     url = '/html/panel.html',
-    width = 1280,
-    height = 720
+    width = 720,
+    height = 480,
+    type = 'panel'
 ) {
     console.debug(`openExtPanel: ${url}`, width, height)
-    const windows = await chrome.windows.getAll({ populate: true })
-    for (const window of windows) {
-        // console.debug('window:', window)
-        if (window.tabs[0]?.url?.endsWith(url)) {
-            console.debug(`%c Panel found: ${window.id}`, 'color: Lime')
-            return chrome.windows.update(window.id, { focused: true })
-        }
+    if (!chrome.windows) {
+        console.log('Browser does not support: chrome.windows')
+        return
     }
-    return chrome.windows.create({ type: 'panel', url, width, height })
+    const { lastPanelID } = await chrome.storage.local.get(['lastPanelID'])
+    console.debug('lastPanelID:', lastPanelID)
+
+    try {
+        const window = await chrome.windows.get(lastPanelID)
+        if (window) {
+            console.debug(`%c Window found: ${window.id}`, 'color: Lime')
+            return await chrome.windows.update(lastPanelID, {
+                focused: true,
+            })
+        }
+    } catch (e) {
+        console.log(e)
+    }
+
+    const window = await chrome.windows.create({ type, url, width, height })
+    console.debug(`%c Created new window: ${window.id}`, 'color: Yellow')
+    // noinspection ES6MissingAwait
+    chrome.storage.local.set({ lastPanelID: window.id })
+    return window
 }
 
 /**
@@ -302,6 +382,7 @@ export async function openSidePanel(event) {
             chrome.sidePanel.open({ windowId: tab.windowId })
         })
     } else if (chrome.sidebarAction) {
+        // noinspection JSUnresolvedReference
         await chrome.sidebarAction.open()
     } else {
         console.log('Side Panel Not Supported')
@@ -316,6 +397,22 @@ export async function openSidePanel(event) {
     // if (typeof window !== 'undefined') {
     //     window.close()
     // }
+}
+
+/**
+ * Open Popup Click Callback
+ * @function openPopup
+ * @param {Event} [event]
+ */
+export async function openPopup(event) {
+    console.debug('openPopup:', event)
+    event?.preventDefault()
+    // Note: This fails if popup is already open (ex. double clicks)
+    try {
+        await chrome.action.openPopup()
+    } catch (e) {
+        console.debug(e)
+    }
 }
 
 /**
@@ -341,20 +438,65 @@ export function showToast(message, type = 'primary') {
 }
 
 /**
+ * Inject Script into Current Tab
+ * @function injectScript
+ * @param {Array|String} files
+ * @return {Promise<chrome.scripting.InjectionResult.result>}
+ */
+export async function injectScript(files) {
+    if (typeof files === 'string') {
+        files = [files]
+    }
+    console.debug('injectScript files:', files)
+    try {
+        const [tab] = await chrome.tabs.query({
+            currentWindow: true,
+            active: true,
+        })
+        const results = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            files,
+        })
+        console.debug('injectScript results:', results)
+        if (results[0]?.error) {
+            // noinspection JSUnresolvedReference
+            console.log('injectScript error:', results[0].error)
+        }
+        return results[0]?.result
+    } catch (e) {
+        console.log(e)
+    }
+}
+
+/**
  * Inject Function into Current Tab with args
  * @function injectFunction
  * @param {Function} func
  * @param {Array} [args]
- * @return {Promise<chrome.scripting.InjectionResult[]>}
+ * @return {Promise<chrome.scripting.InjectionResult.result>}
  */
 export async function injectFunction(func, args) {
-    const [tab] = await chrome.tabs.query({ currentWindow: true, active: true })
-    return await chrome.scripting.executeScript({
-        target: { tabId: tab.id },
-        injectImmediately: true,
-        func: func,
-        args: args,
-    })
+    console.debug('injectFunction:', func, args)
+    try {
+        const [tab] = await chrome.tabs.query({
+            currentWindow: true,
+            active: true,
+        })
+        const results = await chrome.scripting.executeScript({
+            target: { tabId: tab.id },
+            injectImmediately: true,
+            func: func,
+            args: args,
+        })
+        console.debug('injectFunction results:', results)
+        if (results[0]?.error) {
+            // noinspection JSUnresolvedReference
+            console.log('injectFunction error:', results[0].error)
+        }
+        return results[0]?.result
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 /**
@@ -365,6 +507,7 @@ export async function injectFunction(func, args) {
  */
 export function copyActiveElementText(ctx) {
     console.debug('copyActiveElementText:', ctx)
+    // noinspection JSUnresolvedReference
     let text =
         ctx.linkText?.trim() ||
         document.activeElement.innerText?.trim() ||
@@ -435,6 +578,7 @@ export async function toggleSite(hostname) {
 
 // /**
 //  * Enable Site Handler
+//  * @function enableSite
 //  * @param {String} hostname
 //  * @param {Boolean} [enabled]
 //  */

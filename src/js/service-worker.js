@@ -7,6 +7,7 @@ import {
     copyActiveImageSrc,
     injectFunction,
     openExtPanel,
+    openPopup,
     openSidePanel,
     toggleSite,
     githubURL,
@@ -40,6 +41,7 @@ async function onInstalled(details) {
     if (details.reason === chrome.runtime.OnInstalledReason.INSTALL) {
         const hasPerms = await checkPerms()
         if (hasPerms) {
+            // noinspection ES6MissingAwait
             chrome.runtime.openOptionsPage()
         } else {
             const url = chrome.runtime.getURL('/html/permissions.html')
@@ -98,6 +100,7 @@ function setUninstallURL() {
     // url.searchParams.append('version', manifest.version)
     // chrome.runtime.setUninstallURL(url.href)
     // console.debug(`setUninstallURL: ${url.href}`)
+    // Note: If only setting to a static url, this function is not required.
     chrome.runtime.setUninstallURL(`${githubURL}/issues`)
     console.debug(`setUninstallURL: ${githubURL}/issues`)
 }
@@ -111,12 +114,13 @@ function setUninstallURL() {
 async function onClicked(ctx, tab) {
     console.debug('onClicked:', ctx, tab)
     if (ctx.menuItemId === 'openOptions') {
+        // noinspection ES6MissingAwait
         chrome.runtime.openOptionsPage()
     } else if (ctx.menuItemId === 'toggleSite') {
         const url = new URL(tab.url)
         await toggleSite(url.hostname)
     } else if (ctx.menuItemId === 'openPopup') {
-        await chrome.action.openPopup()
+        await openPopup()
     } else if (ctx.menuItemId === 'openPage') {
         const url = chrome.runtime.getURL('/html/page.html')
         await activateOrOpen(url)
@@ -144,6 +148,7 @@ async function onClicked(ctx, tab) {
 async function onCommand(command, tab) {
     console.debug('onCommand:', command, tab)
     if (command === 'openOptions') {
+        // noinspection ES6MissingAwait
         chrome.runtime.openOptionsPage()
     } else if (command === 'toggleSite') {
         const url = new URL(tab.url)
@@ -219,13 +224,13 @@ function createContextMenus() {
         [['link'], 'copyText', 'Copy Link Text'],
         [['image', 'audio', 'video'], 'copySrc', 'Copy Source URL'],
         [['link', 'image', 'audio', 'video'], 'separator'],
-        [['all'], 'toggleSite', 'Toggle Site'],
+        [['all'], 'toggleSite', 'Toggle Current Site'],
+        [['all'], 'separator'],
+        [['all'], 'openSidePanel', 'Open Side Panel'],
+        [['all'], 'openExtPanel', 'Open Extension Panel'],
+        [['all'], 'openPage', 'Open Extension Page'],
         [['all'], 'separator'],
         [['all'], 'openPopup', 'Open Popup'],
-        [['all'], 'openPage', 'Extension Page'],
-        [['all'], 'openExtPanel', 'Extension Panel'],
-        [['all'], 'openSidePanel', 'Side Panel'],
-        [['all'], 'separator'],
         [['all'], 'openOptions', 'Open Options'],
     ]
     contexts.forEach(addContext)
