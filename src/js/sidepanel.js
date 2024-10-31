@@ -1,14 +1,17 @@
 // JS for sidepanel.html
 
-import { linkClick, updateManifest } from './export.js'
+import { linkClick, openPopup, updateManifest } from './export.js'
 
 document.addEventListener('DOMContentLoaded', domContentLoaded)
 document
-    .querySelectorAll('.close-panel')
-    .forEach((el) => el.addEventListener('click', closePanel))
-document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', linkClick))
+document
+    .querySelectorAll('.open-popup')
+    .forEach((el) => el.addEventListener('click', openPopup))
+document
+    .querySelectorAll('.close-panel')
+    .forEach((el) => el.addEventListener('click', closePanel))
 
 /**
  * DOMContentLoaded
@@ -23,7 +26,7 @@ async function domContentLoaded() {
 }
 
 /**
- * Close Side Panel
+ * Close Side Panel Click Callback
  * @function closePanel
  * @param {Event} [event]
  */

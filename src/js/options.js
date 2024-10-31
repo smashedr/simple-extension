@@ -133,7 +133,7 @@ async function setShortcuts(selector = '#keyboard-shortcuts') {
 }
 
 /**
- * Copy Support/Debugging Information
+ * Copy Support Click Callback
  * @function copySupport
  * @param {MouseEvent} event
  */
@@ -322,7 +322,7 @@ async function importSites(data) {
 }
 
 /**
- * Text File Download
+ * Text File Download Handler
  * @function textFileDownload
  * @param {String} filename
  * @param {String} text
@@ -342,7 +342,7 @@ function textFileDownload(filename, text) {
 }
 
 /**
- * Add Host Callback
+ * Add Host Submit Callback
  * @function addHost
  * @param {SubmitEvent} event
  */

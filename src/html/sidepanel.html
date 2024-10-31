@@ -31,12 +31,16 @@
             <div class="flex-fill text-center">
                 <a class="link-body-emphasis text-decoration-none fs-4" title="Home Page" href="homepage_url">
                     <img src="../images/logo32.png" alt="Logo" class="mb-1" style="height: 1.1em;">
-                    GitHub Ext.</a>
+                    Simple Ext.</a>
                 <a class="link-body-emphasis text-decoration-none small" title="Release Notes" href="version_url">
                     v<span class="version"></span></a>
             </div>
 
-            <div class="">
+            <div class="" data-mobile-add="d-none">
+                <a class="btn btn-sm btn-outline-info open-popup" role="button" title="Side Panel">
+                    <i class="fa-solid fa-window-maximize"></i></a>
+            </div>
+            <div class="ms-2">
                 <a class="btn btn-sm btn-outline-info" role="button" href="../html/options.html" title="Options">
                     <i class="fa-solid fa-gears"></i></a>
             </div>
@@ -50,9 +54,23 @@
     <div class="container-fluid">
         <div class="row">
             <div class="col-12">
-                <h1>Simple Extension Side Panel</h1>
+                <h1>Simple Extension</h1>
                 <p>It may be possible, that someone, somewhere, may find some use for this panel...</p>
             </div>
+        </div>
+        <div class="d-grid g-2 gap-2">
+            <a class="btn btn-primary d-flex align-items-center hvr-grow-sm open-popup" data-mobile-add="d-none">
+                <i class="fa-solid fa-window-maximize me-1"></i>
+                <span class="flex-fill text-center me-4">Open Popup</span>
+            </a>
+            <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/panel.html" data-mobile-add="d-none">
+                <i class="fa-regular fa-window-restore me-1"></i>
+                <span class="flex-fill text-center me-4">Open Extension Panel</span>
+            </a>
+            <a class="btn btn-primary d-flex align-items-center hvr-grow-sm" href="../html/page.html">
+                <i class="fa-regular fa-window-maximize me-1"></i>
+                <span class="flex-fill text-center me-4">Open Extension Page</span>
+            </a>
         </div>
     </div>
 </main>

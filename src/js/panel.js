@@ -22,8 +22,13 @@ async function domContentLoaded() {
     })
 }
 
+/**
+ * Close Panel Click Callback
+ * @function closePanel
+ * @param {Event} [event]
+ */
 function closePanel(event) {
     console.debug('closePanel:', event)
-    event.preventDefault()
+    event?.preventDefault()
     window.close()
 }

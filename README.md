@@ -21,6 +21,7 @@ Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox
 
 - [Features](#features)
 - [Configuration](#configuration)
+- [Template Notes](#template-notes)
 - [Development](#development)
   - [Building](#building)
   - [Chrome Setup](#Chrome-Setup)
@@ -45,6 +46,14 @@ Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox
 You can pin the Addon by clicking the `Puzzle Piece`, find the Link Extractor icon, then;  
 **Chrome,** click the `Pin` icon.  
 **Firefox,** click the `Settings Wheel` and `Pin to Toolbar`.
+
+# Template Notes
+
+- Minimum Chrome and Firefox Versions
+
+These should ben set to the highest level of API you use.  
+**Firefox** is set to 112 due to `background: type: "module"` allowing import in the service-worker.  
+**Chrome** is set to 127 due to using `action.openPopup()` which was policy restricted until then.
 
 # Development
 

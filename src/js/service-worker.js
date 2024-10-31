@@ -7,6 +7,7 @@ import {
     copyActiveImageSrc,
     injectFunction,
     openExtPanel,
+    openPopup,
     openSidePanel,
     toggleSite,
     githubURL,
@@ -118,7 +119,7 @@ async function onClicked(ctx, tab) {
         const url = new URL(tab.url)
         await toggleSite(url.hostname)
     } else if (ctx.menuItemId === 'openPopup') {
-        await chrome.action.openPopup()
+        await openPopup()
     } else if (ctx.menuItemId === 'openPage') {
         const url = chrome.runtime.getURL('/html/page.html')
         await activateOrOpen(url)

@@ -400,6 +400,22 @@ export async function openSidePanel(event) {
 }
 
 /**
+ * Open Popup Click Callback
+ * @function openPopup
+ * @param {Event} [event]
+ */
+export async function openPopup(event) {
+    console.debug('openPopup:', event)
+    event?.preventDefault()
+    // Note: This fails if popup is already open (ex. double clicks)
+    try {
+        await chrome.action.openPopup()
+    } catch (e) {
+        console.debug(e)
+    }
+}
+
+/**
  * Show Bootstrap Toast
  * @function showToast
  * @param {String} message
@@ -422,7 +438,7 @@ export function showToast(message, type = 'primary') {
 }
 
 /**
- * Inject Function into Current Tab with args
+ * Inject Script into Current Tab
  * @function injectScript
  * @param {Array|String} files
  * @return {Promise<chrome.scripting.InjectionResult.result>}
