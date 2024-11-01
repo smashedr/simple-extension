@@ -346,6 +346,7 @@ export async function openExtPanel(
     console.debug(`openExtPanel: ${url}`, width, height)
     if (!chrome.windows) {
         console.log('Browser does not support: chrome.windows')
+        showToast('Browser does not support windows', 'danger')
         return
     }
     const { lastPanelID } = await chrome.storage.local.get(['lastPanelID'])
@@ -364,9 +365,10 @@ export async function openExtPanel(
     }
 
     const window = await chrome.windows.create({ type, url, width, height })
+    // NOTE: Code after windows.create is not executed on the first pop-out...
     console.debug(`%c Created new window: ${window.id}`, 'color: Yellow')
     // noinspection ES6MissingAwait
-    chrome.storage.local.set({ lastPanelID: window.id })
+    // chrome.storage.local.set({ lastPanelID: window.id })
     return window
 }
 
