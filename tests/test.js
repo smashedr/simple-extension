@@ -64,6 +64,7 @@ async function getPage(browser, name, log, size) {
         args: [
             `--disable-extensions-except=${pathToExtension}`,
             `--load-extension=${pathToExtension}`,
+            '--no-sandbox',
         ],
         dumpio: true,
         // headless: false,
