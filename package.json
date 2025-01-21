@@ -21,9 +21,9 @@
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "@types/chrome": "^0.0.298",
+    "@types/chrome": "^0.0.299",
     "eslint": "^9.18.0",
-    "gulp": "^4.0.2",
+    "gulp": "^5.0.0",
     "json-merger": "^2.0.0",
     "prettier": "^3.4.2",
     "puppeteer": "^24.1.0",
