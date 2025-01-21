@@ -104,7 +104,7 @@ async function getPage(browser, name, log, size) {
     await page.screenshot(ssOpts('github2'))
 
     // Options
-    // await worker.evaluate('chrome.runtime.openOptionsPage();')
+    await worker.evaluate('chrome.runtime.openOptionsPage();')
     page = await getPage(browser, 'options.html')
     console.log('page:', page)
     await page.waitForNetworkIdle()
@@ -113,7 +113,7 @@ async function getPage(browser, name, log, size) {
     // await page.keyboard.press('Enter')
     await new Promise((resolve) => setTimeout(resolve, 500))
     await page.screenshot(ssOpts('options2'))
-    await page.close()
 
+    await page.close()
     await browser.close()
 })()
