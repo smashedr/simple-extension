@@ -135,15 +135,15 @@ Build: [https://wiki.mozilla.org/Add-ons/Extension_Signing#Unbranded_Builds](htt
 
 To support this project install, star, or provide a 5-star rating on other Web Extensions I have created and published:
 
-- [Link Extractor](https://github.com/cssnr/link-extractor)
-- [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab)
-- [Auto Auth](https://github.com/cssnr/auto-auth)
-- [Cache Cleaner](https://github.com/cssnr/cache-cleaner)
-- [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader)
-- [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension)
-- [PlayDrift Extension](https://github.com/cssnr/playdrift-extension)
-- [ASN Plus](https://github.com/cssnr/asn-plus)
-- [Aviation Tools](https://github.com/cssnr/aviation-tools)
-- [Text Formatter](https://github.com/cssnr/text-formatter)
+- [Link Extractor](https://github.com/cssnr/link-extractor?tab=readme-ov-file#readme)
+- [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab?tab=readme-ov-file#readme)
+- [Auto Auth](https://github.com/cssnr/auto-auth?tab=readme-ov-file#readme)
+- [Cache Cleaner](https://github.com/cssnr/cache-cleaner?tab=readme-ov-file#readme)
+- [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader?tab=readme-ov-file#readme)
+- [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension?tab=readme-ov-file#readme)
+- [PlayDrift Extension](https://github.com/cssnr/playdrift-extension?tab=readme-ov-file#readme)
+- [ASN Plus](https://github.com/cssnr/asn-plus?tab=readme-ov-file#readme)
+- [Aviation Tools](https://github.com/cssnr/aviation-tools?tab=readme-ov-file#readme)
+- [Text Formatter](https://github.com/cssnr/text-formatter?tab=readme-ov-file#readme)
 
 For a full list of current projects visit: [https://cssnr.github.io/](https://cssnr.github.io/)
