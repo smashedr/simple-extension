@@ -68,7 +68,7 @@ async function getPage(browser, name, log, size) {
         ],
         dumpio: true,
         // headless: false,
-        // slowMo: 150,
+        // slowMo: 50,
     })
     console.log('browser:', browser)
 
@@ -82,6 +82,7 @@ async function getPage(browser, name, log, size) {
     console.log('worker:', worker)
 
     // Popup
+    await new Promise((resolve) => setTimeout(resolve, 500))
     await worker.evaluate('chrome.action.openPopup();')
     let page = await getPage(browser, 'popup.html')
     console.log('page:', page)
