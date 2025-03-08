@@ -6,6 +6,7 @@ import {
     linkClick,
     onAdded,
     onRemoved,
+    openPopup,
     revokePerms,
     updatePlatform,
 } from './export.js'
@@ -23,6 +24,9 @@ document
 document
     .querySelectorAll('a[href]')
     .forEach((el) => el.addEventListener('click', linkClick))
+document
+    .querySelectorAll('.open-popup')
+    .forEach((el) => el.addEventListener('click', openPopup))
 document
     .querySelectorAll('[data-bs-toggle="tooltip"]')
     .forEach((el) => new bootstrap.Tooltip(el))
