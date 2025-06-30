@@ -17,18 +17,18 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
-    "bootstrap": "^5.3.3",
+    "bootstrap": "^5.3.7",
     "clipboard": "^2.0.11",
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "@types/chrome": "^0.0.308",
-    "eslint": "^9.21.0",
-    "gulp": "^5.0.0",
+    "@eslint/js": "^9.30.0",
+    "@types/chrome": "^0.0.328",
+    "eslint": "^9.30.0",
+    "gulp": "^5.0.1",
     "json-merger": "^3.0.0",
-    "prettier": "^3.5.3",
-    "puppeteer": "^24.4.0",
-    "web-ext": "^8.4.0"
+    "prettier": "^3.6.2",
+    "puppeteer": "^24.11.1",
+    "web-ext": "^8.8.0"
   }
 }
