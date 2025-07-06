@@ -81,8 +81,9 @@ async function getPage(browser, name, log, size) {
     const worker = await workerTarget.worker()
     console.log('worker:', worker)
 
+    await new Promise((resolve) => setTimeout(resolve, 1000))
+
     // Popup
-    await new Promise((resolve) => setTimeout(resolve, 500))
     await worker.evaluate('chrome.action.openPopup();')
     let page = await getPage(browser, 'popup.html')
     console.log('page:', page)
