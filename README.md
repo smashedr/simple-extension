@@ -15,6 +15,7 @@
 [![GitHub Repo Size](https://img.shields.io/github/repo-size/cssnr/link-extractor?logo=bookstack&logoColor=white&label=repo%20size)](https://github.com/cssnr/link-extractor)
 [![GitHub Org Stars](https://img.shields.io/github/stars/cssnr?style=flat&logo=github&logoColor=white&label=org%20stars)](https://cssnr.github.io/)
 [![Discord](https://img.shields.io/discord/899171661457293343?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/wXy6m2X8wY)
+[![Support](https://img.shields.io/badge/Ko--fi-f26a2e?logo=kofi&label=Support)](https://ko-fi.com/cssnr)
 
 # Simple Extension Template
 
@@ -61,7 +62,12 @@ For instructions on building, testing and submitting a PR, see [CONTRIBUTING.md]
 
 # Contributing
 
-To support this project install, star, or provide a 5-star rating on other Web Extensions I have created and published:
+Please consider making a donation to support the development of this project
+and [additional](https://cssnr.com/) open source projects.
+
+[![Support](https://img.shields.io/badge/Ko--fi-f26a2e?style=for-the-badge&logo=kofi&label=Support)](https://ko-fi.com/cssnr)
+
+Additionally, you can star or provide a 5-star rating on other Web Extensions I have created and published:
 
 - [Link Extractor](https://github.com/cssnr/link-extractor?tab=readme-ov-file#readme)
 - [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab?tab=readme-ov-file#readme)
