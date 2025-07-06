@@ -61,11 +61,13 @@ async function getPage(browser, name, log, size) {
     const pathToExtension = path.join(process.cwd(), sourceDir)
     console.log('pathToExtension:', pathToExtension)
     const browser = await puppeteer.launch({
-        args: [
-            `--disable-extensions-except=${pathToExtension}`,
-            `--load-extension=${pathToExtension}`,
-            '--no-sandbox',
-        ],
+        pipe: true,
+        enableExtensions: [pathToExtension],
+        // args: [
+        //     `--disable-extensions-except=${pathToExtension}`,
+        //     `--load-extension=${pathToExtension}`,
+        //     '--no-sandbox',
+        // ],
         dumpio: true,
         // headless: false,
         // slowMo: 50,
