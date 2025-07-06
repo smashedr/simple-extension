@@ -164,7 +164,6 @@ export async function activateOrOpen(url, open = true) {
 /**
  * Update DOM with Manifest Details
  * @function updateManifest
- * @function updateManifest
  */
 export async function updateManifest() {
     const manifest = chrome.runtime.getManifest()
@@ -198,13 +197,13 @@ export async function updateBrowser() {
 
 /**
  * @function updatePlatform
- * @return {Promise<void>}
+ * @return {Promise<chrome.runtime.PlatformInfo>}
  */
 export async function updatePlatform() {
     const platform = await chrome.runtime.getPlatformInfo()
     console.debug('updatePlatform:', platform)
     const splitCls = (cls) => cls.split(' ').filter(Boolean)
-    if (platform.os === 'android') {
+    if (platform.os === 'android' && typeof document !== 'undefined') {
         // document.querySelectorAll('[class*="mobile-"]').forEach((el) => {
         document
             .querySelectorAll(
@@ -235,6 +234,7 @@ export async function updatePlatform() {
                 }
             })
     }
+    return platform
 }
 
 /**

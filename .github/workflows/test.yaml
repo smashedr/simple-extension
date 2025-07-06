@@ -2,19 +2,20 @@ name: "Test"
 
 on:
   workflow_dispatch:
-  #schedule:
-  #  - cron: "18 18 * * 1,3,5"
+  schedule:
+    - cron: "18 18 * * 1,3,5"
   pull_request:
-    branches: ["master"]
+    branches: [master]
   push:
-    branches: ["master"]
-    paths:
-      - "src/**"
-      - "tests/**"
-      - ".github/workflows/test.yaml"
-      - "gulpfile.js"
-      - "manifest*.json"
-      - "package*.json"
+    branches: [master]
+    #paths:
+    #  - ".github/workflows/test.yaml"
+    #  - "src/**"
+    #  - "tests/**"
+    #  - "gulpfile.js"
+    #  - "manifest.json"
+    #  - "package.json"
+    #  - "package-lock.json"
 
 jobs:
   test:
@@ -22,6 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     if: ${{ !contains(github.event.head_commit.message, '#notest') }}
+    permissions:
+      contents: write
+      pull-requests: write
 
     steps:
       - name: "Checkout"
@@ -35,7 +39,7 @@ jobs:
 
       - name: "Install"
         run: |
-          npm ci
+          npm install
 
       - name: "Test"
         id: test
@@ -44,6 +48,8 @@ jobs:
 
       - name: "Push Artifacts"
         uses: cssnr/push-artifacts-action@master
+        if: ${{ github.event_name == 'pull_request' }}
+        continue-on-error: true
         with:
           source: "tests/screenshots/"
           dest: "/static"
@@ -52,7 +58,7 @@ jobs:
           pass: ${{ secrets.RSYNC_PASS }}
           port: ${{ secrets.RSYNC_PORT }}
           webhost: "https://artifacts.hosted-domains.com"
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          #webhook: ${{ secrets.DISCORD_WEBHOOK }}
           #token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: "Schedule Failure Notification"

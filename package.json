@@ -22,13 +22,13 @@
     "jquery": "^3.7.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.30.0",
-    "@types/chrome": "^0.0.328",
-    "eslint": "^9.30.0",
+    "@eslint/js": "^9.30.1",
+    "@types/chrome": "^0.0.329",
+    "eslint": "^9.30.1",
     "gulp": "^5.0.1",
     "json-merger": "^3.0.0",
     "prettier": "^3.6.2",
-    "puppeteer": "^24.11.1",
+    "puppeteer": "^24.11.2",
     "web-ext": "^8.8.0"
   }
 }

@@ -1,5 +1,6 @@
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white&label=users)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/link-extractor?logo=mozilla&label=users)](https://addons.mozilla.org/addon/link-extractor)
+[![GitHub Downloads](https://img.shields.io/github/downloads/cssnr/link-extractor/total?logo=github)](https://github.com/cssnr/obtainium-extension/releases/latest)
 [![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Rating](https://img.shields.io/amo/rating/link-extractor?logo=mozilla&logoColor=white)](https://addons.mozilla.org/addon/link-extractor)
 [![GitHub Repo Stars](https://img.shields.io/github/stars/cssnr/link-extractor?style=flat&logo=github&logoColor=white)](https://github.com/cssnr/link-extractor/stargazers)
@@ -11,6 +12,7 @@
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=smashedr_simple-extension&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=smashedr_simple-extension)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/smashedr/simple-extension?logo=github&logoColor=white&label=updated)](https://github.com/smashedr/simple-extension/graphs/commit-activity)
 [![GitHub Top Language](https://img.shields.io/github/languages/top/smashedr/simple-extension?logo=htmx&logoColor=white)](https://github.com/smashedr/simple-extension)
+[![GitHub Repo Size](https://img.shields.io/github/repo-size/cssnr/link-extractor?logo=bookstack&logoColor=white&label=repo%20size)](https://github.com/cssnr/link-extractor)
 [![GitHub Org Stars](https://img.shields.io/github/stars/cssnr?style=flat&logo=github&logoColor=white&label=org%20stars)](https://cssnr.github.io/)
 [![Discord](https://img.shields.io/discord/899171661457293343?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/wXy6m2X8wY)
 
@@ -66,6 +68,7 @@ To support this project install, star, or provide a 5-star rating on other Web E
 - [Auto Auth](https://github.com/cssnr/auto-auth?tab=readme-ov-file#readme)
 - [Cache Cleaner](https://github.com/cssnr/cache-cleaner?tab=readme-ov-file#readme)
 - [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader?tab=readme-ov-file#readme)
+- [Obtainium Extension](https://github.com/cssnr/obtainium-extension?tab=readme-ov-file#readme)
 - [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension?tab=readme-ov-file#readme)
 - [PlayDrift Extension](https://github.com/cssnr/playdrift-extension?tab=readme-ov-file#readme)
 - [ASN Plus](https://github.com/cssnr/asn-plus?tab=readme-ov-file#readme)
