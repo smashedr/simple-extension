@@ -63,11 +63,7 @@ async function getPage(browser, name, log, size) {
     const browser = await puppeteer.launch({
         pipe: true,
         enableExtensions: [pathToExtension],
-        // args: [
-        //     `--disable-extensions-except=${pathToExtension}`,
-        //     `--load-extension=${pathToExtension}`,
-        //     '--no-sandbox',
-        // ],
+        args: ['--no-sandbox'],
         dumpio: true,
         // headless: false,
         // slowMo: 50,
