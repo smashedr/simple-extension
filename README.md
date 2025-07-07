@@ -1,21 +1,24 @@
 [![Chrome Web Store Users](https://img.shields.io/chrome-web-store/users/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white&label=users)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Users](https://img.shields.io/amo/users/link-extractor?logo=mozilla&label=users)](https://addons.mozilla.org/addon/link-extractor)
-[![GitHub Downloads](https://img.shields.io/github/downloads/cssnr/link-extractor/total?logo=github)](https://github.com/cssnr/obtainium-extension/releases/latest)
+[![Edge Add-on Users](https://img.shields.io/badge/dynamic/json?label=users&logo=gmail&logoColor=white&query=%24.activeInstallCount&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnmndaimimedljcfgnnoahempcajdamej)](https://microsoftedge.microsoft.com/addons/detail/link-extractor/nmndaimimedljcfgnnoahempcajdamej)
 [![Chrome Web Store Rating](https://img.shields.io/chrome-web-store/rating/ifefifghpkllfibejafbakmflidjcjfp?logo=google&logoColor=white)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Rating](https://img.shields.io/amo/rating/link-extractor?logo=mozilla&logoColor=white)](https://addons.mozilla.org/addon/link-extractor)
+[![Edge Add-on Rating](https://img.shields.io/badge/dynamic/json?label=rating&logo=gmail&logoColor=white&suffix=/5&query=%24.averageRating&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnmndaimimedljcfgnnoahempcajdamej)](https://microsoftedge.microsoft.com/addons/detail/link-extractor/nmndaimimedljcfgnnoahempcajdamej)
 [![GitHub Repo Stars](https://img.shields.io/github/stars/cssnr/link-extractor?style=flat&logo=github&logoColor=white)](https://github.com/cssnr/link-extractor/stargazers)
 [![Chrome Web Store Version](https://img.shields.io/chrome-web-store/v/ifefifghpkllfibejafbakmflidjcjfp?label=chrome&logo=googlechrome)](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
 [![Mozilla Add-on Version](https://img.shields.io/amo/v/link-extractor?label=firefox&logo=firefox)](https://addons.mozilla.org/addon/link-extractor)
+[![Edge Add-on Version](https://img.shields.io/badge/dynamic/json?label=microsoft&logo=leptos&logoColor=2bc3d2&&query=%24.version&url=https%3A%2F%2Fmicrosoftedge.microsoft.com%2Faddons%2Fgetproductdetailsbycrxid%2Fnmndaimimedljcfgnnoahempcajdamej)](https://microsoftedge.microsoft.com/addons/detail/link-extractor/nmndaimimedljcfgnnoahempcajdamej)
 [![GitHub Release Version](https://img.shields.io/github/v/release/cssnr/link-extractor?logo=github)](https://github.com/cssnr/link-extractor/releases/latest)
 [![Build](https://img.shields.io/github/actions/workflow/status/smashedr/simple-extension/build.yaml?logo=github&logoColor=white&label=build)](https://github.com/smashedr/simple-extension/actions/workflows/build.yaml)
 [![Test](https://img.shields.io/github/actions/workflow/status/smashedr/simple-extension/test.yaml?logo=github&logoColor=white&label=test)](https://github.com/smashedr/simple-extension/actions/workflows/test.yaml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=smashedr_simple-extension&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=smashedr_simple-extension)
+[![Lint](https://img.shields.io/github/actions/workflow/status/smashedr/simple-extension/lint.yaml?logo=github&logoColor=white&label=lint)](https://github.com/smashedr/simple-extension/actions/workflows/lint.yaml)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=cssnr_link-extractor&metric=alert_status&label=quality)](https://sonarcloud.io/summary/overall?id=cssnr_link-extractor)
 [![GitHub Last Commit](https://img.shields.io/github/last-commit/smashedr/simple-extension?logo=github&logoColor=white&label=updated)](https://github.com/smashedr/simple-extension/graphs/commit-activity)
 [![GitHub Top Language](https://img.shields.io/github/languages/top/smashedr/simple-extension?logo=htmx&logoColor=white)](https://github.com/smashedr/simple-extension)
-[![GitHub Repo Size](https://img.shields.io/github/repo-size/cssnr/link-extractor?logo=bookstack&logoColor=white&label=repo%20size)](https://github.com/cssnr/link-extractor)
+[![GitHub Repo Size](https://img.shields.io/github/repo-size/smashedr/simple-extension?logo=bookstack&logoColor=white&label=repo%20size)](https://github.com/smashedr/simple-extension)
 [![GitHub Org Stars](https://img.shields.io/github/stars/cssnr?style=flat&logo=github&logoColor=white&label=org%20stars)](https://cssnr.github.io/)
 [![Discord](https://img.shields.io/discord/899171661457293343?logo=discord&logoColor=white&label=discord&color=7289da)](https://discord.gg/wXy6m2X8wY)
-[![Support](https://img.shields.io/badge/Ko--fi-579fbf?logo=kofi&label=Support)](https://ko-fi.com/cssnr)
+[![Ko-fi](https://img.shields.io/badge/Ko--fi-73a4f1?logo=kofi&label=Support)](https://ko-fi.com/cssnr)
 
 # Simple Extension Template
 
@@ -65,7 +68,7 @@ For instructions on building, testing and submitting a PR, see [CONTRIBUTING.md]
 Please consider making a donation to support the development of this project
 and [additional](https://cssnr.com/) open source projects.
 
-[![Support](https://img.shields.io/badge/Ko--fi-579fbf?style=for-the-badge&logo=kofi&label=Support)](https://ko-fi.com/cssnr)
+[![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/cssnr)
 
 Additionally, you can star or provide a 5-star rating on other Web Extensions I have created and published:
 
