@@ -17,6 +17,8 @@ on:
     #  - "package.json"
     #  - "package-lock.json"
 
+# GitHub is Retarded
+
 jobs:
   test:
     name: "Test"
