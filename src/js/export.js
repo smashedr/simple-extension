@@ -24,10 +24,10 @@ export async function saveOptions(event) {
     } else if (event.target.type === 'checkbox') {
         value = event.target.checked
     } else if (event.target.type === 'number') {
-        const number = parseFloat(event.target.value)
-        let min = parseFloat(event.target.min)
-        let max = parseFloat(event.target.max)
-        if (!isNaN(number) && number >= min && number <= max) {
+        const number = Number.parseFloat(event.target.value)
+        let min = Number.parseFloat(event.target.min)
+        let max = Number.parseFloat(event.target.max)
+        if (!Number.isNaN(number) && number >= min && number <= max) {
             event.target.value = number.toString()
             value = number
         } else {
@@ -54,7 +54,7 @@ export async function saveOptions(event) {
 export function updateOptions(options) {
     console.debug('updateOptions:', options)
     for (let [key, value] of Object.entries(options)) {
-        if (typeof value === 'undefined') {
+        if (value === undefined) {
             console.warn('Value undefined for key:', key)
             continue
         }
