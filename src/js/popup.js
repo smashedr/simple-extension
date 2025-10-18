@@ -64,9 +64,7 @@ async function initPopup() {
 
     // Get Tab Info
     // Note: contentScript is defined in the content-script.js and fails if not loaded
-    const siteInfo = await injectFunction(() => {
-        return { contentScript, ...window.location }
-    })
+    const siteInfo = await injectFunction(checkSite)
     console.debug('siteInfo:', siteInfo)
 
     // Check if Current Tab is Accessible
@@ -81,13 +79,13 @@ async function initPopup() {
     // Update Site Data
     try {
         // noinspection JSUnresolvedReference
-        hostnameEl.textContent = siteInfo.hostname
+        hostnameEl.textContent = siteInfo.location.hostname
         // noinspection JSUnresolvedReference
-        console.debug('%c hostname:', 'color: Lime', siteInfo.hostname)
+        console.debug('%chostname:', 'color: Lime', siteInfo.location.hostname)
         document.getElementById('toggle-site').disabled = false
         const { sites } = await chrome.storage.sync.get(['sites'])
         // noinspection JSUnresolvedReference
-        if (sites.includes(siteInfo.hostname)) {
+        if (sites.includes(siteInfo.location.hostname)) {
             switchEl.classList.replace('border-secondary', 'border-success')
             toggleSiteEl.checked = true
         }
@@ -107,6 +105,30 @@ async function initPopup() {
 
     // const platform = await chrome.runtime.getPlatformInfo()
     // console.debug('platform:', platform)
+}
+
+/**
+ * Check Site Info
+ * @function checkSite
+ * @return {Object}
+ */
+function checkSite() {
+    const cookies = Object.fromEntries(
+        document.cookie.split(';').map((cookie) => {
+            const [key, ...valParts] = cookie.split('=')
+            return [key.trim(), decodeURIComponent(valParts.join('='))]
+        })
+    )
+    return {
+        cookies,
+        contentScript,
+        location: {
+            href: window.location.href,
+            host: window.location.host,
+            hostname: window.location.hostname,
+            origin: window.location.origin,
+        },
+    }
 }
 
 /**

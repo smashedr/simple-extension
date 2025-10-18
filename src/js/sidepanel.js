@@ -60,7 +60,7 @@ async function onActivated(activeInfo) {
     if (window.id !== activeInfo.windowId) {
         return console.debug('Tab Change - Different Window.')
     }
-    console.debug('%c Tab Change - Update Tab Data.', 'color: Lime')
+    console.debug('%cTab Change - Update Tab Data.', 'color: Lime')
     // noinspection ES6MissingAwait
     tabChange()
 }

@@ -24,10 +24,10 @@ export async function saveOptions(event) {
     } else if (event.target.type === 'checkbox') {
         value = event.target.checked
     } else if (event.target.type === 'number') {
-        const number = parseFloat(event.target.value)
-        let min = parseFloat(event.target.min)
-        let max = parseFloat(event.target.max)
-        if (!isNaN(number) && number >= min && number <= max) {
+        const number = Number.parseFloat(event.target.value)
+        let min = Number.parseFloat(event.target.min)
+        let max = Number.parseFloat(event.target.max)
+        if (!Number.isNaN(number) && number >= min && number <= max) {
             event.target.value = number.toString()
             value = number
         } else {
@@ -54,7 +54,7 @@ export async function saveOptions(event) {
 export function updateOptions(options) {
     console.debug('updateOptions:', options)
     for (let [key, value] of Object.entries(options)) {
-        if (typeof value === 'undefined') {
+        if (value === undefined) {
             console.warn('Value undefined for key:', key)
             continue
         }
@@ -107,14 +107,16 @@ function hideShowElement(selector, show, speed = 'fast') {
  */
 export async function linkClick(event, close = false) {
     console.debug('linkClick:', close, event)
-    event.preventDefault()
-    const href = event.currentTarget.getAttribute('href').replace(/^\.+/g, '')
+    const target = event.currentTarget
+    const href = target.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
     let url
     if (href.startsWith('#')) {
         console.debug('return on anchor link')
         return
-    } else if (href.endsWith('html/options.html')) {
+    }
+    event.preventDefault()
+    if (href.endsWith('html/options.html')) {
         await chrome.runtime.openOptionsPage()
         if (close) window.close()
         return
@@ -150,12 +152,12 @@ export async function activateOrOpen(url, open = true) {
     console.debug('tabs:', tabs)
     for (const tab of tabs) {
         if (tab.url === url) {
-            console.debug('found tab in tabs:', tab)
+            console.debug('%cTab found, activating:', 'color: Lime', tab)
             return await chrome.tabs.update(tab.id, { active: true })
         }
     }
     if (open) {
-        console.debug('tab not found, opening url:', url)
+        console.debug('%cTab not found, opening url:', 'color: Yellow', url)
         return await chrome.tabs.create({ active: true, url })
     }
     console.warn('tab not found and open not set!')
