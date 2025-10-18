@@ -13,7 +13,8 @@
     "build:chrome": "npm run manifest:chrome && npx web-ext build -n {name}-chrome-{version}.zip -o -s src",
     "build:firefox": "npm run manifest:firefox && npx web-ext build -n {name}-firefox-{version}.zip -o -s src",
     "build": "npm run build:chrome && npm run build:firefox",
-    "prettier": "npx prettier --check ."
+    "prettier:check": "npx prettier --check .",
+    "prettier:write": "npx prettier --write ."
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^7.1.0",
