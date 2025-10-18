@@ -39,10 +39,10 @@ async function domContentLoaded() {
 async function onAdded(permissions) {
     console.debug('onAdded', permissions)
     const hasPerms = await checkPerms()
-    if (hasPerms && document.hasFocus()) {
-        await chrome.runtime.openOptionsPage()
-    }
     if (hasPerms) {
+        if (document.hasFocus()) {
+            await chrome.runtime.openOptionsPage()
+        }
         window.close()
     }
 }

@@ -107,14 +107,16 @@ function hideShowElement(selector, show, speed = 'fast') {
  */
 export async function linkClick(event, close = false) {
     console.debug('linkClick:', close, event)
-    event.preventDefault()
-    const href = event.currentTarget.getAttribute('href').replace(/^\.+/g, '')
+    const target = event.currentTarget
+    const href = target.getAttribute('href').replace(/^\.+/g, '')
     console.debug('href:', href)
     let url
     if (href.startsWith('#')) {
         console.debug('return on anchor link')
         return
-    } else if (href.endsWith('html/options.html')) {
+    }
+    event.preventDefault()
+    if (href.endsWith('html/options.html')) {
         await chrome.runtime.openOptionsPage()
         if (close) window.close()
         return
@@ -150,12 +152,12 @@ export async function activateOrOpen(url, open = true) {
     console.debug('tabs:', tabs)
     for (const tab of tabs) {
         if (tab.url === url) {
-            console.debug('found tab in tabs:', tab)
+            console.debug('%cTab found, activating:', 'color: Lime', tab)
             return await chrome.tabs.update(tab.id, { active: true })
         }
     }
     if (open) {
-        console.debug('tab not found, opening url:', url)
+        console.debug('%cTab not found, opening url:', 'color: Yellow', url)
         return await chrome.tabs.create({ active: true, url })
     }
     console.warn('tab not found and open not set!')

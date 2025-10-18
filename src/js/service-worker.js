@@ -101,6 +101,7 @@ function setUninstallURL() {
     // chrome.runtime.setUninstallURL(url.href)
     // console.debug(`setUninstallURL: ${url.href}`)
     // Note: If only setting to a static url, this function is not required.
+    // noinspection JSIgnoredPromiseFromCall
     chrome.runtime.setUninstallURL(`${githubURL}/issues`)
     console.debug(`setUninstallURL: ${githubURL}/issues`)
 }
@@ -202,6 +203,7 @@ function onChanged(changes, namespace) {
                     createContextMenus()
                 } else {
                     console.log('%cDisabled contextMenu...', 'color: OrangeRed')
+                    // noinspection JSIgnoredPromiseFromCall
                     chrome.contextMenus?.removeAll()
                 }
             }
@@ -218,6 +220,7 @@ function createContextMenus() {
         return console.debug('Skipping: chrome.contextMenus')
     }
     console.debug('createContextMenus')
+    // noinspection JSIgnoredPromiseFromCall
     chrome.contextMenus.removeAll()
     /** @type {Array[chrome.contextMenus.ContextType[], String, String]} */
     const contexts = [

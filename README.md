@@ -77,6 +77,7 @@ Additionally, you can star or provide a 5-star rating on other Web Extensions I 
 - [Auto Auth](https://github.com/cssnr/auto-auth?tab=readme-ov-file#readme)
 - [Cache Cleaner](https://github.com/cssnr/cache-cleaner?tab=readme-ov-file#readme)
 - [HLS Video Downloader](https://github.com/cssnr/hls-video-downloader?tab=readme-ov-file#readme)
+- [Zipline Extension](https://github.com/cssnr/zipline-extension?tab=readme-ov-file#readme)
 - [Obtainium Extension](https://github.com/cssnr/obtainium-extension?tab=readme-ov-file#readme)
 - [SMWC Web Extension](https://github.com/cssnr/smwc-web-extension?tab=readme-ov-file#readme)
 - [PlayDrift Extension](https://github.com/cssnr/playdrift-extension?tab=readme-ov-file#readme)
