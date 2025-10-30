@@ -41,7 +41,7 @@ jobs:
 
       - name: "Install"
         run: |
-          npm install
+          npm ci
 
       - name: "Test"
         id: test
