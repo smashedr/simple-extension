@@ -117,7 +117,7 @@ function checkSite() {
         document.cookie.split(';').map((cookie) => {
             const [key, ...valParts] = cookie.split('=')
             return [key.trim(), decodeURIComponent(valParts.join('='))]
-        })
+        }),
     )
     return {
         cookies,

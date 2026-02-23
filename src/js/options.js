@@ -48,14 +48,14 @@ document
 document
     .querySelectorAll('.form-control')
     .forEach((el) =>
-        el.addEventListener('input', () => el.classList.remove('is-invalid'))
+        el.addEventListener('input', () => el.classList.remove('is-invalid')),
     )
 document
     .querySelectorAll('.modal')
     .forEach((el) =>
         el.addEventListener('shown.bs.modal', () =>
-            el.querySelector('input,textarea').focus()
-        )
+            el.querySelector('input,textarea').focus(),
+        ),
     )
 
 document.getElementById('chrome-shortcuts').addEventListener('click', () => {
@@ -332,7 +332,7 @@ function textFileDownload(filename, text) {
     const element = document.createElement('a')
     element.setAttribute(
         'href',
-        'data:text/plain;charset=utf-8,' + encodeURIComponent(text)
+        'data:text/plain;charset=utf-8,' + encodeURIComponent(text),
     )
     element.setAttribute('download', filename)
     element.classList.add('d-none')
