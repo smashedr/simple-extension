@@ -1,17 +1,11 @@
 {
   "name": "Simple Extension",
-  "description": "Simple Web Extension Example.",
+  "description": "Simple Extension Web Extension.",
   "homepage_url": "https://github.com/smashedr/simple-extension",
   "author": "Shane",
   "version": "0.0.1",
   "manifest_version": 3,
-  "permissions": [
-    "activeTab",
-    "clipboardWrite",
-    "contextMenus",
-    "scripting",
-    "storage"
-  ],
+  "permissions": ["activeTab", "clipboardWrite", "contextMenus", "scripting", "storage"],
   "host_permissions": ["*://*/*"],
   "content_scripts": [
     {
