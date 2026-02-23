@@ -14,10 +14,7 @@ let tabEnabled = false
     // get options
     // const { options } = await chrome.storage.sync.get(['options'])
     // const { sites } = await chrome.storage.local.get(['sites'])
-    const { options, sites } = await chrome.storage.sync.get([
-        'options',
-        'sites',
-    ])
+    const { options, sites } = await chrome.storage.sync.get(['options', 'sites'])
     console.log('options:', options)
     console.log('sites:', sites)
     console.log('window.location.hostname:', window.location.hostname)

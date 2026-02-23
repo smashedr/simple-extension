@@ -192,9 +192,7 @@ export async function updateBrowser() {
         selector = '.firefox'
     }
     console.debug('updateBrowser:', selector)
-    document
-        .querySelectorAll(selector)
-        .forEach((el) => el.classList.remove('d-none'))
+    document.querySelectorAll(selector).forEach((el) => el.classList.remove('d-none'))
 }
 
 /**
@@ -209,7 +207,7 @@ export async function updatePlatform() {
         // document.querySelectorAll('[class*="mobile-"]').forEach((el) => {
         document
             .querySelectorAll(
-                '[data-mobile-add],[data-mobile-remove],[data-mobile-replace]'
+                '[data-mobile-add],[data-mobile-remove],[data-mobile-replace]',
             )
             .forEach((el) => {
                 if (el.dataset.mobileAdd) {
@@ -343,7 +341,7 @@ export async function openExtPanel(
     url = '/html/panel.html',
     width = 720,
     height = 480,
-    type = 'panel'
+    type = 'panel',
 ) {
     console.debug(`openExtPanel: ${url}`, width, height)
     if (!chrome.windows) {
