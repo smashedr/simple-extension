@@ -2,7 +2,7 @@ blank_issues_enabled: true
 contact_links:
   - name: "❔ Start a Discussion"
     about: Ask a general question or start a discussion
-    url: https://github.com/smashedr/install-release/discussions/new?category=q-a
+    url: https://github.com/smashedr/simple-extension/discussions/new?category=q-a
 
   - name: "💬 Join Discord"
     about: Chat with us about anything
