@@ -8,16 +8,16 @@
 })()
 
 // Detect multiple injections for run-once code
-if (!window.injected) {
+if (window.injected) {
+    setTimeout(() => {
+        alert('Warn: Already injected script: inject.js')
+    }, 1)
+} else {
     window.injected = true
     console.debug('Adding runtime.onMessage Listener')
     chrome.runtime.onMessage.addListener(onMessage)
     setTimeout(() => {
         alert('Success: Injected script: inject.js')
-    }, 1)
-} else {
-    setTimeout(() => {
-        alert('Warn: Already injected script: inject.js')
     }, 1)
 }
 

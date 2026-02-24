@@ -338,7 +338,7 @@ function textFileDownload(filename, text) {
     element.classList.add('d-none')
     document.body.appendChild(element)
     element.click()
-    document.body.removeChild(element)
+    element.remove()
 }
 
 /**
