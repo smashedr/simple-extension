@@ -248,9 +248,7 @@ async function importExportClick(event) {
     } else if (action === 'text') {
         const el = document.getElementById(target.dataset.id)
         console.debug('el:', el)
-        if (!el.value) {
-            el.focus()
-        } else {
+        if (el.value) {
             try {
                 const data = JSON.parse(el.value)
                 console.debug('data:', data)
@@ -266,6 +264,8 @@ async function importExportClick(event) {
                 el.focus()
                 // showToast(`Import Error: ${e.message}`, 'danger')
             }
+        } else {
+            el.focus()
         }
     } else if (action === 'clear') {
         const el = document.getElementById(target.dataset.id)
