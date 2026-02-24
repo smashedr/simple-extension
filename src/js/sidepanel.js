@@ -40,7 +40,7 @@ async function closePanel(event) {
     console.debug('closePanel:', event)
     event?.preventDefault()
     // noinspection JSUnresolvedReference
-    if (typeof browser !== 'undefined') {
+    if (typeof browser?.runtime?.getBrowserInfo === 'function') {
         // noinspection JSUnresolvedReference
         await browser.sidebarAction.close()
     } else {

@@ -108,7 +108,7 @@ function hideShowElement(selector, show, speed = 'fast') {
 export async function linkClick(event, close = false) {
     console.debug('linkClick:', close, event)
     const target = event.currentTarget
-    const href = target.getAttribute('href').replace(/^\.+/g, '')
+    const href = target.getAttribute('href').replace(/^\.+/, '')
     console.debug('href:', href)
     let url
     if (href.startsWith('#')) {
@@ -188,7 +188,7 @@ export async function updateManifest() {
 export async function updateBrowser() {
     let selector = '.chrome'
     // noinspection JSUnresolvedReference
-    if (typeof browser !== 'undefined') {
+    if (typeof browser?.runtime?.getBrowserInfo === 'function') {
         selector = '.firefox'
     }
     console.debug('updateBrowser:', selector)
@@ -403,6 +403,7 @@ export async function openSidePanel(event) {
 
 /**
  * Open Popup Click Callback
+ * NOTE: Requires Chrome>=127
  * @function openPopup
  * @param {Event} [event]
  */
@@ -558,17 +559,17 @@ export async function toggleSite(hostname) {
     let enabled = false
     const { sites } = await chrome.storage.sync.get(['sites'])
     // if (!(hostname in sites)) {
-    if (!sites.includes(hostname)) {
+    if (sites.includes(hostname)) {
+        console.log(`Disabling Site: ${hostname}`)
+        // delete sites[hostname]
+        sites.splice(sites.indexOf(hostname), 1)
+        changed = true
+    } else {
         console.log(`Enabling Site: ${hostname}`)
         // sites[hostname] = {}
         sites.push(hostname)
         changed = true
         enabled = true
-    } else {
-        console.log(`Disabling Site: ${hostname}`)
-        // delete sites[hostname]
-        sites.splice(sites.indexOf(hostname), 1)
-        changed = true
     }
     if (changed) {
         sites.sort()
