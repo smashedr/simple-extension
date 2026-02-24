@@ -26,8 +26,8 @@
 
 # Simple Extension
 
-<a title="Install Release" href="https://github.com/smashedr/simple-extension?tab=readme-ov-file#readme" target="_blank">
-<img alt="Install Release" align="right" width="128" height="auto" src="https://raw.githubusercontent.com/smashedr/simple-extension/refs/heads/master/src/images/logo128.png"></a>
+<a title="Simple Extension" href="https://github.com/smashedr/simple-extension?tab=readme-ov-file#readme" target="_blank">
+<img alt="Simple Extension" align="right" width="128" height="auto" src="https://raw.githubusercontent.com/smashedr/simple-extension/refs/heads/master/src/images/logo128.png"></a>
 
 - [Features](#features)
 - [Configuration](#configuration)
