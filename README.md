@@ -26,14 +26,18 @@
 
 # Simple Extension
 
-Modern Chrome Web Extension and Firefox Browser Addon for Copying and Creating New Extensions.
-Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox, Yandex, Kiwi, etc.
+<a title="Install Release" href="https://github.com/smashedr/simple-extension?tab=readme-ov-file#readme" target="_blank">
+<img alt="Install Release" align="right" width="128" height="auto" src="https://raw.githubusercontent.com/smashedr/simple-extension/refs/heads/master/src/images/logo128.png"></a>
 
 - [Features](#features)
 - [Configuration](#configuration)
+- [Support](#support)
 - [Template Notes](#template-notes)
 - [Development](#development)
-- [Contributing](#Contributing)
+- [Contributing](#contributing)
+
+Modern Chrome Web Extension and Firefox Browser Addon for Copying and Creating New Extensions.
+Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox, Yandex, Kiwi, etc.
 
 ## Features
 
@@ -55,6 +59,25 @@ You can pin the Addon by clicking the `Puzzle Piece`, find the Link Extractor ic
 **Chrome,** click the `Pin` icon.  
 **Firefox,** click the `Settings Wheel` and `Pin to Toolbar`.
 
+## Support
+
+Logs can be found inspecting the page (Ctrl+Shift+I), clicking on the Console, and;
+Firefox: toggling Debug logs, Chrome: toggling Verbose from levels dropdown.
+
+If you run into any issues or need help getting started, please do one of the following:
+
+- Report an Issue: <https://github.com/smashedr/simple-extension/issues>
+- Q&A Discussion: <https://github.com/smashedr/simple-extension/discussions/categories/q-a>
+- Request a Feature: <https://github.com/smashedr/simple-extension/issues/new?template=1-feature.yaml>
+- Chat with us on Discord: <https://discord.gg/wXy6m2X8wY>
+
+[![Features](https://img.shields.io/badge/features-brightgreen?style=for-the-badge&logo=rocket&logoColor=white)](https://github.com/smashedr/simple-extension/issues/new?template=1-feature.yaml)
+[![Issues](https://img.shields.io/badge/issues-red?style=for-the-badge&logo=southwestairlines&logoColor=white)](https://github.com/smashedr/simple-extension/issues)
+[![Discussions](https://img.shields.io/badge/discussions-blue?style=for-the-badge&logo=livechat&logoColor=white)](https://github.com/smashedr/simple-extension/discussions)
+[![Discord](https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white)](https://discord.gg/wXy6m2X8wY)
+
+To support this project, see the [Contributing](#Contributing) section at the bottom.
+
 # Template Notes
 
 - Minimum Chrome and Firefox Versions
@@ -65,7 +88,7 @@ These should ben set to the highest level of API you use.
 
 # Development
 
-For instructions on building, testing and submitting a PR, see [CONTRIBUTING.md](CONTRIBUTING.md).
+For instructions on building, testing and submitting a PR, see [CONTRIBUTING.md](#contributing-ov-file).
 
 # Contributing
 
@@ -90,3 +113,11 @@ Additionally, you can star or provide a 5-star rating on other Web Extensions I 
 - [Text Formatter](https://github.com/cssnr/text-formatter?tab=readme-ov-file#readme)
 
 For a full list of current projects visit: [https://cssnr.github.io/](https://cssnr.github.io/)
+
+<a href="https://github.com/cssnr/link-extractor?tab=readme-ov-file#readme">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=cssnr/link-extractor&type=date&legend=bottom-right&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=cssnr/link-extractor&type=date&legend=bottom-right" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=cssnr/link-extractor&type=date&legend=bottom-right" />
+ </picture>
+</a>
