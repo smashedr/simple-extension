@@ -81,7 +81,7 @@ async function onInstalled(details) {
 async function onStartup() {
     console.log('onStartup')
     // noinspection JSUnresolvedReference
-    if (typeof browser !== 'undefined') {
+    if (typeof browser?.runtime?.getBrowserInfo === 'function') {
         console.log('Firefox Startup Workarounds')
         const { options } = await chrome.storage.sync.get(['options'])
         console.debug('options:', options)
@@ -242,7 +242,7 @@ function createContextMenus() {
 /**
  * Add Context from Array
  * @function addContext
- * @param {[chrome.contextMenus.ContextType[],String,String,chrome.contextMenus.ContextItemType?]} context
+ * @param {[chrome.contextMenus.ContextType[],String,String,chrome.contextMenus.ContextType?]} context
  */
 function addContext(context) {
     // console.debug('addContext:', context)
@@ -253,6 +253,7 @@ function addContext(context) {
             context.push('separator', 'separator')
         }
         // console.debug('menus.create:', context)
+        // noinspection JSCheckFunctionSignatures
         chrome.contextMenus.create({
             contexts: context[0],
             id: context[1],
