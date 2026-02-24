@@ -403,6 +403,7 @@ export async function openSidePanel(event) {
 
 /**
  * Open Popup Click Callback
+ * NOTE: Requires Chrome>=127
  * @function openPopup
  * @param {Event} [event]
  */
