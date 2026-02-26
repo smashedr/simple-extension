@@ -367,6 +367,7 @@ export async function openExtPanel(
         console.log(e)
     }
 
+    // noinspection JSCheckFunctionSignatures
     const window = await chrome.windows.create({ type, url, width, height })
     // NOTE: Code after windows.create is not executed on the first pop-out...
     console.debug(`%c Created new window: ${window.id}`, 'color: Yellow')

@@ -97,7 +97,11 @@ and [additional](https://cssnr.com/) open source projects.
 
 [![Ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/cssnr)
 
-Additionally, you can star or provide a 5-star rating on other Web Extensions I have created and published:
+Additionally, you can give a 5-star rating
+on [Google](https://chromewebstore.google.com/detail/link-extractor/ifefifghpkllfibejafbakmflidjcjfp)
+or [Mozilla](https://addons.mozilla.org/addon/link-extractor) and star this project on GitHub.
+
+Other Web Extensions I have created and published:
 
 - [Link Extractor](https://github.com/cssnr/link-extractor?tab=readme-ov-file#readme)
 - [Open Links in New Tab](https://github.com/cssnr/open-links-in-new-tab?tab=readme-ov-file#readme)

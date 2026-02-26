@@ -1,5 +1,6 @@
 {
   "name": "simple-extension",
+  "private": true,
   "scripts": {
     "postinstall": "npx gulp",
     "lint:eslint": "npx eslint src/js tests",
