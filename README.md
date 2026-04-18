@@ -39,6 +39,16 @@
 Modern Chrome Web Extension and Firefox Browser Addon for Copying and Creating New Extensions.
 Written in Vanilla JavaScript using Bootstrap and compatible with Mobile Firefox, Yandex, Kiwi, etc.
 
+> [!CAUTION]  
+> **DEPRECATED**  
+> This extension will no longer be updated in favor of:  
+> <https://github.com/smashedr/wxt-extension>
+
+> [!TIP]  
+> **TS + VUE + WXT + VITE**  
+> A new template extension has been created and maintained:  
+> <https://github.com/smashedr/wxt-extension>
+
 ## Features
 
 - Options Page
